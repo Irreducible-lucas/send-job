@@ -1,0 +1,5 @@
+export {default as logo} from "./logo.jpeg"
+export {default as hero} from "./hero.jpg"
+export {default as ellipse} from "./ellipse.png"
+export {default as Christiana} from "./christiana.jpg"
+export {default as event} from "./event2.png"

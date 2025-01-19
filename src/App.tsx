@@ -9,23 +9,7 @@ import Root from "./layout/Root";
 import DashboardRoot from "./layout/DashboardRoot";
 import {
   Home,
-  Jobs,
-  TalentSolutions,
-  Resources,
-  PostJobs,
-  HireTalent,
-  SkillAssessment,
-  UpskillTeam,
-  CareerAdvice,
-  HiringTips,
-  FAQs,
-  TrainingPrograms,
-  Dashboard,
-  AllEvent,
-  AttendanceManagement,
-  CheckIn,
-  AccountSetting,
-  Billing,
+  JobsPage,
 } from "./pages"; // Add missing imports for all required components
 
 const App = () => {
@@ -37,27 +21,8 @@ const App = () => {
           {/* Root Routes */}
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
-          {/* <Route path="/jobs" element={<Jobs />} />
-          <Route path="/talent-solution" element={<TalentSolutions />} />
-          <Route path="/resources" element={<Resources />} /> */}
-
-          {/* Talent Solutions Sub-Routes */}
-          {/* <Route path="/talent-solution/post-job" element={<PostJobs />} />
-          <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
-          <Route
-            path="/talent-solution/skill-assessment"
-            element={<SkillAssessment />}
-          />
-          <Route path="/upskill-team" element={<UpskillTeam />} /> */}
-
-          {/* Resources Sub-Routes
-          <Route path="/resources/career-advice" element={<CareerAdvice />} />
-          <Route path="/resources/hiring-tips" element={<HiringTips />} />
-          <Route path="/resources/faqs" element={<FAQs />} />
-          <Route
-            path="/resources/training-programs"
-            element={<TrainingPrograms />}
-          /> */}
+          <Route path="/jobs" element={<JobsPage />} />
+  
         </Route>
 
         {/* Admin Dashboard Layout */}

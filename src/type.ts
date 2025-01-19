@@ -59,3 +59,8 @@ export interface FooterProps {
   links: string[];
 }
 
+export interface GeneralList {
+  id: number;
+  title: string;
+  // value: string;
+}

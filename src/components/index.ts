@@ -9,3 +9,8 @@ export {default as TopRecruiters} from "./TopRecruiters"
 export {default as Testimonial} from "./Testimonial"
 export {default as NewsCardList} from "./NewsCardList"
 export {default as NewsLetter} from "./NewLetter"
+export {default as JobCard} from "./JobCard"
+export {default as SelectInput} from "./SelectInput"
+export {default as SearchJobs} from "./SearchJobs"
+
+

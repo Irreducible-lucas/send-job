@@ -5,7 +5,7 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-blue-50 p-4 flex items-center justify-between z-10">
+    <nav className="bg-blue-50 p-4 flex items-center justify-between z-10 relative">
       {/* Logo */}
       <div className="flex items-center space-x-2">
         <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
                 {link.text}
               </a>
               {link.child && (
-                <ul className="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-2">
+                <ul className="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-2 w-48 z-50">
                   {link.child.map((childLink) => (
                     <li
                       key={childLink.id}

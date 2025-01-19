@@ -11,14 +11,11 @@ import {
   Home,
   Jobs,
   TalentSolutions,
-  Resources,
-  PostJobs,
   HireTalent,
   SkillAssessment,
   UpskillTeam,
   CareerAdvice,
   HiringTips,
-  FAQs,
   TrainingPrograms,
   Dashboard,
   AllEvent,
@@ -26,6 +23,10 @@ import {
   CheckIn,
   AccountSetting,
   Billing,
+  Job,
+  Faqs,
+  PostJob,
+  Resources,
 } from "./pages"; // Add missing imports for all required components
 
 const App = () => {
@@ -37,27 +38,25 @@ const App = () => {
           {/* Root Routes */}
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
-          {/* <Route path="/jobs" element={<Jobs />} />
+          <Route path="/jobs" element={<Job />} />
           <Route path="/talent-solution" element={<TalentSolutions />} />
-          <Route path="/resources" element={<Resources />} /> */}
-
-          {/* Talent Solutions Sub-Routes */}
-          {/* <Route path="/talent-solution/post-job" element={<PostJobs />} />
+          <Route path="/resources" element={<Resources />} />
+          Talent Solutions Sub-Routes
+          <Route path="/talent-solution/post-job" element={<PostJob />} />
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route
             path="/talent-solution/skill-assessment"
             element={<SkillAssessment />}
           />
-          <Route path="/upskill-team" element={<UpskillTeam />} /> */}
-
-          {/* Resources Sub-Routes
+          <Route path="/upskill-team" element={<UpskillTeam />} />
+          Resources Sub-Routes
           <Route path="/resources/career-advice" element={<CareerAdvice />} />
           <Route path="/resources/hiring-tips" element={<HiringTips />} />
-          <Route path="/resources/faqs" element={<FAQs />} />
+          <Route path="/resources/faqs" element={<Faqs />} />
           <Route
             path="/resources/training-programs"
             element={<TrainingPrograms />}
-          /> */}
+          />
         </Route>
 
         {/* Admin Dashboard Layout */}

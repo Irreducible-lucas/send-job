@@ -1,22 +1,24 @@
 import {
+  FeaturedJobList,
   HeroSection,
-  NewsCardList,
+  // JobCategorySection,
+  // NewsCardList,
+  // Testimonial,
+  // TopRecruiters,
   NewsLetter,
   PostedJobs,
-  Testimonial,
-  TopRecruiters,
 } from "../components";
-import JobCategorySection from "../components/JobCategorySection";
 
 const Home = () => {
   return (
     <div>
       <HeroSection />
-      <JobCategorySection />
+      {/* <JobCategorySection /> */}
       <PostedJobs />
-      <TopRecruiters />
+      <FeaturedJobList />
+      {/* <TopRecruiters />
       <Testimonial />
-      <NewsCardList />
+      <NewsCardList /> */}
       <NewsLetter />
     </div>
   );

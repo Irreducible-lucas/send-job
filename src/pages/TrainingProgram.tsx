@@ -1,0 +1,33 @@
+import { motion } from "framer-motion";
+import styles, { layout } from "../styles";
+import { AboutCarousal } from "../components";
+import { event } from "../assets";
+
+const TrainingProgram = () => {
+  return (
+    <motion.div
+      id="home"
+      transition={{
+        when: "beforeChildren",
+        staggerChildren: 2,
+      }}
+      className="bg-white w-full overflow-hidden"
+    >
+      {/* carousal */}
+      <div className={` ${styles.flexStart}`}>
+        <div className={`${styles.boxWidth}`}>
+          <AboutCarousal
+            image={event}
+            title={"Training Program"}
+            content={
+              "Explore the bylaws and ordinances of Kono District Council, which provide the legal framework for governing the district, regulating public conduct, and ensuring the orderly development and management of community resources and services."
+            }
+          />
+        </div>
+      </div>
+      <div className={`${layout.section} `}>{/*  */}</div>
+    </motion.div>
+  );
+};
+
+export default TrainingProgram;

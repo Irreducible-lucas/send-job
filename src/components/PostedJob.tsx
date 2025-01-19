@@ -6,7 +6,7 @@ const PostedJob = () => {
   return (
     <div className={`${layout.section}`}>
       <div className="text-center mb-10">
-        <p className="text-blue-600 font-medium">Job of the day</p>
+        <p className="text-blue-600 font-medium">Job for You</p>
         <h2 className="lg:text-4xl text-2xl font-bold text-gray-800 mt-2">
           Connect with the right candidates faster.
         </h2>

@@ -1,12 +1,10 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileAlt } from "@fortawesome/free-solid-svg-icons";
 import { layout } from "../styles";
-import { hero } from "../assets";
+import HeroSlider from "./HeroSlider";
 
 const HeroSection = () => {
   return (
     <section
-      className={`${layout.section} bg-blue-50 flex flex-col-reverse md:flex-row items-center justify-between`}
+      className={`${layout.sectionImg} pl-4 md:pl-[40px] lg:pl-[60px] bg-blue-50 flex flex-col-reverse md:flex-row items-center justify-between`}
     >
       {/* Left Content */}
       <div className="md:w-1/2 space-y-6 text-center md:text-left">
@@ -59,19 +57,7 @@ const HeroSection = () => {
 
       {/* Right Content */}
       <div className="md:w-1/2 flex justify-end relative">
-        <div className="w-80 bg-blue-100 md:w-[26rem] rounded-full p-5">
-          {/* Image */}
-          <img src={hero} alt="Hero" className="w-72 md:w-96 rounded-full" />
-        </div>
-        {/* Decorative Elements */}
-        <div className="absolute top-10 right-16 bg-orange-500 text-white text-sm font-medium p-3 rounded-md shadow flex items-center gap-2">
-          <FontAwesomeIcon icon={faFileAlt} />
-          Upload CV
-        </div>
-        <div className="absolute bottom-10 left-40 bg-white text-gray-800 text-sm font-medium p-2 rounded-md shadow">
-          <h6 className="text-2xl text-blue-900 font-extrabold">12k</h6>
-          <p className="text-xs">People Hired Today</p>
-        </div>
+        <HeroSlider />
       </div>
     </section>
   );

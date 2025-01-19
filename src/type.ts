@@ -59,3 +59,13 @@ export interface FooterProps {
   links: string[];
 }
 
+export interface FeaturedJobProps {
+  companyLogo: string;
+  companyName: string;
+  location: string;
+  jobTitle: string;
+  salary: string;
+  jobType: string;
+  postedTime: string;
+}
+

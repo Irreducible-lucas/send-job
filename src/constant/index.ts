@@ -1,5 +1,5 @@
 import { Christiana, ellipse, event } from "../assets";
-import { FooterProps, Job, JobCategory,Link, NewsCardProps, recruiterProps, Testimonial } from "../type";
+import { FeaturedJobProps, FooterProps, Job, JobCategory,Link, NewsCardProps, recruiterProps, Testimonial } from "../type";
 
 export const links: Link[] = [
   {
@@ -375,4 +375,81 @@ export const footerLinks: FooterProps[] = [
     title: 'Quick Links',
     links: ['Home', 'About us', 'Bookmark'],
   },
+];
+
+
+
+export const featuredJob: FeaturedJobProps[] = [
+  {
+    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png',
+    companyName: 'Pinterest',
+    location: 'Washington U.S.A.',
+    jobTitle: 'Backend Developer',
+    salary: '$130',
+    jobType: 'Full Time',
+    postedTime: '1 Day ago',
+  },
+  {
+    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Yahoo%21_logo.svg',
+    companyName: 'Yahoo!',
+    location: 'Washington U.S.A.',
+    jobTitle: 'Backend Developer',
+    salary: '$130',
+    jobType: 'Full Time',
+    postedTime: '1 Day ago',
+  },
+  {
+    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png',
+    companyName: 'Google',
+    location: 'Washington U.S.A.',
+    jobTitle: 'Backend Developer',
+    salary: '$130',
+    jobType: 'Full Time',
+    postedTime: '1 Day ago',
+  },
+  {
+    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png',
+    companyName: 'Pinterest',
+    location: 'Washington U.S.A.',
+    jobTitle: 'Backend Developer',
+    salary: '$130',
+    jobType: 'Full Time',
+    postedTime: '1 Day ago',
+  },
+  {
+    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png',
+    companyName: 'Pinterest',
+    location: 'Washington U.S.A.',
+    jobTitle: 'Backend Developer',
+    salary: '$130',
+    jobType: 'Full Time',
+    postedTime: '1 Day ago',
+  },
+  {
+    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Yahoo%21_logo.svg',
+    companyName: 'Yahoo!',
+    location: 'Washington U.S.A.',
+    jobTitle: 'Backend Developer',
+    salary: '$130',
+    jobType: 'Full Time',
+    postedTime: '1 Day ago',
+  },
+  {
+    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png',
+    companyName: 'Google',
+    location: 'Washington U.S.A.',
+    jobTitle: 'Backend Developer',
+    salary: '$130',
+    jobType: 'Full Time',
+    postedTime: '1 Day ago',
+  },
+  {
+    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png',
+    companyName: 'Pinterest',
+    location: 'Washington U.S.A.',
+    jobTitle: 'Backend Developer',
+    salary: '$130',
+    jobType: 'Full Time',
+    postedTime: '1 Day ago',
+  }
 ];

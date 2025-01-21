@@ -1,5 +1,6 @@
 import { Christiana, ellipse, event } from "../assets";
-import { FeaturedJobProps, FooterProps, Job, JobCategory,Link, NewsCardProps, recruiterProps, Testimonial } from "../type";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { FeaturedJobProps, FooterProps, Job, JobCategory,JobDetailSidebarProps,Link, NewsCardProps, recruiterProps, Testimonial } from "../type";
 
 export const links: Link[] = [
   {
@@ -452,4 +453,113 @@ export const featuredJob: FeaturedJobProps[] = [
     jobType: 'Full Time',
     postedTime: '1 Day ago',
   }
+];
+
+
+
+export const jobDetails = {
+  title: "UI/UX Designer",
+  company: "Pixelz Studio",
+  companyLogo: ellipse,
+  location: {
+    name: "Yogyakarta, Indonesia",
+    icon: "fa-location-dot", 
+  },
+  tags: ["Fulltime", "Remote", "2-4 Years"],
+  description:
+    "As a UI/UX Designer at Pixelz Studio, you'll focus on designing user-friendly interfaces across several platforms (web, mobile, dashboards, etc.) to meet user needs...",
+  qualifications: [
+    "At least 2-4 years of relevant experience in product design.",
+    "Knowledge of design validation through quantitative or qualitative research.",
+    "Proficient in Figma and FigJam.",
+    "Experience with analytics tools to gather user data.",
+  ],
+  responsibilities: [
+    "Create user journeys for various platforms (web and app).",
+    "Identify design problems and propose elegant solutions.",
+    "Develop low and high-fidelity designs, prototypes, and workflows.",
+    "Collaborate with design leads, engineers, and PMs to execute tasks.",
+  ],
+};
+
+
+export const jobDeatilsSidebar: JobDetailSidebarProps[] = [
+  {
+    id: 1,
+    title: "Lead UI Designer",
+    company: "Gojek",
+    location: "Jakarta, Indonesia",
+    type: "Fulltime",
+    mode: "Onsite",
+    experience: "3-5 Years",
+    posted: "2 days ago",
+    applicants: 521,
+    logo: ellipse,
+  },
+  {
+    id: 2,
+    title: "Sr. UX Designer",
+    company: "GoPay",
+    location: "Jakarta, Indonesia",
+    type: "Fulltime",
+    mode: "Onsite",
+    experience: "3-5 Years",
+    posted: "2 days ago",
+    applicants: 210,
+    logo: ellipse,
+  },
+  {
+    id: 3,
+    title: "Jr. UI Designer",
+    company: "OVO",
+    location: "Jakarta, Indonesia",
+    type: "Fulltime",
+    mode: "Onsite",
+    experience: "1-3 Years",
+    posted: "an hour ago",
+    applicants: 120,
+    logo: ellipse,
+  },
+];
+export const otherJobs: JobDetailSidebarProps[] = [
+  {
+    id: 1,
+    title: "UI Designer",
+    company: "Pixelz Studio",
+    location: "Jakarta, Indonesia",
+    type: "Fulltime",
+    mode: "Onsite",
+    experience: "3-5 Years",
+    posted: "2 days ago",
+    applicants: 521,
+    logo: ellipse,
+
+  },
+  {
+    id: 1,
+    title: "UI Designer",
+    company: "Pixelz Studio",
+    location: "Jakarta, Indonesia",
+    type: "Fulltime",
+    mode: "Onsite",
+    experience: "3-5 Years",
+    posted: "2 days ago",
+    applicants: 521,
+    logo: ellipse,
+  }
+  
+];
+export const files = [
+  {
+    fileName: "Jobs_Requirements.pdf",
+    fileType: "image",
+    filePreviewUrl:
+    "https://images.unsplash.com/photo-1579422028695-9caa16d483d3?w=800&q=80",
+  },
+  {
+    fileName: "Company_Benefits.jpg",
+    fileType: "image",
+    filePreviewUrl:
+      "https://images.unsplash.com/photo-1579422028695-9caa16d483d3?w=800&q=80",
+  },
 ];

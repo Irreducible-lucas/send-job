@@ -22,26 +22,32 @@ import {
   // CheckIn,
   // AccountSetting,
   // Billing,
-  Job,
   Faqs,
   PostJob,
   Resources,
+  JobsPage,
+  LoginPage,
+  SignUpPage,
+  JobDetail,
 } from "./pages"; // Add missing imports for all required components
 
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" errorElement={<ErrorPage />}>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="sign-up" element={<SignUpPage />} />
         {/* Root Layout */}
         <Route path="/" element={<Root />}>
           {/* Root Routes */}
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/jobs" element={<Job />} />
+          <Route path="/jobs" element={<JobsPage />} />
           <Route path="/talent-solution" element={<TalentSolutions />} />
           <Route path="/resources" element={<Resources />} />
           Talent Solutions Sub-Routes
-          <Route path="/talent-solution/post-job" element={<PostJob />} />
+          {/* <Route path="/talent-solution/post-job" element={<PostJob />} /> */}
+          <Route path="/talent-solution/post-job" element={<JobDetail />} />
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route
             path="/talent-solution/skill-assessment"

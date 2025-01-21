@@ -72,5 +72,39 @@ export interface FeaturedJobProps {
 export interface GeneralList {
   id: number;
   title: string;
-  // value: string;
+  value?: string;
 }
+export interface ProgramType {
+  id: number;
+  image: string;
+  title: string;
+  overview: string;
+}
+export interface JobDetailCardProps {
+  title: string;
+  company: string;
+  location?: string;
+  type: string;
+  experience: string;
+}
+
+export interface JobDetailSidebarProps {
+  id: number;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  mode: string;
+  experience: string;
+  posted: string;
+  applicants: number;
+  logo: string;
+}
+export interface FileCardProps {
+  fileName: string;
+  fileType: string; 
+  filePreviewUrl: string;
+  onClick: () => void;
+}
+
+

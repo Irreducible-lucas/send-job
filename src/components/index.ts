@@ -1,4 +1,4 @@
-export {default as Nav} from "./Nav"
+
 export {default as Footer} from "./Footer"
 export {default as SideNav} from "./SideNav"
 export {default as ErrorPage} from "./ErrorPage"
@@ -15,5 +15,13 @@ export {default as FeaturedJobList} from "./FeaturedJobList"
 export {default as JobCard} from "./JobCard"
 export {default as SelectInput} from "./SelectInput"
 export {default as SearchJobs} from "./SearchJobs"
+export {default as LoginInForm} from "./LoginInForm"
+export {default as LoginLeft} from "./LoginLeft"
+export {default as SignUpForm} from "./SignUpForm"
+export {default as NavBar} from "./NavBar"
+export {default as JobDetailContent} from "./JobDetailContent"
+export {default as FileLists} from "./FileList"
+
+
 
 

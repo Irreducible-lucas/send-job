@@ -9,7 +9,7 @@ export interface JobCategory {
   id: number;
   title: string;
   jobsAvailable: number;
-  icon: string; 
+  icon: string;
 }
 
 export interface Job {
@@ -33,9 +33,9 @@ export interface recruiterProps {
   company: string;
   jobs: string | number;
   location: string;
-  rating:  number;
-  reviews: number
-  logo: string,
+  rating: number;
+  reviews: number;
+  logo: string;
 }
 export interface Testimonial {
   id: number;
@@ -63,4 +63,19 @@ export interface GeneralList {
   id: number;
   title: string;
   // value: string;
+}
+
+export interface UserModel {
+  Id: string;
+  Email: string;
+  FirstName: string;
+  Role: "Admin" | "user" | "interpreter" | "PrivateCustomer";
+  About?: string;
+  Address?: string;
+  Zipcode?: string;
+  City: string;
+  State?: number;
+  Adresse?: string;
+  GenderId?: number;
+  LastName?: string;
 }

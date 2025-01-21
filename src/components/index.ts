@@ -21,6 +21,7 @@ export {default as SignUpForm} from "./SignUpForm"
 export {default as NavBar} from "./NavBar"
 export {default as JobDetailContent} from "./JobDetailContent"
 export {default as FileLists} from "./FileList"
+export {default as SignUpMenu} from "./SignUpMenu"
 
 
 

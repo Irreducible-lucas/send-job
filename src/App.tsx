@@ -30,13 +30,14 @@ import {
   SignUpPage,
   JobDetail,
 } from "./pages"; // Add missing imports for all required components
+import Layout from "./layout/layout";
 
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" errorElement={<ErrorPage />}>
         <Route path="login" element={<LoginPage />} />
-        <Route path="sign-up" element={<SignUpPage />} />
+        <Route path="sign-up" element={<Layout />} />
         {/* Root Layout */}
         <Route path="/" element={<Root />}>
           {/* Root Routes */}

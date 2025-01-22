@@ -6,7 +6,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -66,7 +65,7 @@ const SignUpMenu = () => {
       </Sidebar>
 
       {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center p-10 w-full">
+      <div className="flex-1 flex items-center w-full">
         {currentStep === 1 && (
           <div className="w-full text-center">
             <div className="mb-6">

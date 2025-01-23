@@ -9,20 +9,60 @@ import Root from "./layout/Root";
 import DashboardRoot from "./layout/DashboardRoot";
 import {
   Home,
+  TalentSolutions,
+  HireTalent,
+  SkillAssessment,
+  UpskillTeam,
+  CareerAdvice,
+  HiringTips,
+  TrainingPrograms,
+  // Dashboard,
+  // AllEvent,
+  // AttendanceManagement,
+  // CheckIn,
+  // AccountSetting,
+  // Billing,
+  Faqs,
+  PostJob,
+  Resources,
   JobsPage,
+  LoginPage,
+  SignUpPage,
+  JobDetail,
 } from "./pages"; // Add missing imports for all required components
+import Layout from "./layout/layout";
 
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" errorElement={<ErrorPage />}>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="sign-up" element={<Layout />} />
         {/* Root Layout */}
         <Route path="/" element={<Root />}>
           {/* Root Routes */}
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/jobs" element={<JobsPage />} />
-  
+          <Route path="/talent-solution" element={<TalentSolutions />} />
+          <Route path="/resources" element={<Resources />} />
+          Talent Solutions Sub-Routes
+          {/* <Route path="/talent-solution/post-job" element={<PostJob />} /> */}
+          <Route path="/talent-solution/post-job" element={<JobDetail />} />
+          <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
+          <Route
+            path="/talent-solution/skill-assessment"
+            element={<SkillAssessment />}
+          />
+          <Route path="/upskill-team" element={<UpskillTeam />} />
+          Resources Sub-Routes
+          <Route path="/resources/career-advice" element={<CareerAdvice />} />
+          <Route path="/resources/hiring-tips" element={<HiringTips />} />
+          <Route path="/resources/faqs" element={<Faqs />} />
+          <Route
+            path="/resources/training-programs"
+            element={<TrainingPrograms />}
+          />
         </Route>
 
         {/* Admin Dashboard Layout */}

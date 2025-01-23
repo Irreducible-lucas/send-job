@@ -59,6 +59,16 @@ export interface FooterProps {
   links: string[];
 }
 
+export interface FeaturedJobProps {
+  companyLogo: string;
+  companyName: string;
+  location: string;
+  jobTitle: string;
+  salary: string;
+  jobType: string;
+  postedTime: string;
+}
+
 export interface GeneralList {
   id: number;
   title: string;
@@ -79,3 +89,39 @@ export interface UserModel {
   GenderId?: number;
   LastName?: string;
 }
+
+
+export interface ProgramType {
+  id: number;
+  image: string;
+  title: string;
+  overview: string;
+}
+export interface JobDetailCardProps {
+  title: string;
+  company: string;
+  location?: string;
+  type: string;
+  experience: string;
+}
+
+export interface JobDetailSidebarProps {
+  id: number;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  mode: string;
+  experience: string;
+  posted: string;
+  applicants: number;
+  logo: string;
+}
+export interface FileCardProps {
+  fileName: string;
+  fileType: string; 
+  filePreviewUrl: string;
+  onClick: () => void;
+}
+
+

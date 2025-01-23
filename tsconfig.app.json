@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", "components/ui/button.tsx", "components/ui/input.tsx", "components/ui/separator.tsx", "components/ui/sheet.tsx", "components/ui/sidebar.tsx", "components/ui/skeleton.tsx", "components/ui/tooltip.tsx"]
 }

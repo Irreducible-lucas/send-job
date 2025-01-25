@@ -1,17 +1,15 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import {BASE_URL} from '../../utils';
 import { store } from "..";
-// import {suffix} from '../../environment';
-// import {BookingModel, WrittenBooking} from '../../types';
+import { BASE_URL } from "../../constant";
+import { Job } from "../../type";
 
 // Define a service using a base URL and expected endpoints
 export const jobsApi = createApi({
   reducerPath: "jobsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "BASE_URL" + "suffix", //we need to add base URL later
+    baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
-      const token = store.getState().user.token;
+      // const token = store.getState().user.token;
 
       // headers.set('Authorization', `Bearer ${token.token}`);
       // headers.set('secret', `${token.secret}`);
@@ -19,12 +17,12 @@ export const jobsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Booking", "Written", "OpenBooking"],
+  tagTypes: ["Job"],
   endpoints: (builder) => ({
-    // getBookings: builder.query<BookingModel[], string>({
-    //   query: () => `orders/`,
-    //   providesTags: ['Booking'],
-    // }),
+    getFeaturedJobs: builder.query<Job[], string>({
+      query: () => `jobs/featured`,
+      providesTags: ["Job"],
+    }),
     // createBooking: builder.mutation({
     //   query: (newBooking: BookingModel) => ({
     //     url: 'orders/',
@@ -43,4 +41,4 @@ export const jobsApi = createApi({
   // update rejected table
 });
 
-export const {} = jobsApi;
+export const { useGetFeaturedJobsQuery } = jobsApi;

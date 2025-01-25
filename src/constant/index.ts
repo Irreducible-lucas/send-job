@@ -1,6 +1,18 @@
 import { Christiana, ellipse, event } from "../assets";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { FeaturedJobProps, FooterProps, Job, JobCategory,JobDetailSidebarProps,Link, NewsCardProps, recruiterProps, Testimonial } from "../type";
+import {
+  FeaturedJobProps,
+  FooterProps,
+  Job,
+  JobCategory,
+  JobDetailSidebarProps,
+  Link,
+  NewsCardProps,
+  recruiterProps,
+  Testimonial,
+} from "../type";
+
+export const BASE_URL = "http://localhost:8080/api/";
 
 export const links: Link[] = [
   {
@@ -37,7 +49,7 @@ export const links: Link[] = [
         text: "Upskill Team",
         url: "/upskill-team",
       },
-       ],
+    ],
   },
   {
     id: 4,
@@ -66,14 +78,13 @@ export const links: Link[] = [
       },
     ],
   },
-  
 ];
 export const jobCategories: JobCategory[] = [
   {
     id: 1,
     title: "Marketing & Sale",
     jobsAvailable: 1526,
-    icon: Christiana, 
+    icon: Christiana,
   },
   {
     id: 2,
@@ -85,41 +96,47 @@ export const jobCategories: JobCategory[] = [
     id: 3,
     title: "Finance",
     jobsAvailable: 168,
-    icon: Christiana, 
+    icon: Christiana,
   },
   {
     id: 4,
     title: "Software",
     jobsAvailable: 300,
-    icon: Christiana, 
+    icon: Christiana,
   },
   {
     id: 5,
     title: "Human Resource",
     jobsAvailable: 125,
-    icon: Christiana, 
+    icon: Christiana,
   },
   {
     id: 6,
     title: "Customer Help",
     jobsAvailable: 1526,
-    icon: Christiana, 
+    icon: Christiana,
   },
- 
 ];
 export const postedJobs: Job[] = [
   {
     id: 1,
-    companyLogo: ellipse, 
+    companyLogo: ellipse,
     companyName: "Facebook.com",
     location: "New York, US",
     jobTitle: "Graphic Designer fulltime",
     jobType: "Fulltime",
     postTime: "4 Minutes ago",
     salary: "$500/hour",
-    description: "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
+    description:
+      "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
     applicants: {
-      profilePictures: [Christiana, Christiana, Christiana, Christiana, Christiana],
+      profilePictures: [
+        Christiana,
+        Christiana,
+        Christiana,
+        Christiana,
+        Christiana,
+      ],
       total: 86,
     },
     skills: ["AdobeXd", "Figma", "Photoshop", "Corel"],
@@ -133,7 +150,8 @@ export const postedJobs: Job[] = [
     jobType: "Fulltime",
     postTime: "4 Minutes ago",
     salary: "$250/hour",
-    description: "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
+    description:
+      "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
     applicants: {
       profilePictures: [Christiana, Christiana],
       total: 50,
@@ -149,9 +167,17 @@ export const postedJobs: Job[] = [
     jobType: "Fulltime",
     postTime: "4 Minutes ago",
     salary: "$250/hour",
-    description: "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
+    description:
+      "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
     applicants: {
-      profilePictures: [Christiana, Christiana, Christiana, Christiana, Christiana, Christiana],  
+      profilePictures: [
+        Christiana,
+        Christiana,
+        Christiana,
+        Christiana,
+        Christiana,
+        Christiana,
+      ],
       total: 200,
     },
     skills: ["AdobeXd", "Figma", "Photoshop", "Corel"],
@@ -194,7 +220,7 @@ export const recruiters: recruiterProps[] = [
     reviews: 68,
     logo: Christiana,
   },
- 
+
   {
     id: 5,
     company: "Coca-cola",
@@ -240,7 +266,7 @@ export const recruiters: recruiterProps[] = [
     reviews: 68,
     logo: Christiana,
   },
- 
+
   {
     id: 10,
     company: "Coca-cola",
@@ -250,79 +276,77 @@ export const recruiters: recruiterProps[] = [
     reviews: 68,
     logo: Christiana,
   },
- 
- 
 ];
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: 'Guy Hawkins',
-    role: 'UI/UX Designer',
+    name: "Guy Hawkins",
+    role: "UI/UX Designer",
     message:
-      'I have minim mollit non deserunt ullamco est sit aliqua dolor do Eam et sint. Velit officia consequat.',
+      "I have minim mollit non deserunt ullamco est sit aliqua dolor do Eam et sint. Velit officia consequat.",
     image: Christiana,
     rating: 5,
   },
   {
     id: 2,
-    name: 'Jane Doe',
-    role: 'Product Manager',
+    name: "Jane Doe",
+    role: "Product Manager",
     message:
-      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     image: ellipse,
     rating: 5,
   },
   {
     id: 3,
-    name: 'Guy Hawkins',
-    role: 'UI/UX Designer',
+    name: "Guy Hawkins",
+    role: "UI/UX Designer",
     message:
-      'I have minim mollit non deserunt ullamco est sit aliqua dolor do Eam et sint. Velit officia consequat.',
-    image: ellipse, 
+      "I have minim mollit non deserunt ullamco est sit aliqua dolor do Eam et sint. Velit officia consequat.",
+    image: ellipse,
     rating: 5,
   },
   {
     id: 4,
-    name: 'Jane Doe',
-    role: 'Product Manager',
+    name: "Jane Doe",
+    role: "Product Manager",
     message:
-      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     image: Christiana,
     rating: 5,
   },
   {
     id: 5,
-    name: 'Jane Doe',
-    role: 'Product Manager',
+    name: "Jane Doe",
+    role: "Product Manager",
     message:
-      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     image: Christiana,
     rating: 5,
   },
   {
     id: 6,
-    name: 'Jane Doe',
-    role: 'Product Manager',
+    name: "Jane Doe",
+    role: "Product Manager",
     message:
-      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     image: Christiana,
     rating: 5,
   },
   {
     id: 7,
-    name: 'Jane Doe',
-    role: 'Product Manager',
+    name: "Jane Doe",
+    role: "Product Manager",
     message:
-      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     image: Christiana,
     rating: 5,
   },
   {
     id: 8,
-    name: 'Jane Doe',
-    role: 'Product Manager',
+    name: "Jane Doe",
+    role: "Product Manager",
     message:
-      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     image: Christiana,
     rating: 5,
   },
@@ -355,107 +379,111 @@ export const newsCard: NewsCardProps[] = [
     title: "Best IT jobs for the upcoming future",
     description:
       "New chip traps clusters of migrating tumor cells asperiortenetur, blanditiis odit.",
-      image: event,
+    image: event,
     category: "Events",
   },
 ];
 export const footerLinks: FooterProps[] = [
   {
-    title: 'For Candidate',
-    links: ['User Dashboard', 'Alert resume', 'Candidates', 'Blog List'],
+    title: "For Candidate",
+    links: ["User Dashboard", "Alert resume", "Candidates", "Blog List"],
   },
   {
-    title: 'For Employers',
-    links: ['Post Jobs', 'Blog Grid', 'Contact', 'Jobs Listing'],
+    title: "For Employers",
+    links: ["Post Jobs", "Blog Grid", "Contact", "Jobs Listing"],
   },
   {
-    title: 'Helpful Resources',
-    links: ['FAQs', 'Employer detail', 'Profile'],
+    title: "Helpful Resources",
+    links: ["FAQs", "Employer detail", "Profile"],
   },
   {
-    title: 'Quick Links',
-    links: ['Home', 'About us', 'Bookmark'],
+    title: "Quick Links",
+    links: ["Home", "About us", "Bookmark"],
   },
 ];
-
-
 
 export const featuredJob: FeaturedJobProps[] = [
   {
-    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png',
-    companyName: 'Pinterest',
-    location: 'Washington U.S.A.',
-    jobTitle: 'Backend Developer',
-    salary: '$130',
-    jobType: 'Full Time',
-    postedTime: '1 Day ago',
+    companyLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png",
+    companyName: "Pinterest",
+    location: "Washington U.S.A.",
+    jobTitle: "Backend Developer",
+    salary: "$130",
+    jobType: "Full Time",
+    postedTime: "1 Day ago",
   },
   {
-    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Yahoo%21_logo.svg',
-    companyName: 'Yahoo!',
-    location: 'Washington U.S.A.',
-    jobTitle: 'Backend Developer',
-    salary: '$130',
-    jobType: 'Full Time',
-    postedTime: '1 Day ago',
+    companyLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/2/24/Yahoo%21_logo.svg",
+    companyName: "Yahoo!",
+    location: "Washington U.S.A.",
+    jobTitle: "Backend Developer",
+    salary: "$130",
+    jobType: "Full Time",
+    postedTime: "1 Day ago",
   },
   {
-    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png',
-    companyName: 'Google',
-    location: 'Washington U.S.A.',
-    jobTitle: 'Backend Developer',
-    salary: '$130',
-    jobType: 'Full Time',
-    postedTime: '1 Day ago',
+    companyLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png",
+    companyName: "Google",
+    location: "Washington U.S.A.",
+    jobTitle: "Backend Developer",
+    salary: "$130",
+    jobType: "Full Time",
+    postedTime: "1 Day ago",
   },
   {
-    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png',
-    companyName: 'Pinterest',
-    location: 'Washington U.S.A.',
-    jobTitle: 'Backend Developer',
-    salary: '$130',
-    jobType: 'Full Time',
-    postedTime: '1 Day ago',
+    companyLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png",
+    companyName: "Pinterest",
+    location: "Washington U.S.A.",
+    jobTitle: "Backend Developer",
+    salary: "$130",
+    jobType: "Full Time",
+    postedTime: "1 Day ago",
   },
   {
-    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png',
-    companyName: 'Pinterest',
-    location: 'Washington U.S.A.',
-    jobTitle: 'Backend Developer',
-    salary: '$130',
-    jobType: 'Full Time',
-    postedTime: '1 Day ago',
+    companyLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png",
+    companyName: "Pinterest",
+    location: "Washington U.S.A.",
+    jobTitle: "Backend Developer",
+    salary: "$130",
+    jobType: "Full Time",
+    postedTime: "1 Day ago",
   },
   {
-    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Yahoo%21_logo.svg',
-    companyName: 'Yahoo!',
-    location: 'Washington U.S.A.',
-    jobTitle: 'Backend Developer',
-    salary: '$130',
-    jobType: 'Full Time',
-    postedTime: '1 Day ago',
+    companyLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/2/24/Yahoo%21_logo.svg",
+    companyName: "Yahoo!",
+    location: "Washington U.S.A.",
+    jobTitle: "Backend Developer",
+    salary: "$130",
+    jobType: "Full Time",
+    postedTime: "1 Day ago",
   },
   {
-    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png',
-    companyName: 'Google',
-    location: 'Washington U.S.A.',
-    jobTitle: 'Backend Developer',
-    salary: '$130',
-    jobType: 'Full Time',
-    postedTime: '1 Day ago',
+    companyLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png",
+    companyName: "Google",
+    location: "Washington U.S.A.",
+    jobTitle: "Backend Developer",
+    salary: "$130",
+    jobType: "Full Time",
+    postedTime: "1 Day ago",
   },
   {
-    companyLogo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png',
-    companyName: 'Pinterest',
-    location: 'Washington U.S.A.',
-    jobTitle: 'Backend Developer',
-    salary: '$130',
-    jobType: 'Full Time',
-    postedTime: '1 Day ago',
-  }
+    companyLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png",
+    companyName: "Pinterest",
+    location: "Washington U.S.A.",
+    jobTitle: "Backend Developer",
+    salary: "$130",
+    jobType: "Full Time",
+    postedTime: "1 Day ago",
+  },
 ];
-
-
 
 export const jobDetails = {
   title: "UI/UX Designer",
@@ -463,7 +491,7 @@ export const jobDetails = {
   companyLogo: ellipse,
   location: {
     name: "Yogyakarta, Indonesia",
-    icon: "fa-location-dot", 
+    icon: "fa-location-dot",
   },
   tags: ["Fulltime", "Remote", "2-4 Years"],
   description:
@@ -481,7 +509,6 @@ export const jobDetails = {
     "Collaborate with design leads, engineers, and PMs to execute tasks.",
   ],
 };
-
 
 export const jobDeatilsSidebar: JobDetailSidebarProps[] = [
   {
@@ -533,7 +560,6 @@ export const otherJobs: JobDetailSidebarProps[] = [
     posted: "2 days ago",
     applicants: 521,
     logo: ellipse,
-
   },
   {
     id: 1,
@@ -546,15 +572,14 @@ export const otherJobs: JobDetailSidebarProps[] = [
     posted: "2 days ago",
     applicants: 521,
     logo: ellipse,
-  }
-  
+  },
 ];
 export const files = [
   {
     fileName: "Jobs_Requirements.pdf",
     fileType: "image",
     filePreviewUrl:
-    "https://images.unsplash.com/photo-1579422028695-9caa16d483d3?w=800&q=80",
+      "https://images.unsplash.com/photo-1579422028695-9caa16d483d3?w=800&q=80",
   },
   {
     fileName: "Company_Benefits.jpg",

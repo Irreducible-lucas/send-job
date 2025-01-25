@@ -11,9 +11,9 @@ const PostedJob = ({ showHeading = true }: PostedJobProps) => {
     <div className={`${layout.section}`}>
       {showHeading && (
         <div className="text-center mb-10">
-          <p className="text-blue-600 font-medium">Job for You</p>
+          {/* <p className="text-blue-600 font-medium">Job for You</p> */}
           <h2 className="lg:text-4xl text-2xl font-bold text-gray-800 mt-2">
-            Connect with the right candidates faster.
+            Job for You
           </h2>
         </div>
       )}

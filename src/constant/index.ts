@@ -1,11 +1,9 @@
 import { Christiana, ellipse, event } from "../assets";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import {
   FeaturedJobProps,
   FooterProps,
   Job,
   JobCategory,
-  JobDetailSidebarProps,
   Link,
   NewsCardProps,
   recruiterProps,
@@ -18,7 +16,7 @@ export const links: Link[] = [
   {
     id: 1,
     text: "Home",
-    url: "/home",
+    url: "/",
     child: null,
   },
   {

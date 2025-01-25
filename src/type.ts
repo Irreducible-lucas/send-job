@@ -13,21 +13,31 @@ export interface JobCategory {
 }
 
 export interface Job {
+  createdAt: Date;
   id: number;
-  companyLogo: string;
-  companyName: string;
-  location: string;
-  jobTitle: string;
-  jobType: string;
-  postTime: string;
-  salary: string;
-  description: string;
-  applicants: {
-    profilePictures: string[];
-    total: number;
-  };
-  skills: string[];
+  employer_name: string;
+  employer_logo: string;
+  employer_website: string;
+  job_title: string;
+  job_employment_type: string;
+  job_salary_currency: string;
+  job_min_salary: number;
+  job_max_salary: number;
+  job_description: string;
+  job_required_skills: string;
+  job_is_remote: boolean;
+  job_city: string;
+  job_state: string;
+  job_country: string;
+  category_id: number;
+  companyId: number;
+  featured: boolean;
+  posted: boolean;
+  closed: boolean;
+  required_docs: string;
+  experience: string;
 }
+
 export interface recruiterProps {
   id: number;
   company: string;
@@ -90,7 +100,6 @@ export interface UserModel {
   LastName?: string;
 }
 
-
 export interface ProgramType {
   id: number;
   image: string;
@@ -105,23 +114,14 @@ export interface JobDetailCardProps {
   experience: string;
 }
 
-export interface JobDetailSidebarProps {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  type: string;
-  mode: string;
-  experience: string;
-  posted: string;
-  applicants: number;
-  logo: string;
+export interface APIResponse {
+  data: [];
+  error: boolean;
+  message: string;
 }
 export interface FileCardProps {
   fileName: string;
-  fileType: string; 
+  fileType: string;
   filePreviewUrl: string;
   onClick: () => void;
 }
-
-

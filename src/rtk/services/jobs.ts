@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { store } from "..";
 import { BASE_URL } from "../../constant";
-import { Job } from "../../type";
+import { APIResponse, Job } from "../../type";
 
 // Define a service using a base URL and expected endpoints
 export const jobsApi = createApi({
@@ -17,12 +17,22 @@ export const jobsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Job"],
+  tagTypes: ["Job", "JobByCompany"],
   endpoints: (builder) => ({
-    getFeaturedJobs: builder.query<Job[], string>({
+    getFeaturedJobs: builder.query<APIResponse, string>({
       query: () => `jobs/featured`,
       providesTags: ["Job"],
     }),
+
+    getJobsByCategory: builder.query<APIResponse, { id: number }>({
+      query: (id) => `jobs/category/${id}`,
+      // providesTags: ["JobByCompany"],
+    }),
+
+    getJobsByCompanyId: builder.query<APIResponse, { id: number }>({
+      query: (id) => `jobs/company/${id}`,
+    }),
+
     // createBooking: builder.mutation({
     //   query: (newBooking: BookingModel) => ({
     //     url: 'orders/',
@@ -41,4 +51,8 @@ export const jobsApi = createApi({
   // update rejected table
 });
 
-export const { useGetFeaturedJobsQuery } = jobsApi;
+export const {
+  useGetFeaturedJobsQuery,
+  useGetJobsByCompanyIdQuery,
+  useGetJobsByCategoryQuery,
+} = jobsApi;

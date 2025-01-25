@@ -1,16 +1,22 @@
-import { FeaturedJobProps } from "../type";
+import { Job } from "../type";
 import { FaBookmark, FaArrowRight } from "react-icons/fa";
 
-const FeaturedJobCard = ({
-  employer_logo,
-  employer_name,
-  location,
-  job_title,
-  job_min_salary,
-  job_employment_type,
-  posted,
-  job_salary_currency,
-}: FeaturedJobProps) => {
+interface Props {
+  job: Job;
+  handleNavigate: (val: Job) => void;
+}
+
+const FeaturedJobCard = ({ job, handleNavigate }: Props) => {
+  const {
+    employer_logo,
+    employer_name,
+    job_city,
+    job_title,
+    job_min_salary,
+    job_employment_type,
+    posted,
+    job_salary_currency,
+  } = job;
   return (
     <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-xs border border-gray-200">
       <div className="flex justify-between items-center text-sm mb-2">
@@ -25,7 +31,7 @@ const FeaturedJobCard = ({
         />
         <div>
           <p className="text-gray-800 font-medium">{employer_name}</p>
-          <p className="text-gray-500 text-xs">{location}</p>
+          <p className="text-gray-500 text-xs">{job_city}</p>
         </div>
       </div>
       <h3 className="text-gray-800 font-semibold text-lg mb-2 border-b-[1px] pb-3">
@@ -40,7 +46,13 @@ const FeaturedJobCard = ({
           <FaBookmark className="text-gray-600" />
           <span>Save</span>
         </button>
-        <button className="flex items-center space-x-2 text-sm border border-blue-600 text-blue-600 rounded-lg px-4 py-2 hover:bg-blue-600 hover:text-white transition-all">
+
+        <button
+          onClick={() => {
+            handleNavigate(job);
+          }}
+          className="flex items-center space-x-2 text-sm border border-blue-600 text-blue-600 rounded-lg px-4 py-2 hover:bg-blue-600 hover:text-white transition-all"
+        >
           <span>Apply</span>
           <FaArrowRight />
         </button>

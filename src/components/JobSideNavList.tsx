@@ -1,20 +1,50 @@
-import { jobDeatilsSidebar, otherJobs } from "../constant";
+import { time } from "console";
+import {
+  useGetJobsByCategoryQuery,
+  useGetJobsByCompanyIdQuery,
+} from "../rtk/services/jobs";
+import { Job } from "../type";
 import JobSideNavCard from "./JobSideNavCard";
 
-const JobSideNavList = () => {
+interface Props {
+  job: Job;
+  // handleNavigate: (val: Job) => void;
+}
+
+const JobSideNavList = ({ job }: Props) => {
+  const id: any = job.companyId;
+
+  const catId: any = job.category_id;
+
+  const { data, isLoading, error } = useGetJobsByCompanyIdQuery(id, {
+    refetchOnMountOrArgChange: true,
+  });
+
+  const { data: jobsByCate } = useGetJobsByCategoryQuery(catId, {
+    refetchOnMountOrArgChange: true,
+  });
+
+  if (isLoading) return "loading...";
+  if (error) return "Something went wrong!" + error;
+  if (!data) return "Jobs not found!";
+
   return (
     <div className="">
       <div className="space-y-4">
         <h1 className="font-bold text-base">Similar Jobs</h1>
-        {jobDeatilsSidebar.map((job) => (
-          <JobSideNavCard key={job.id} job={job} />
-        ))}
+        {jobsByCate?.data.map((item: Job) => {
+          if (item.id !== job.id)
+            return <JobSideNavCard key={item.id} job={item} />;
+        })}
       </div>
       <div className="space-y-4 mt-10">
-        <h1 className="font-bold text-base">Other Jobs From Pixel Studio</h1>
-        {otherJobs.map((job) => (
-          <JobSideNavCard key={job.id} job={job} />
-        ))}
+        <h1 className="font-bold text-base">
+          Other Jobs From {job.employer_name}
+        </h1>
+        {data?.data.map((item: Job) => {
+          if (item.id !== job.id)
+            return <JobSideNavCard key={item.id} job={item} />;
+        })}
       </div>
     </div>
   );

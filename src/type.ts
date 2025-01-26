@@ -123,5 +123,7 @@ export interface FileCardProps {
   filePreviewUrl: string;
   onClick: () => void;
 }
-
-
+export type Location = {
+  id: number;
+  name: string;
+};

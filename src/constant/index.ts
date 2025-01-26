@@ -1,6 +1,6 @@
 import { Christiana, ellipse, event } from "../assets";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { FeaturedJobProps, FooterProps, Job, JobCategory,JobDetailSidebarProps,Link, NewsCardProps, recruiterProps, Testimonial } from "../type";
+import { FeaturedJobProps, FooterProps, Job, JobCategory,JobDetailSidebarProps,Link, Location, NewsCardProps, recruiterProps, Testimonial } from "../type";
 
 export const links: Link[] = [
   {
@@ -561,5 +561,46 @@ export const files = [
     fileType: "image",
     filePreviewUrl:
       "https://images.unsplash.com/photo-1579422028695-9caa16d483d3?w=800&q=80",
+  },
+];
+
+export const locations: Location[] = [
+  { id: 1, name: "Afrika Selatan" },
+  { id: 2, name: "Afganistan" },
+  { id: 3, name: "Arab Saudi" },
+  { id: 4, name: "Armenia" },
+  { id: 5, name: "Azerbaijan" },
+  { id: 6, name: "Albania" },
+  { id: 7, name: "Andorra" },
+  { id: 8, name: "Austria" },
+  { id: 9, name: "Amerika Serikat" },
+  { id: 10, name: "Antigua" },
+  { id: 11, name: "Argentina" },
+  { id: 12, name: "Australia" },
+  { id: 13, name: "Albania" },
+  { id: 14, name: "Andorra" },
+  { id: 15, name: "Austria" },
+  { id: 16, name: "Amerika Serikat" },
+  { id: 17, name: "Antigua" },
+  { id: 18, name: "Argentina" },
+  { id: 19, name: "Australia" },
+];
+
+export const steps = [
+  {
+    title: "Personal Information",
+    description: "Fill in your personal details to get started.",
+  },
+  {
+    title: "Educational Qualification",
+    description: "Specify your highest level of education.",
+  },
+  {
+    title: "Job Preferences",
+    description: "Select the job roles that interest you the most.",
+  },
+  {
+    title: "Preferred Location",
+    description: "Choose your desired work location to proceed.",
   },
 ];

@@ -129,7 +129,11 @@ export type Location = {
   id: number;
   name: string;
 };
-export interface StepValidatorProps {
-  requirementsMet: boolean;
-  onValidate: () => void;
+export interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: () => void;
+  children: React.ReactNode;
 }
+
+

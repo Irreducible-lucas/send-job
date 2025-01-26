@@ -55,7 +55,7 @@ const App = () => {
         {/* Profile Route and sub-routes */}
         <Route path="profile" element={<ProfileRoot />}>
           <Route index element={<Profile />} />
-          <Route path="profile-edir" element={<ProfileEdits />} />
+          <Route path="profile-edit" element={<ProfileEdits />} />
           <Route path="qualifications" element={<QualificationEdits />} />
           <Route path="job-preferences" element={<JobPreferenceEdits />} />
           <Route path="hide-job-details" element={<HideJobDetails />} />

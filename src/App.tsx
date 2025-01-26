@@ -65,20 +65,19 @@ const App = () => {
         {/* Root Layout */}
         <Route path="/" element={<Root />}>
           <Route index element={<Home />} />
-          <Route path="home" element={<Home />} />
-          <Route path="jobs" element={<JobsPage />} />
-          <Route path="talent-solution" element={<TalentSolutions />} />
-          <Route path="resources" element={<Resources />} />
-
-          {/* Talent Solutions Sub-Routes */}
-          <Route path="talent-solution/post-job" element={<JobDetail />} />
-          <Route path="talent-solution/hire-talent" element={<HireTalent />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/talent-solution" element={<TalentSolutions />} />
+          <Route path="/resources" element={<Resources />} />
+          Talent Solutions Sub-Routes
+          {/* <Route path="/talent-solution/post-job" element={<PostJob />} /> */}
+          <Route path="/jobs/:slug" element={<JobDetail />} />
+          <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route
             path="talent-solution/skill-assessment"
             element={<SkillAssessment />}
           />
           <Route path="upskill-team" element={<UpskillTeam />} />
-
           {/* Resources Sub-Routes */}
           <Route path="resources/career-advice" element={<CareerAdvice />} />
           <Route path="resources/hiring-tips" element={<HiringTips />} />

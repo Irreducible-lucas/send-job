@@ -3,8 +3,17 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
+  Outlet,
 } from "react-router-dom";
-import { ErrorPage } from "./components";
+import {
+  ErrorPage,
+  HideJobDetails,
+  JobPreferenceEdits,
+  Profile,
+  ProfileEdits,
+  QualificationEdits,
+  ReadyToWork,
+} from "./components";
 import Root from "./layout/Root";
 import DashboardRoot from "./layout/DashboardRoot";
 import {
@@ -16,12 +25,6 @@ import {
   CareerAdvice,
   HiringTips,
   TrainingPrograms,
-  // Dashboard,
-  // AllEvent,
-  // AttendanceManagement,
-  // CheckIn,
-  // AccountSetting,
-  // Billing,
   Faqs,
   PostJob,
   Resources,
@@ -30,16 +33,37 @@ import {
   SignUpPage,
   JobDetail,
 } from "./pages";
+import ProfileRoot from "./layout/ProfileRoot";
+
+// const ProfileLayout = () => {
+//   return (
+//     <div>
+//       <h1>Profile</h1>
+//       <Outlet />
+//     </div>
+//   );
+// };
 
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" errorElement={<ErrorPage />}>
+        {/* Authentication Routes */}
         <Route path="login" element={<LoginPage />} />
         <Route path="sign-up" element={<SignUpPage />} />
+
+        {/* Profile Route and sub-routes */}
+        <Route path="profile" element={<ProfileRoot />}>
+          <Route index element={<Profile />} />
+          <Route path="profile-edir" element={<ProfileEdits />} />
+          <Route path="qualifications" element={<QualificationEdits />} />
+          <Route path="job-preferences" element={<JobPreferenceEdits />} />
+          <Route path="hide-job-details" element={<HideJobDetails />} />
+          <Route path="ready-to-work" element={<ReadyToWork />} />
+        </Route>
+
         {/* Root Layout */}
         <Route path="/" element={<Root />}>
-          {/* Root Routes */}
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/jobs" element={<JobsPage />} />
@@ -50,31 +74,23 @@ const App = () => {
           <Route path="/jobs/:slug" element={<JobDetail />} />
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route
-            path="/talent-solution/skill-assessment"
+            path="talent-solution/skill-assessment"
             element={<SkillAssessment />}
           />
-          <Route path="/upskill-team" element={<UpskillTeam />} />
-          Resources Sub-Routes
-          <Route path="/resources/career-advice" element={<CareerAdvice />} />
-          <Route path="/resources/hiring-tips" element={<HiringTips />} />
-          <Route path="/resources/faqs" element={<Faqs />} />
+          <Route path="upskill-team" element={<UpskillTeam />} />
+          {/* Resources Sub-Routes */}
+          <Route path="resources/career-advice" element={<CareerAdvice />} />
+          <Route path="resources/hiring-tips" element={<HiringTips />} />
+          <Route path="resources/faqs" element={<Faqs />} />
           <Route
-            path="/resources/training-programs"
+            path="resources/training-programs"
             element={<TrainingPrograms />}
           />
         </Route>
 
         {/* Admin Dashboard Layout */}
         <Route path="dashboard" element={<DashboardRoot />}>
-          {/* <Route index element={<Dashboard />} /> */}
-          {/* <Route path="event" element={<AllEvent />} />
-          <Route
-            path="attendance-management"
-            element={<AttendanceManagement />}
-          />
-          <Route path="check-in" element={<CheckIn />} />
-          <Route path="account-setting" element={<AccountSetting />} />
-          <Route path="billing" element={<Billing />} /> */}
+          {/* Add dashboard-related routes here */}
         </Route>
 
         {/* Catch-all Route */}

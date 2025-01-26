@@ -22,6 +22,15 @@ export {default as NavBar} from "./NavBar"
 export {default as JobDetailContent} from "./JobDetailContent"
 export {default as FileLists} from "./FileList"
 export {default as SignUpMenu} from "./SignUpMenu"
+export {default as Profile} from "./Profile"
+export {default as ProfileEdits} from "./ProfileEdit"
+export {default as QualificationEdits} from "./QualificationEdit"
+export {default as JobPreferenceEdits} from "./JobPreferenceEdit"
+export {default as HideJobDetails} from "./HideJobDetail"
+export {default as ReadyToWork} from "./ReadytoWork"
+export {default as ProfileRouters} from "./ProfileRoute"
+
+
 
 
 

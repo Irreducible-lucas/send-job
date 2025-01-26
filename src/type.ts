@@ -125,3 +125,11 @@ export interface FileCardProps {
   filePreviewUrl: string;
   onClick: () => void;
 }
+export type Location = {
+  id: number;
+  name: string;
+};
+export interface StepValidatorProps {
+  requirementsMet: boolean;
+  onValidate: () => void;
+}

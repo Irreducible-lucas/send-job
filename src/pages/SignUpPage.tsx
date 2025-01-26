@@ -8,6 +8,52 @@ import { steps } from "../constant";
 const SignUpPage: FC = () => {
   const [step, setStep] = useState<number>(1);
 
+  const renderButtons = () => {
+    return (
+      <div className="mt-6 flex justify-between">
+        {step > 1 && (
+          <button
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+            onClick={() => setStep(step - 1)}
+          >
+            Previous
+          </button>
+        )}
+
+        {step < steps.length ? (
+          <button
+            className="ml-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            onClick={() => setStep(step + 1)}
+          >
+            Next
+          </button>
+        ) : (
+          <button
+            className="ml-auto px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+            onClick={() => alert("Get Started!")}
+          >
+            Get Started
+          </button>
+        )}
+      </div>
+    );
+  };
+
+  const renderContent = () => {
+    switch (step) {
+      case 1:
+        return <SignUpStepOne />;
+      case 2:
+        return <SignUpStepTwo />;
+      case 3:
+        return <SignUpStepThree />;
+      case 4:
+        return <SignUpStepFour />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen lg:flex-row">
       {/* Sidebar for Large Devices */}
@@ -53,14 +99,11 @@ const SignUpPage: FC = () => {
       </div>
 
       {/* Stepper for Small and Medium Devices */}
-      <div className="block lg:hidden w-full max-w-md mx-auto">
-        <div className="flex items-center justify-center space-x-4 mt-6">
+      <div className="block lg:hidden w-full max-w-md mx-auto overflow-x-hidden">
+        <div className="flex items-center justify-around mt-6">
           {steps.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center cursor-pointer"
-              onClick={() => setStep(index + 1)}
-            >
+            <div key={index} className="flex items-center space-x-2">
+              {/* Circle with Step Number */}
               <div
                 className={`w-10 h-10 flex items-center justify-center rounded-full text-white font-bold ${
                   step > index
@@ -69,19 +112,15 @@ const SignUpPage: FC = () => {
                     ? "bg-blue-300"
                     : "bg-gray-300"
                 }`}
+                onClick={() => setStep(index + 1)}
               >
                 {index + 1}
               </div>
-              <p
-                className={`text-sm mt-2 ${
-                  step === index + 1 ? "text-blue-500" : "text-gray-500"
-                }`}
-              >
-                {item.title}
-              </p>
+
+              {/* Line Between Steps */}
               {index < steps.length - 1 && (
                 <div
-                  className={`w-8 h-1 ${
+                  className={`h-1 w-6 ${
                     step > index ? "bg-blue-500" : "bg-gray-300"
                   }`}
                 ></div>
@@ -89,15 +128,27 @@ const SignUpPage: FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Step Titles */}
+        <div className="flex justify-around mt-2">
+          {steps.map((item, index) => (
+            <p
+              key={index}
+              className={`text-sm ${
+                step === index + 1 ? "text-blue-500" : "text-gray-500"
+              } text-center w-10`}
+            >
+              {item.title}
+            </p>
+          ))}
+        </div>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex items-center justify-center bg-white">
         <div className="w-full p-6">
-          {step === 1 && <SignUpStepOne />}
-          {step === 2 && <SignUpStepTwo />}
-          {step === 3 && <SignUpStepThree />}
-          {step === 4 && <SignUpStepFour />}
+          {renderContent()}
+          {renderButtons()}
         </div>
       </div>
     </div>

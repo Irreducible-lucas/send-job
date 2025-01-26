@@ -23,7 +23,6 @@ const SignUpStepTwo = () => {
       alert("You must agree to the Terms & Conditions to proceed.");
       return;
     }
-    // Handle form submission logic
     console.log({
       cvFile,
       cvReview,
@@ -208,13 +207,6 @@ const SignUpStepTwo = () => {
           </span>
         </label>
       </div>
-
-      <button
-        type="submit"
-        className="w-full mt-6 bg-blue-500 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-600 transition"
-      >
-        Create Your Account
-      </button>
     </form>
   );
 };

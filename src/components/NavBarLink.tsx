@@ -7,6 +7,7 @@ import {
 } from "../../components/dropdown-menu";
 import { Logo } from "../assets";
 import { links } from "../constant";
+import { FaUserCircle } from "react-icons/fa";
 
 const NavBarLinks = ({
   fill,
@@ -22,23 +23,33 @@ const NavBarLinks = ({
       <ul
         className={`${
           isOpen
-            ? "fixed top-0 left-0 w-full flex flex-col gap-4 bg-white p-2 z-50" // Adjusted padding and removed h-screen
+            ? "fixed top-0 left-0 w-full flex flex-col gap-4 bg-white p-2 z-50"
             : "hidden"
-        } lg:flex lg:items-center lg:justify-around`}
+        } lg:flex lg:items-center lg:justify-between`}
       >
-        <div className="lg:hidden flex items-center justify-between">
+        <div className="lg:hidden flex items-center justify-between w-full">
           <NavLink to={"/"}>
             <img src={Logo} alt="Logo Image" className="h-[50px] lg:h-[70px]" />
           </NavLink>
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 384 512"
-            className={`w-8 h-8 lg:hidden hover:cursor-pointer fill-black"`}
-            onClick={() => setIsOpen(false)}
-          >
-            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-          </svg>
+          <div className="flex gap-2 items-center">
+            <NavLink
+              to="/profile"
+              className={`flex items-center gap-2 text-lg hover:text-blue-500 ${
+                fill ? "text-blue-500" : "text-white"
+              }`}
+            >
+              <FaUserCircle className="w-6 h-6" />
+            </NavLink>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"
+              className={`w-8 h-8 lg:hidden hover:cursor-pointer fill-black`}
+              onClick={() => setIsOpen(false)}
+            >
+              <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+            </svg>
+          </div>
         </div>
 
         {links.map((link) => (
@@ -119,10 +130,7 @@ const NavBarLinks = ({
           </div>
         ))}
 
-        {/* Action Buttons for Large and Small Screens */}
-        <div className="md:flex md:space-x-4 space-y-2 md:space-y-0">
-          {" "}
-          {/* Adjust space-y-4 to space-y-2 */}
+        <div className="md:flex md:space-x-4 space-y-2 md:space-y-0 flex-col-reverse lg:flex-row">
           <a href="/sign-up">
             <button className="w-full md:w-auto px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition">
               Sign Up

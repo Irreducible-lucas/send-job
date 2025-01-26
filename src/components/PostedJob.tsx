@@ -1,12 +1,18 @@
 import PostedJobCard from "./PostedJobCard";
-import { postedJobs } from "../constant";
 import { layout } from "../styles";
+import { useGetMatchedJobsQuery } from "../rtk/services/jobs";
+import { Job } from "../type";
 
 interface PostedJobProps {
   showHeading?: boolean;
 }
 
 const PostedJob = ({ showHeading = true }: PostedJobProps) => {
+  const userId: any = 5;
+  const { data, error } = useGetMatchedJobsQuery(userId, {
+    refetchOnMountOrArgChange: true,
+  });
+
   return (
     <div className={`${layout.section}`}>
       {showHeading && (
@@ -18,9 +24,11 @@ const PostedJob = ({ showHeading = true }: PostedJobProps) => {
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {postedJobs.map((job) => (
-          <PostedJobCard key={job.id} job={job} />
-        ))}
+        {data &&
+          data?.data.length > 0 &&
+          data?.data.map((job: Job, index: number) => (
+            <PostedJobCard key={job.id} job={job} />
+          ))}
       </div>
     </div>
   );

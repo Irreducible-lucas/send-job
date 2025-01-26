@@ -39,7 +39,7 @@ const FeaturedJobCard = ({ job, handleNavigate }: Props) => {
       </h3>
       <p className="text-blue-600 font-bold text-lg">
         {job_salary_currency + " " + job_min_salary}
-        <span className="text-black text-sm"> / Month</span>
+        {/* <span className="text-black text-sm"> / Month</span> */}
       </p>
       <div className="flex justify-between items-center mt-4">
         <button className="flex items-center space-x-2 text-sm border border-gray-300 rounded-lg px-4 py-2 hover:border-gray-400 transition-all">

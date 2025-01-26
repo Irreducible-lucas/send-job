@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { featuredJob } from "../constant";
 import { useGetFeaturedJobsQuery } from "../rtk/services/jobs";
 import { layout } from "../styles";
 import Button from "./Button";

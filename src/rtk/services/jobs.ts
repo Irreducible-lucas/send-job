@@ -33,6 +33,10 @@ export const jobsApi = createApi({
       query: (id) => `jobs/company/${id}`,
     }),
 
+    getMatchedJobs: builder.query<APIResponse, { id: number }>({
+      query: (id) => `jobs/matched/${id}`,
+    }),
+
     // createBooking: builder.mutation({
     //   query: (newBooking: BookingModel) => ({
     //     url: 'orders/',
@@ -55,4 +59,5 @@ export const {
   useGetFeaturedJobsQuery,
   useGetJobsByCompanyIdQuery,
   useGetJobsByCategoryQuery,
+  useGetMatchedJobsQuery,
 } = jobsApi;

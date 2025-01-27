@@ -131,9 +131,29 @@ export type Location = {
 };
 export interface ModalProps {
   isOpen: boolean;
+  onAddAnother: () => void;
   onClose: () => void;
   onSave: () => void;
   children: React.ReactNode;
 }
+export interface Field {
+  name: string;
+  label: string;
+  required: boolean;
+  type: "input" | "select" | "two-selects";
+  options?: string[];
+  selects?: {
+    name: string;
+    label: string;
+    options: string[];
+  }[];
+}
+export interface Section {
+  key: string;
+  title: string;
+  icon: JSX.Element;
+  fields: Field[];
+}
+
 
 

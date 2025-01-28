@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { store } from "..";
 import { BASE_URL } from "../../constant";
-import { APIResponse, Job } from "../../type";
+import { APIResponse } from "../../type";
 
 // Define a service using a base URL and expected endpoints
 export const jobsApi = createApi({
@@ -37,6 +36,10 @@ export const jobsApi = createApi({
       query: (id) => `jobs/matched/${id}`,
     }),
 
+    getAllJobs: builder.query<APIResponse, { title: string; country: string }>({
+      query: ({ title, country }) => `jobs/${title}/${country}`,
+    }),
+
     // createBooking: builder.mutation({
     //   query: (newBooking: BookingModel) => ({
     //     url: 'orders/',
@@ -60,4 +63,5 @@ export const {
   useGetJobsByCompanyIdQuery,
   useGetJobsByCategoryQuery,
   useGetMatchedJobsQuery,
+  useGetAllJobsQuery,
 } = jobsApi;

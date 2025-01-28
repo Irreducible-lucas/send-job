@@ -1,11 +1,32 @@
 import { motion } from "framer-motion";
 import styles from "../styles";
-import { AboutCarousal } from "../components";
+import { AboutCarousal, FeaturedJobList, JobList } from "../components";
 import { event } from "../assets";
 import { SearchJobs } from "../components";
-import PostedJob from "../components/PostedJob";
 import { jobCategories } from "../constant";
+import { useGetAllJobsQuery } from "../rtk/services/jobs";
+import { useNavigate } from "react-router-dom";
+import FeaturedJobCard from "../components/FeaturedJobCard";
+import { Job } from "../type";
 const JobsPage = () => {
+  const title = "all";
+  const country = "all";
+
+  const { data, isLoading } = useGetAllJobsQuery(
+    { title, country },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
+
+  let navigate = useNavigate();
+
+  const handleNavigate = (item: any) => {
+    navigate(`/jobs/${item.job_title}`, {
+      state: { state: item },
+    });
+  };
+
   return (
     <motion.div
       id="home"
@@ -29,8 +50,9 @@ const JobsPage = () => {
       </div>
       <div>
         <SearchJobs regions={[]} jobs={[]} jobClassifications={jobCategories} />
+        {/* <PostedJob showHeading={false} /> */}
 
-        <PostedJob showHeading={false} />
+        <JobList />
       </div>
     </motion.div>
   );

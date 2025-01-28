@@ -52,6 +52,7 @@ const NavBarLinks = ({
           </div>
         </div>
 
+        {/* Links section for large devices */}
         {links.map((link) => (
           <div key={link.id}>
             {link.child ? (
@@ -130,6 +131,7 @@ const NavBarLinks = ({
           </div>
         ))}
 
+        {/* Buttons section */}
         <div className="md:flex md:space-x-4 space-y-2 md:space-y-0 flex-col-reverse lg:flex-row">
           <a href="/sign-up">
             <button className="w-full md:w-auto px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition">
@@ -139,6 +141,14 @@ const NavBarLinks = ({
           <button className="w-full md:w-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
             Post Job for Free
           </button>
+          <NavLink
+            to="/profile"
+            className={`flex items-center gap-2 text-lg hover:text-blue-500 ${
+              fill ? "text-blue-500" : "text-white"
+            }`}
+          >
+            <FaUserCircle className="w-8 h-8" />
+          </NavLink>
         </div>
       </ul>
     </>

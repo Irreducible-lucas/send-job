@@ -9,6 +9,7 @@ import {
   faFilePdf,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 interface ProfileProps {
   userImage?: string; // Optional prop for the user image URL
@@ -85,12 +86,12 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
             <FontAwesomeIcon icon={faLocationDot} className="text-gray-600" />
             <span>{location}</span>
           </div>
-          <a
-            href="edit-location"
+          <Link
+            to="profile-edit"
             className="text-blue-500 text-sm cursor-pointer hover:underline"
           >
             Edit
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -149,8 +150,8 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
       <div className="mt-6">
         <h2 className="text-lg font-semibold mb-4">Improve your job matches</h2>
         <div className="divide-y divide-gray-200">
-          <a
-            href="/qualifications"
+          <Link
+            to="qualifications"
             className="flex justify-between items-center py-3 hover:bg-gray-100"
           >
             <div>
@@ -160,9 +161,9 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
               </p>
             </div>
             <FontAwesomeIcon icon={faChevronRight} className="text-gray-500" />
-          </a>
-          <a
-            href="/job-preferences"
+          </Link>
+          <Link
+            to="job-preferences"
             className="flex justify-between items-center py-3 hover:bg-gray-100"
           >
             <div>
@@ -172,9 +173,9 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
               </p>
             </div>
             <FontAwesomeIcon icon={faChevronRight} className="text-gray-500" />
-          </a>
-          <a
-            href="/hide-job-details"
+          </Link>
+          <Link
+            to="hide-job-details"
             className="flex justify-between items-center py-3 hover:bg-gray-100"
           >
             <div>
@@ -187,9 +188,9 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
               </p>
             </div>
             <FontAwesomeIcon icon={faChevronRight} className="text-gray-500" />
-          </a>
-          <a
-            href="ready-to-work"
+          </Link>
+          <Link
+            to="ready-to-work"
             className="flex justify-between items-center py-3 hover:bg-gray-100"
           >
             <div>
@@ -200,16 +201,16 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
               </p>
             </div>
             <FontAwesomeIcon icon={faChevronRight} className="text-gray-500" />
-          </a>
+          </Link>
         </div>
       </div>
 
       {/* Footer */}
       <footer className="mt-6 text-sm text-gray-500 text-center">
         ©2025 SierraJob -{" "}
-        <a href="#" className="underline">
+        <Link to="#" className="underline">
           Cookies, Privacy and Terms
-        </a>
+        </Link>
       </footer>
     </div>
   );

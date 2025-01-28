@@ -29,6 +29,7 @@ export {default as JobPreferenceEdits} from "./JobPreferenceEdit"
 export {default as HideJobDetails} from "./HideJobDetail"
 export {default as ReadyToWork} from "./ReadytoWork"
 export {default as ProfileRouters} from "./ProfileRoute"
+export {default as ModalDialog} from "./ModalDialog"
 
 
 

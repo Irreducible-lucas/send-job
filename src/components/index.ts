@@ -34,6 +34,9 @@ export {default as jobTitleModal} from "./JobTitleModal"
 export {default as PayModal} from "./PayModal"
 export {default as RelocationModal} from "./RelocationModal"
 export {default as JobTypeModal} from "./JobTypeModal"
+export {default as ProcessJobs} from "./ProcessJob"
+export {default as SavedJobs} from "./Savedjob"
+export {default as FinishedJobs} from "./FinishedJob"
 
 
 

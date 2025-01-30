@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { savedJobs, savedTabs } from "../constant";
-import { FaBookmark, FaBriefcase, FaTrashAlt } from "react-icons/fa";
+import {
+  FaBookmark,
+  FaBriefcase,
+  FaTrashAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 
 const SavedJob = () => {
   const [activeTab, setActiveTab] = useState("All");
@@ -31,16 +36,28 @@ const SavedJob = () => {
               key={job.id}
               className="bg-white p-4 rounded-xl shadow-md border"
             >
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="font-semibold text-lg">{job.title}</h3>
-                  <p className="text-gray-500">{job.salary}</p>
-                  <p className="text-gray-500">{job.company}</p>
-                  <p className="text-gray-400">{job.location}</p>
+              <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-x-4">
+                  <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full">
+                    <img src={job.image} alt="Figma Logo" className="w-8 h-8" />
+                  </div>
+                  <div className="grid">
+                    <h3 className="font-semibold text-lg">{job.title}</h3>
+                    <p className="text-gray-500">
+                      {job.salary}
+                      <span>/month</span>
+                    </p>
+                  </div>
                 </div>
 
                 <FaBookmark className="text-blue-600 text-lg md:text-xl" />
               </div>
+
+              <p className="font-semibold">{job.company}</p>
+
+              <p className="text-gray-400 flex items-center">
+                <FaMapMarkerAlt className="mr-1" /> {job.location}
+              </p>
 
               <p className="mt-2 text-gray-600">Full time</p>
 

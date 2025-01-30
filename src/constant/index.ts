@@ -632,6 +632,7 @@ export const steps = [
 export  const processJobs = [
   {
     id: 1,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -640,6 +641,7 @@ export  const processJobs = [
   },
   {
     id: 2,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -648,6 +650,7 @@ export  const processJobs = [
   },
   {
     id: 3,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -669,6 +672,7 @@ export const finishTabs = [
 export const finishJobs = [
   {
     id: 1,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -679,6 +683,7 @@ export const finishJobs = [
 export const savedJobs = [
   {
     id: 1,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Frontend Developer",
     salary: "$60,000",
     company: "Tech Corp",
@@ -687,6 +692,7 @@ export const savedJobs = [
   },
   {
     id: 2,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$55,000",
     company: "Creative Studio",
@@ -695,6 +701,7 @@ export const savedJobs = [
   },
   {
     id: 3,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Backend Developer",
     salary: "$70,000",
     company: "Data Systems",
@@ -703,6 +710,7 @@ export const savedJobs = [
   },
   {
     id: 4,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Marketing Specialist",
     salary: "$50,000",
     company: "Brand Solutions",
@@ -711,6 +719,7 @@ export const savedJobs = [
   },
   {
     id: 5,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Product Manager",
     salary: "$80,000",
     company: "Innovation Labs",

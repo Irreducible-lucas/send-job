@@ -34,6 +34,7 @@ import {
   JobDetail,
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
+import SavedJobTab from "./components/SavedJobTab";
 
 // const ProfileLayout = () => {
 //   return (
@@ -75,7 +76,7 @@ const App = () => {
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route
             path="talent-solution/skill-assessment"
-            element={<SkillAssessment />}
+            element={<SavedJobTab />}
           />
           <Route path="upskill-team" element={<UpskillTeam />} />
           {/* Resources Sub-Routes */}

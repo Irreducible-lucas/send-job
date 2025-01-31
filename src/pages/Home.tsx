@@ -7,6 +7,7 @@ import {
   // TopRecruiters,
   NewsLetter,
   PostedJobs,
+  SavedJobsTab,
 } from "../components";
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
       <HeroSection />
       {/* <JobCategorySection /> */}
       <PostedJobs />
+      <SavedJobsTab />
       <FeaturedJobList />
       {/* <TopRecruiters />
       <Testimonial />

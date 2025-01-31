@@ -9,10 +9,10 @@ import {
   faFilePdf,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
 
 interface ProfileProps {
-  userImage?: string; // Optional prop for the user image URL
+  userImage?: string;
 }
 
 const Profile: React.FC<ProfileProps> = ({ userImage }) => {
@@ -107,8 +107,8 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
         <FontAwesomeIcon icon={employerVisibility ? faEye : faEyeSlash} />
         <span>
           {employerVisibility
-            ? "Employers can find you"
-            : "Employers cannot find you"}
+            ? "Employers can find you on Send-Job"
+            : "Employers cannot find you on Send-Job"}
         </span>
       </div>
 
@@ -150,58 +150,43 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
       <div className="mt-6">
         <h2 className="text-lg font-semibold mb-4">Improve your job matches</h2>
         <div className="divide-y divide-gray-200">
-          <Link
-            to="qualifications"
-            className="flex justify-between items-center py-3 hover:bg-gray-100"
-          >
-            <div>
-              <p className="font-medium text-gray-800">Qualifications</p>
-              <p className="text-sm text-gray-600">
-                Highlight your skills and experience.
-              </p>
-            </div>
-            <FontAwesomeIcon icon={faChevronRight} className="text-gray-500" />
-          </Link>
-          <Link
-            to="job-preferences"
-            className="flex justify-between items-center py-3 hover:bg-gray-100"
-          >
-            <div>
-              <p className="font-medium text-gray-800">Job preferences</p>
-              <p className="text-sm text-gray-600">
-                Save specific details like minimum desired pay and schedule.
-              </p>
-            </div>
-            <FontAwesomeIcon icon={faChevronRight} className="text-gray-500" />
-          </Link>
-          <Link
-            to="hide-job-details"
-            className="flex justify-between items-center py-3 hover:bg-gray-100"
-          >
-            <div>
-              <p className="font-medium text-gray-800">
-                Hide jobs with these details
-              </p>
-              <p className="text-sm text-gray-600">
-                Manage the qualifications or preferences used to hide jobs from
-                your search.
-              </p>
-            </div>
-            <FontAwesomeIcon icon={faChevronRight} className="text-gray-500" />
-          </Link>
-          <Link
-            to="ready-to-work"
-            className="flex justify-between items-center py-3 hover:bg-gray-100"
-          >
-            <div>
-              <p className="font-medium text-gray-800">Ready to work</p>
-              <p className="text-sm text-gray-600">
-                Let employers know that you're available to start working as
-                soon as possible.
-              </p>
-            </div>
-            <FontAwesomeIcon icon={faChevronRight} className="text-gray-500" />
-          </Link>
+          {[
+            {
+              to: "qualifications",
+              title: "Qualifications",
+              desc: "Highlight your skills and experience.",
+            },
+            {
+              to: "job-preferences",
+              title: "Job preferences",
+              desc: "Save specific details like minimum desired pay and schedule.",
+            },
+            {
+              to: "hide-job-details",
+              title: "Hide jobs with these details",
+              desc: "Manage the qualifications or preferences used to hide jobs from your search.",
+            },
+            {
+              to: "ready-to-work",
+              title: "Ready to work",
+              desc: "Let employers know that you're available to start working as soon as possible.",
+            },
+          ].map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="flex justify-between items-center py-4 px-4 hover:bg-gray-100"
+            >
+              <div>
+                <p className="font-medium text-gray-800">{item.title}</p>
+                <p className="text-sm text-gray-600">{item.desc}</p>
+              </div>
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className="text-gray-500"
+              />
+            </Link>
+          ))}
         </div>
       </div>
 

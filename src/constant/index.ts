@@ -664,3 +664,106 @@ export const steps = [
     description: "Choose your desired work location to proceed.",
   },
 ];
+export  const processJobs = [
+  {
+    id: 1,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    title: "UI/UX Designer",
+    salary: "$120 - $200/month",
+    company: "Figma Company",
+    location: "Indonesia",
+    status: "Waiting",
+  },
+  {
+    id: 2,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    title: "UI/UX Designer",
+    salary: "$120 - $200/month",
+    company: "Figma Company",
+    location: "Indonesia",
+    status: "Waiting",
+  },
+  {
+    id: 3,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    title: "UI/UX Designer",
+    salary: "$120 - $200/month",
+    company: "Figma Company",
+    location: "Indonesia",
+    status: "Interview",
+  },
+];
+export const processTabs = [
+  { label: "All", count: 3 },
+  { label: "Waiting", count: 2 },
+  { label: "Interview", count: 1 },
+];
+export const finishTabs = [
+  { label: "All", count: 1 },
+  { label: "Received", count: 0 },
+  { label: "Rejected", count: 1 },
+];
+
+export const finishJobs = [
+  {
+    id: 1,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    title: "UI/UX Designer",
+    salary: "$120 - $200/month",
+    company: "Figma Company",
+    location: "Indonesia",
+    status: "Rejected",
+  },
+];
+export const savedJobs = [
+  {
+    id: 1,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    title: "Frontend Developer",
+    salary: "$60,000",
+    company: "Tech Corp",
+    location: "New York, NY",
+    status: "Saved",
+  },
+  {
+    id: 2,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    title: "UI/UX Designer",
+    salary: "$55,000",
+    company: "Creative Studio",
+    location: "San Francisco, CA",
+    status: "Saved",
+  },
+  {
+    id: 3,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    title: "Backend Developer",
+    salary: "$70,000",
+    company: "Data Systems",
+    location: "Austin, TX",
+    status: "Saved",
+  },
+  {
+    id: 4,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    title: "Marketing Specialist",
+    salary: "$50,000",
+    company: "Brand Solutions",
+    location: "Chicago, IL",
+    status: "Applied",
+  },
+  {
+    id: 5,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    title: "Product Manager",
+    salary: "$80,000",
+    company: "Innovation Labs",
+    location: "Remote",
+    status: "Applied",
+  },
+];
+export const savedTabs = [
+  { label: "All", count: 5 },
+  { label: "Saved", count: 3 },
+  { label: "Applied", count: 2 },
+];

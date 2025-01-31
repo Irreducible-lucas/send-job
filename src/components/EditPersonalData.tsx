@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const EditPersonalData: React.FC = () => {
+const EditPersonalData = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",

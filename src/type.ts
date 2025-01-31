@@ -179,9 +179,3 @@ export interface Field {
     options: string[];
   }[];
 }
-export interface Section {
-  key: string;
-  title: string;
-  icon: JSX.Element;
-  fields: Field[];
-}

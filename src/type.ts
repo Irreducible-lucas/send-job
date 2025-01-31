@@ -85,6 +85,37 @@ export interface GeneralList {
   // value: string;
 }
 
+export enum GenderEnum {
+  male = "male",
+  female = "female",
+}
+
+export interface UserType {
+  name: string;
+  email: string;
+  password: string;
+  telephone: string;
+  gender: GenderEnum;
+  birth_date: string;
+  interested_job: string;
+  work_location: string;
+}
+
+export interface InterestedJobType {
+  jobTitle: string;
+  location: string;
+}
+
+export interface UserFormInput {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  telephone: string;
+  gender: GenderEnum;
+  birth_date: string;
+}
+
 export interface UserModel {
   Id: string;
   Email: string;
@@ -154,6 +185,3 @@ export interface Section {
   icon: JSX.Element;
   fields: Field[];
 }
-
-
-

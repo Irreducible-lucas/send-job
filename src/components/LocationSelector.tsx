@@ -1,20 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { locations } from "../constant";
 
-const LocationSelector = () => {
+const LocationSelector = ({ setInterestedLocation }: any) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState<number | null>(null);
+  const [selectedLocations, setSelectedLocations] = useState<number[]>([]);
 
   const filteredLocations = locations.filter((location) =>
     location.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleSelect = (id: number) => {
-    setSelectedLocation(id);
+    if (selectedLocations.includes(id)) {
+      setSelectedLocations(
+        selectedLocations.filter((locationId) => locationId !== id)
+      );
+    } else {
+      setSelectedLocations([...selectedLocations, id]);
+    }
   };
 
+  useEffect(() => {
+    const interestedLocations =
+      selectedLocations.length === 0
+        ? ""
+        : selectedLocations
+            .map((id) => locations.find((loc) => loc.id === id)?.name)
+            .join(", ");
+
+    setInterestedLocation("work_location", interestedLocations);
+  }, [selectedLocations]);
+
   return (
-    <div className="w-full  mx-auto p-4 bg-white shadow-md rounded-lg flex flex-col">
+    <div className="w-full mx-auto p-4 bg-white shadow-md rounded-lg flex flex-col">
       {/* Search Input */}
       <div className="relative mb-4">
         <input
@@ -27,7 +44,7 @@ const LocationSelector = () => {
       </div>
 
       {/* Locations List */}
-      <ul className="space-y-2 overflow-y-auto flex-grow max-h-[calc(100vh-180px)] border border-gray-300 rounded-md p-2">
+      <ul className="space-y-2 overflow-y-auto flex-grow max-h-[180px] border border-gray-300 rounded-md p-2">
         {filteredLocations.length > 0 ? (
           filteredLocations.map((location) => (
             <li
@@ -37,7 +54,7 @@ const LocationSelector = () => {
               <span className="text-gray-700">{location.name}</span>
               <input
                 type="checkbox"
-                checked={selectedLocation === location.id}
+                checked={selectedLocations.includes(location.id)}
                 onChange={() => handleSelect(location.id)}
                 className="form-checkbox h-5 w-5 text-blue-600"
               />
@@ -48,13 +65,15 @@ const LocationSelector = () => {
         )}
       </ul>
 
-      {/* Selected Location */}
-      {selectedLocation !== null && (
-        <div className="mt-4 text-green-600">
-          Selected Location:{" "}
-          {locations.find((loc) => loc.id === selectedLocation)?.name}
-        </div>
-      )}
+      {/* Selected Locations */}
+      <div className="mt-4 text-green-600">
+        <span className="font-bold">Selected Locations: </span>
+        {selectedLocations.length > 0
+          ? selectedLocations
+              .map((id) => locations.find((loc) => loc.id === id)?.name)
+              .join(", ")
+          : "No Locations selected"}
+      </div>
     </div>
   );
 };

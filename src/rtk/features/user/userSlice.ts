@@ -1,9 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserState } from "../../models";
-import { UserModel } from "../../../type";
+import { UserType } from "../../../type";
 
 const initialState: UserState = {
-  user: {} as UserModel,
+  user: {
+    name: "",
+    email: "",
+    password: "",
+    telephone: "",
+    profile_image: "",
+    gender: "male",
+    birth_date: "",
+    job_title: "",
+    interested_job: "",
+    work_location: "",
+  } as UserType,
   token: {} as [], //TokenModel,
   error: undefined,
   authenticated: false,

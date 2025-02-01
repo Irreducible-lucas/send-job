@@ -36,8 +36,22 @@ export const jobsApi = createApi({
       query: (id) => `jobs/matched/${id}`,
     }),
 
-    getAllJobs: builder.query<APIResponse, { title: string; country: string }>({
-      query: ({ title, country }) => `jobs/${title}/${country}`,
+    searchJob: builder.query<
+      APIResponse,
+      {
+        searchParamsObj?: Record<string, string>; // Ensures it's a key-value object
+        pageNum?: string;
+        limit?: number;
+      }
+    >({
+      query: ({ searchParamsObj = {}, pageNum, limit }) => ({
+        url: `jobs/search`,
+        params: {
+          ...searchParamsObj,
+          ...(pageNum && { pageNum }),
+          ...(limit && { limit }),
+        },
+      }),
     }),
 
     // createBooking: builder.mutation({
@@ -63,5 +77,5 @@ export const {
   useGetJobsByCompanyIdQuery,
   useGetJobsByCategoryQuery,
   useGetMatchedJobsQuery,
-  useGetAllJobsQuery,
+  useSearchJobQuery,
 } = jobsApi;

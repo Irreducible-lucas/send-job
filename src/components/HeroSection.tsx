@@ -1,7 +1,16 @@
+import { useState } from "react";
+import { jobCategories } from "../constant";
 import { layout } from "../styles";
 import HeroSlider from "./HeroSlider";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import Search from "./Search";
 
 const HeroSection = () => {
+  const [selectedCategory, setSelectedCategory] = useState("Select Category");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <section
       className={`${layout.sectionImg} pl-4 md:pl-[40px] lg:pl-[60px] bg-blue-50 flex flex-col-reverse md:flex-row items-center justify-between`}
@@ -29,26 +38,19 @@ const HeroSection = () => {
         </p>
 
         {/* Search Form */}
-        <div className="bg-white shadow-lg rounded-md p-2 flex flex-col md:flex-row  items-center justify-between">
-          <select
+        <div className="bg-white shadow-lg rounded-md p-2 flex flex-col md:flex-row items-center justify-between">
+          {/* <select
             className="w-full md:w-1/3 outline-0 rounded p-2 text-gray-600"
-            defaultValue="Select Category"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
           >
             <option disabled>Select Category</option>
             <option>Design</option>
-            <option>Development</option>
-            <option>Marketing</option>
-          </select>
-          <div className="w-full md:w-1/3 relative">
-            <input
-              type="text"
-              placeholder="Search location"
-              className="w-full outline-0 p-2 text-gray-600"
-            />
-            <span className="absolute top-1/2 right-1 transform -translate-y-1/2 text-gray-400">
-              📍
-            </span>
-          </div>
+            {jobCategories.map((item, index) => (
+              <option key={index.toString()}>{item.title}</option>
+            ))}
+          </select> */}
+          <Search />
           <button className="w-full md:w-auto bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition">
             Find Job
           </button>

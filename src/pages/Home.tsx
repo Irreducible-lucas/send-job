@@ -8,13 +8,19 @@ import {
   NewsLetter,
   PostedJobs,
 } from "../components";
+import { useGetMatchedJobsQuery } from "../rtk/services/jobs";
 
 const Home = () => {
+  const userId: any = 5;
+  const { data, error } = useGetMatchedJobsQuery(userId, {
+    refetchOnMountOrArgChange: true,
+  });
+
   return (
     <div>
       <HeroSection />
       {/* <JobCategorySection /> */}
-      <PostedJobs />
+      {data && data.data.length > 0 && <PostedJobs data={data.data} />}
       <FeaturedJobList />
       {/* <TopRecruiters />
       <Testimonial />

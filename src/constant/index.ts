@@ -1,6 +1,5 @@
 import { Christiana, ellipse, event } from "../assets";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { FeaturedJobProps, FooterProps, Job, JobCategory,JobDetailSidebarProps,Link, Location, NewsCardProps, recruiterProps, Testimonial } from "../type";
+
 import {
   FeaturedJobProps,
   FooterProps,
@@ -79,6 +78,7 @@ export const links: Link[] = [
     ],
   },
 ];
+
 export const jobCategories: JobCategory[] = [
   {
     id: 1,
@@ -628,4 +628,98 @@ export const steps = [
     title: "Preferred Location",
     description: "Choose your desired work location to proceed.",
   },
+];
+export const processJobs = [
+  {
+    id: 1,
+    title: "UI/UX Designer",
+    salary: "$120 - $200/month",
+    company: "Figma Company",
+    location: "Indonesia",
+    status: "Waiting",
+  },
+  {
+    id: 2,
+    title: "UI/UX Designer",
+    salary: "$120 - $200/month",
+    company: "Figma Company",
+    location: "Indonesia",
+    status: "Waiting",
+  },
+  {
+    id: 3,
+    title: "UI/UX Designer",
+    salary: "$120 - $200/month",
+    company: "Figma Company",
+    location: "Indonesia",
+    status: "Interview",
+  },
+];
+export const processTabs = [
+  { label: "All", count: 3 },
+  { label: "Waiting", count: 2 },
+  { label: "Interview", count: 1 },
+];
+export const finishTabs = [
+  { label: "All", count: 1 },
+  { label: "Received", count: 0 },
+  { label: "Rejected", count: 1 },
+];
+
+export const finishJobs = [
+  {
+    id: 1,
+    title: "UI/UX Designer",
+    salary: "$120 - $200/month",
+    company: "Figma Company",
+    location: "Indonesia",
+    status: "Rejected",
+  },
+];
+export const savedJobs = [
+  {
+    id: 1,
+    title: "Frontend Developer",
+    salary: "$60,000",
+    company: "Tech Corp",
+    location: "New York, NY",
+    status: "Saved",
+  },
+  {
+    id: 2,
+    title: "UI/UX Designer",
+    salary: "$55,000",
+    company: "Creative Studio",
+    location: "San Francisco, CA",
+    status: "Saved",
+  },
+  {
+    id: 3,
+    title: "Backend Developer",
+    salary: "$70,000",
+    company: "Data Systems",
+    location: "Austin, TX",
+    status: "Saved",
+  },
+  {
+    id: 4,
+    title: "Marketing Specialist",
+    salary: "$50,000",
+    company: "Brand Solutions",
+    location: "Chicago, IL",
+    status: "Applied",
+  },
+  {
+    id: 5,
+    title: "Product Manager",
+    salary: "$80,000",
+    company: "Innovation Labs",
+    location: "Remote",
+    status: "Applied",
+  },
+];
+export const savedTabs = [
+  { label: "All", count: 5 },
+  { label: "Saved", count: 3 },
+  { label: "Applied", count: 2 },
 ];

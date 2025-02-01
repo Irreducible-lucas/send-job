@@ -32,26 +32,35 @@ export const jobsApi = createApi({
       query: (id) => `jobs/company/${id}`,
     }),
 
+    getAllJobs: builder.query<APIResponse, { id: number }>({
+      query: (id) => `jobs/`,
+    }),
+
     getMatchedJobs: builder.query<APIResponse, { id: number }>({
       query: (id) => `jobs/matched/${id}`,
     }),
 
-    searchJob: builder.query<
-      APIResponse,
-      {
-        searchParamsObj?: Record<string, string>; // Ensures it's a key-value object
-        pageNum?: string;
-        limit?: number;
-      }
-    >({
-      query: ({ searchParamsObj = {}, pageNum, limit }) => ({
-        url: `jobs/search`,
+    searchJob: builder.query({
+      query: ({ searchParamsObj = {}, pageNum = 1, limit = 10 }) => ({
+        url: "jobs/search",
         params: {
-          ...searchParamsObj,
-          ...(pageNum && { pageNum }),
-          ...(limit && { limit }),
+          page: pageNum, // Keep consistency with getJobs
+          limit,
+          ...searchParamsObj, // Spread additional search filters
         },
       }),
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+      merge: (currentCache, newItems, { arg }) => {
+        // If it's the first page, replace the cache, otherwise append
+        if (arg.pageNum === 1) {
+          currentCache.data = newItems.data; // Replace for first page
+        } else {
+          currentCache.data = [...(currentCache.data || []), ...newItems.data]; // Append for next pages
+        }
+        currentCache.hasMore = newItems.hasMore;
+      },
+      forceRefetch: ({ currentArg, previousArg }) =>
+        currentArg?.pageNum !== previousArg?.pageNum,
     }),
 
     // createBooking: builder.mutation({

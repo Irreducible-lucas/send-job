@@ -1,30 +1,22 @@
+import { useSearchParams } from "react-router-dom";
 import {
   FeaturedJobList,
   HeroSection,
-  // JobCategorySection,
-  // NewsCardList,
-  // Testimonial,
-  // TopRecruiters,
+  MatchedJob,
   NewsLetter,
   PostedJobs,
 } from "../components";
-import { useGetMatchedJobsQuery } from "../rtk/services/jobs";
+import { useEffect } from "react";
 
 const Home = () => {
-  const userId: any = 5;
-  const { data, error } = useGetMatchedJobsQuery(userId, {
-    refetchOnMountOrArgChange: true,
-  });
-
   return (
     <div>
       <HeroSection />
-      {/* <JobCategorySection /> */}
-      {data && data.data.length > 0 && <PostedJobs data={data.data} />}
+
+      <MatchedJob />
+
       <FeaturedJobList />
-      {/* <TopRecruiters />
-      <Testimonial />
-      <NewsCardList /> */}
+
       <NewsLetter />
     </div>
   );

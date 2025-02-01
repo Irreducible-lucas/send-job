@@ -25,7 +25,7 @@ const PostedJobCard: React.FC<JobCardProps> = ({ job }) => {
           href="#"
           className="text-blue-500 text-sm font-medium hover:underline"
         >
-          {job.employer_name}
+          {job.id}
         </a>
         <h3 className="text-gray-800 font-semibold mt-2 truncate">
           {job.job_title}

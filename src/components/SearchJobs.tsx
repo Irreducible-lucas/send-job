@@ -2,7 +2,7 @@ import { layout } from "../styles";
 import { Search, SelectInput } from ".";
 import { GeneralList, Job } from "../type";
 import { useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
   jobClassifications: GeneralList[];
@@ -11,9 +11,27 @@ type Props = {
 };
 
 const SearchJobs = ({ jobClassifications, jobs, regions }: Props) => {
-  const [selectedClassification, setSelectedClassification] =
-    useState<string>("");
-  const [selectedRegion, setSelectedRegion] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleCategoryChange = (category: any) => {
+    if (searchParams.get("category") !== category) {
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
+        category: category,
+      });
+    }
+  };
+
+  const handleKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      const query = e.target.value;
+
+      setSearchParams({
+        ...Object.fromEntries(searchParams),
+        location: query,
+      });
+    }
+  };
 
   return (
     <section className={`bg-white ${layout.section}`}>
@@ -43,16 +61,14 @@ const SearchJobs = ({ jobClassifications, jobs, regions }: Props) => {
           </div>
           <div className="h-[50px]">
             <SelectInput
-              setSelectedValue={setSelectedClassification}
+              setSelectedValue={handleCategoryChange}
               data={jobClassifications}
               title="Select Job Classification"
             />
           </div>
           <div className="h-[50px]">
             <input
-              onChange={(e: any) => {
-                setFilter(e.target.value);
-              }}
+              onKeyDown={handleKeyPress}
               id="search"
               type="text"
               placeholder="location"

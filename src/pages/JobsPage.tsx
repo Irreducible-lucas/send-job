@@ -53,9 +53,7 @@ const JobsPage = () => {
       </div>
       <div>
         <SearchJobs regions={[]} jobs={[]} jobClassifications={jobCategories} />
-        {data && data.data.length > 0 && (
-          <PostedJobs showHeading={false} data={data.data} />
-        )}
+        {data && data.data.length > 0 && <PostedJobs showHeading={false} />}
       </div>
     </motion.div>
   );

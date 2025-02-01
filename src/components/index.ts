@@ -11,6 +11,7 @@ export { default as NewsLetter } from "./NewLetter";
 export { default as AboutCarousal } from "./AboutCarousal";
 export { default as JobCategorySection } from "./JobCategorySection";
 export { default as FeaturedJobList } from "./FeaturedJobList";
+export { default as MatchedJob } from "./MatchedJob";
 export { default as JobCard } from "./JobCard";
 export { default as SelectInput } from "./SelectInput";
 export { default as SearchJobs } from "./SearchJobs";

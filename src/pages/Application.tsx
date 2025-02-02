@@ -86,8 +86,6 @@ const Application = () => {
 
     let response = await applyForJob(data);
 
-    console.log(response, "Saving response");
-
     if (response?.data) {
       if (response.data.message === "already applied!") {
         toast.info("already applied!");

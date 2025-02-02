@@ -16,7 +16,7 @@ export const jobsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Job", "JobByCompany"],
+  tagTypes: ["Job", "SavedJobs"],
   endpoints: (builder) => ({
     getFeaturedJobs: builder.query<APIResponse, string>({
       query: () => `jobs/featured`,
@@ -63,22 +63,20 @@ export const jobsApi = createApi({
         currentArg?.pageNum !== previousArg?.pageNum,
     }),
 
-    applyForJob: builder.mutation({
-      query: (newApplication: Job) => ({
-        url: "application/",
+    saveJob: builder.mutation({
+      query: (payload: Job) => ({
+        url: "jobs/saved",
         method: "POST",
-        body: newApplication,
+        body: payload,
       }),
-      // invalidatesTags: ['Booking'],
+      invalidatesTags: ["SavedJobs"],
     }),
-    // get single booking
-    // getBooking: builder.query<BookingModel, {id: number}>({
-    //   query: ({id}) => `orders/${id}`,
-    // }),
-    // upfate booking status
-  }),
 
-  // update rejected table
+    getSavedJobs: builder.query<APIResponse, string>({
+      query: () => `jobs/saved`,
+      providesTags: ["SavedJobs"],
+    }),
+  }),
 });
 
 export const {
@@ -87,4 +85,6 @@ export const {
   useGetJobsByCategoryQuery,
   useGetMatchedJobsQuery,
   useSearchJobQuery,
+  useSaveJobMutation,
+  useGetSavedJobsQuery,
 } = jobsApi;

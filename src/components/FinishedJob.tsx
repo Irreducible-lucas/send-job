@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { finishJobs, finishTabs } from "../constant";
+import { finishTabs } from "../constant";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { useGetMyApplicationsQuery } from "../rtk/services/application";
 import { Job } from "../type";

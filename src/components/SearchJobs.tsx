@@ -1,7 +1,6 @@
 import { layout } from "../styles";
 import { Search, SelectInput } from ".";
 import { GeneralList, Job } from "../type";
-import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 type Props = {

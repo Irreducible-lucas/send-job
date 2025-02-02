@@ -30,7 +30,7 @@ export const links: Link[] = [
   },
 
   {
-    id: 1,
+    id: 6,
     text: "Application",
     url: "/applications",
     child: null,
@@ -93,105 +93,34 @@ export const jobCategories: JobCategory[] = [
     id: 1,
     title: "Marketing & Sale",
     jobsAvailable: 1526,
-    icon: Christiana,
   },
   {
     id: 2,
     title: "Customer Help",
     jobsAvailable: 1526,
-    icon: Christiana,
   },
   {
     id: 3,
     title: "Finance",
     jobsAvailable: 168,
-    icon: Christiana,
   },
   {
     id: 4,
     title: "Software",
     jobsAvailable: 300,
-    icon: Christiana,
   },
   {
     id: 5,
     title: "Human Resource",
     jobsAvailable: 125,
-    icon: Christiana,
   },
   {
     id: 6,
     title: "Customer Help",
     jobsAvailable: 1526,
-    icon: Christiana,
   },
 ];
-export const postedJobs: Job[] = [
-  {
-    id: 1,
-    companyLogo: ellipse,
-    companyName: "Facebook.com",
-    location: "New York, US",
-    jobTitle: "Graphic Designer fulltime",
-    jobType: "Fulltime",
-    postTime: "4 Minutes ago",
-    salary: "$500/hour",
-    description:
-      "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
-    applicants: {
-      profilePictures: [
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-      ],
-      total: 86,
-    },
-    skills: ["AdobeXd", "Figma", "Photoshop", "Corel"],
-  },
-  {
-    id: 2,
-    companyLogo: ellipse,
-    companyName: "Mackdonals.com",
-    location: "New York, US",
-    jobTitle: "Web Developer",
-    jobType: "Fulltime",
-    postTime: "4 Minutes ago",
-    salary: "$250/hour",
-    description:
-      "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
-    applicants: {
-      profilePictures: [Christiana, Christiana],
-      total: 50,
-    },
-    skills: ["AdobeXd", "Figma", "Photoshop", "Corel"],
-  },
-  {
-    id: 3,
-    companyLogo: ellipse,
-    companyName: "Cocacola.com",
-    location: "New York, US",
-    jobTitle: "Delivery Boy",
-    jobType: "Fulltime",
-    postTime: "4 Minutes ago",
-    salary: "$250/hour",
-    description:
-      "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
-    applicants: {
-      profilePictures: [
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-      ],
-      total: 200,
-    },
-    skills: ["AdobeXd", "Figma", "Photoshop", "Corel"],
-  },
-];
+
 export const recruiters: recruiterProps[] = [
   {
     id: 1,
@@ -769,8 +698,4 @@ export const savedJobs = [
     status: "Applied",
   },
 ];
-export const savedTabs = [
-  { label: "All", count: 5 },
-  { label: "Saved", count: 3 },
-  { label: "Applied", count: 2 },
-];
+export const savedTabs = [{ label: "All", count: 5 }];

@@ -1,10 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { useGetMatchedJobsQuery } from "../rtk/services/jobs";
+import {
+  useGetMatchedJobsQuery,
+  useSaveJobMutation,
+} from "../rtk/services/jobs";
 import { layout } from "../styles";
 import Button from "./Button";
 
 import { Job } from "../type";
 import PostedJobCard from "./PostedJobCard";
+import { toast } from "react-toastify";
 
 const MatchedJobs = () => {
   const userId: any = 5;
@@ -20,10 +24,32 @@ const MatchedJobs = () => {
     });
   };
 
+  const [saveJob] = useSaveJobMutation();
+
+  const onSaveJob = async (job: Job) => {
+    const data: any = {
+      jobId: job.id,
+      userId: 1,
+    };
+
+    let response: any = await saveJob(data);
+
+    if (response?.data) {
+      if (response.data.message === "Job Already Saved") {
+        toast.info("Job already save");
+        return;
+      }
+      toast.success("Job saved");
+    } else {
+      console.log(response.error);
+      toast.error("Unable to save Job");
+      // setErrorMessage('Error saving quote');
+    }
+  };
+
   return (
     <section className={`${layout.section} bg-blue-50`}>
       <div className="text-center mb-10">
-        {/* <p className="text-blue-600 font-medium">Job Category</p> */}
         <h2 className="lg:text-4xl text-2xl font-bold text-gray-800 mt-2">
           Jobs For You
         </h2>
@@ -33,7 +59,12 @@ const MatchedJobs = () => {
         {data &&
           data?.data.length > 0 &&
           data?.data.map((job: Job, index: number) => (
-            <PostedJobCard key={index} job={job} />
+            <PostedJobCard
+              key={index}
+              job={job}
+              handleNavigate={handleNavigate}
+              saveJob={onSaveJob}
+            />
           ))}
       </div>
     </section>

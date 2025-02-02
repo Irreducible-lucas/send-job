@@ -1,7 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { loginUser } from "../rtk/features/user/userSlice";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
+  const [user, setUser] = useState({});
   return (
     <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-8 h-full">
       <h2 className="text-xl font-bold mb-6">LOGIN</h2>
@@ -11,12 +17,14 @@ const LoginForm = () => {
       <div className="w-full max-w-sm space-y-4">
         {/* Username and Password Fields */}
         <input
-          type="text"
-          placeholder="Username/email"
+          type="email"
+          name="email"
+          placeholder="email"
           className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
           className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />

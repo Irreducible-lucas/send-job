@@ -96,9 +96,11 @@ export interface UserType {
   password: string;
   telephone: string;
   gender: GenderEnum;
-  birth_date: string;
-  interested_job: string;
-  work_location: string;
+  birthDate: string;
+  domicile: string;
+  skills: string;
+  photoUrl: string;
+  about_me: string;
 }
 
 export interface InterestedJobType {

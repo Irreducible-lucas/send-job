@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { UserState } from "../../models";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { LoginModel, UserState } from "../../models";
 import { UserType } from "../../../type";
+import axios from "../../../axios";
 
 const initialState: UserState = {
   user: {
@@ -8,12 +9,12 @@ const initialState: UserState = {
     email: "",
     password: "",
     telephone: "",
-    profile_image: "",
+    photoUrl: "",
     gender: "male",
-    birth_date: "",
-    job_title: "",
-    interested_job: "",
-    work_location: "",
+    birthDate: "",
+    about_me: "",
+    skills: "",
+    domicile: "",
   } as UserType,
   token: {} as [], //TokenModel,
   error: undefined,
@@ -22,34 +23,34 @@ const initialState: UserState = {
 };
 
 // Generates pending, fulfilled and rejected action types
-// export const loginUser = createAsyncThunk(
-//   'user/loginUser',
-//   async (body: LoginModel) => {
-//     try {
-//       let response: any = await axios.post(`${AUTH_BASE_URL}login`, body);
+export const loginUser = createAsyncThunk(
+  "user/loginUser",
+  async (body: LoginModel) => {
+    try {
+      let response: any = await axios.post("/login", body);
 
-//       console.log(response, 'from server 1');
-//       if (!response.data?.token) {
-//         return response.data;
-//       }
-//       // get server token
+      console.log(response, "from backend server");
+      // if (!response.data?.token) {
+      //   return response.data;
+      // }
+      // get server token
 
-//       response = await getServerToken(body.UserName, response.data?.token);
+      // response = await getServerToken(body.UserName, response.data?.token);
 
-//       if (!response) return 'Authentication Error';
+      // if (!response) return 'Authentication Error';
 
-//       if (response?.user?.InActive) return 'InActive';
+      // if (response?.user?.InActive) return 'InActive';
 
-//       await setHeaders(response);
-//       storeAuthToken(response);
-//       storeUserName(body.UserName);
+      // await setHeaders(response);
+      // storeAuthToken(response);
+      // storeUserName(body.UserName);
 
-//       return response;
-//     } catch (error) {
-//       throw error;
-//     }
-//   },
-// );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 // export const registerUser = createAsyncThunk(
 //   'user/registerUser',
@@ -146,55 +147,56 @@ const userSlice = createSlice({
       state.authenticated = initialState.authenticated;
     },
   },
-  // extraReducers: builder => {
-  //   builder.addCase(getAuthToken.fulfilled, (state, action) => {
-  //     if (action?.payload?.token && action?.payload?.secret) {
-  //       state.token = action.payload;
-  //     }
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.fulfilled, (state, action) => {
+        //   state.loadingUI = false;
+        state.token = action.payload;
+        console.log(action, "from slice");
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        // state.loadingUI = false;
+        console.log(action.error, "from slice");
+      });
 
-  //     state.loading = false;
-  //   });
+    //   builder.addCase(getAuthToken.fulfilled, (state, action) => {
+    //     if (action?.payload?.token && action?.payload?.secret) {
+    //       state.token = action.payload;
+    //     }
 
-  //   builder.addCase(loginUser.fulfilled, (state, action) => {
-  //     //   state.loadingUI = false;
-  //     state.token = action.payload;
-  //   });
+    //     state.loading = false;
+    //   });
 
-  //   builder.addCase(loginUser.rejected, (state, action) => {
-  //     //   state.loadingUI = false;
-  //     // console.log(action.error, 'from slice');
-  //   });
+    //   // register user state case
 
-  //   // register user state case
+    //   // fetch user state cases
+    //   builder.addCase(
+    //     fetchUser.fulfilled,
+    //     (state, action: PayloadAction<UserModel>) => {
+    //       console.log('fulfiled');
+    //       if (action.payload?.InActive) {
+    //         state.error = 'Your account is inactive';
+    //         state.authenticated = false;
+    //       } else {
+    //         state.user = action.payload;
+    //         state.error = '';
+    //         state.authenticated = true;
+    //       }
+    //       state.loading = false;
+    //     },
+    //   );
 
-  //   // fetch user state cases
-  //   builder.addCase(
-  //     fetchUser.fulfilled,
-  //     (state, action: PayloadAction<UserModel>) => {
-  //       console.log('fulfiled');
-  //       if (action.payload?.InActive) {
-  //         state.error = 'Your account is inactive';
-  //         state.authenticated = false;
-  //       } else {
-  //         state.user = action.payload;
-  //         state.error = '';
-  //         state.authenticated = true;
-  //       }
-  //       state.loading = false;
-  //     },
-  //   );
+    //   builder.addCase(fetchUser.pending, (state, action) => {
+    //     state.error = '';
+    //     if (!state.authenticated) state.loading = true;
+    //   });
 
-  //   builder.addCase(fetchUser.pending, (state, action) => {
-  //     state.error = '';
-  //     if (!state.authenticated) state.loading = true;
-  //   });
+    //   builder.addCase(fetchUser.rejected, (state, action) => {
+    //     state.error = action.error.message || 'Something went wrong';
 
-  //   builder.addCase(fetchUser.rejected, (state, action) => {
-  //     state.error = action.error.message || 'Something went wrong';
-
-  //     state.loading = false;
-  //   });
-  // },
+    //     state.loading = false;
+    //   });
+  },
 });
 
 export default userSlice.reducer;

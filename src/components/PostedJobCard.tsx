@@ -1,12 +1,19 @@
 import React from "react";
 import { Job } from "../type";
 import moment from "moment";
+import { FaArrowRight, FaBookmark } from "react-icons/fa";
 
 interface JobCardProps {
   job: Job;
+  handleNavigate: (val: Job) => void;
+  saveJob: (val: Job) => void;
 }
 
-const PostedJobCard: React.FC<JobCardProps> = ({ job }) => {
+const PostedJobCard: React.FC<JobCardProps> = ({
+  job,
+  handleNavigate,
+  saveJob,
+}) => {
   return (
     <div className="p-6 bg-white shadow-md rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-200">
       <div className="flex justify-between items-start">
@@ -25,7 +32,7 @@ const PostedJobCard: React.FC<JobCardProps> = ({ job }) => {
           href="#"
           className="text-blue-500 text-sm font-medium hover:underline"
         >
-          {job.employer_name}
+          {job.id}
         </a>
         <h3 className="text-gray-800 font-semibold mt-2 truncate">
           {job.job_title}
@@ -39,26 +46,26 @@ const PostedJobCard: React.FC<JobCardProps> = ({ job }) => {
       <p className="text-gray-600 text-sm mt-2 line-clamp-2">
         {job.job_description}
       </p>
-      <div className="flex items-center justify-between">
-        {/* <div className="flex items-center mt-4">
-          {job.applicants.profilePictures.map((picture, index) => (
-            <img
-              key={index}
-              src={picture}
-              alt={`Applicant ${index + 1}`}
-              className="w-8 h-8 rounded-full border-2 border-white -ml-2"
-            />
-          ))}
-          <span className="text-gray-600 text-sm ml-2">
-            +{job.applicants.total}
-          </span>
-        </div> */}
-        <a
-          href="#"
-          className=" text-blue-500  hover:border-b-[1px] border-red-500 border-dotted  "
+      <div className="flex justify-between items-center mt-4">
+        <button
+          onClick={() => {
+            saveJob(job);
+          }}
+          className="flex items-center space-x-2 text-sm border border-gray-300 rounded-lg px-4 py-2 hover:border-gray-400 transition-all"
         >
-          Apply Job
-        </a>
+          <FaBookmark className="text-gray-600" />
+          <span>Save</span>
+        </button>
+
+        <button
+          onClick={() => {
+            handleNavigate(job);
+          }}
+          className="flex items-center space-x-2 text-sm border border-blue-600 text-blue-600 rounded-lg px-4 py-2 hover:bg-blue-600 hover:text-white transition-all"
+        >
+          <span>Apply</span>
+          <FaArrowRight />
+        </button>
       </div>
       {/* <div className="flex flex-wrap gap-2 mt-6">
         {job.skills.map((skill, index) => (

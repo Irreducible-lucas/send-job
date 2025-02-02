@@ -1,11 +1,32 @@
 import { motion } from "framer-motion";
 import styles from "../styles";
-import { AboutCarousal } from "../components";
+import { AboutCarousal, PostedJobs } from "../components";
 import { event } from "../assets";
 import { SearchJobs } from "../components";
-import PostedJob from "../components/PostedJob";
 import { jobCategories } from "../constant";
+import { useSearchJobQuery } from "../rtk/services/jobs";
+import { useNavigate, useSearchParams } from "react-router-dom";
 const JobsPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const searchParamsObj = Object.fromEntries([...searchParams]);
+
+  const { data, isLoading, error } = useSearchJobQuery(
+    { searchParamsObj, pageNum: "1", limit: 10 }, // Pass an object
+    { refetchOnMountOrArgChange: true }
+  );
+
+  // if (isLoading) return <p>Loading jobs...</p>;
+  // if (error) return <p>Error fetching jobs</p>;
+
+  let navigate = useNavigate();
+
+  const handleNavigate = (item: any) => {
+    navigate(`/jobs/${item.job_title}`, {
+      state: { state: item },
+    });
+  };
+
   return (
     <motion.div
       id="home"
@@ -29,8 +50,7 @@ const JobsPage = () => {
       </div>
       <div>
         <SearchJobs regions={[]} jobs={[]} jobClassifications={jobCategories} />
-
-        <PostedJob showHeading={false} />
+        {data && data.data.length > 0 && <PostedJobs showHeading={false} />}
       </div>
     </motion.div>
   );

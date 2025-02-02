@@ -9,10 +9,12 @@ export interface JobCategory {
   id: number;
   title: string;
   jobsAvailable: number;
-  icon: string;
+  icon?: string;
 }
 
 export interface Job {
+  jobId?: number;
+  status: string;
   createdAt: Date;
   id: number;
   employer_name: string;

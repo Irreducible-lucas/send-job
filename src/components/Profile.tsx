@@ -10,12 +10,15 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../rtk/hooks";
 
 interface ProfileProps {
   userImage?: string;
 }
 
 const Profile: React.FC<ProfileProps> = ({ userImage }) => {
+  const { user } = useAppSelector((state) => state.user);
+
   const [employerVisibility, setEmployerVisibility] = useState(true);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(
@@ -48,7 +51,7 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
     <div className="max-w-2xl mx-auto p-4 border bg-white">
       {/* Header */}
       <div className="flex items-center justify-between space-x-4">
-        <div className="text-3xl font-bold">AKINSANYA AYOBAMI</div>
+        <div className="text-3xl font-bold">{user?.name}</div>
         <label htmlFor="profile-image-upload" className="cursor-pointer">
           <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white text-lg font-medium overflow-hidden">
             {profileImage ? (
@@ -75,16 +78,16 @@ const Profile: React.FC<ProfileProps> = ({ userImage }) => {
       <div className="mt-4 text-sm text-gray-700 space-y-2">
         <div className="flex items-center space-x-2">
           <FontAwesomeIcon icon={faEnvelope} className="text-gray-600" />
-          <span>luqmonayobami3600@gmail.com</span>
+          <span>{user?.email}</span>
         </div>
         <div className="flex items-center space-x-2">
           <FontAwesomeIcon icon={faPhone} className="text-gray-600" />
-          <span>0810 842 0169</span>
+          <span>{user?.telephone}</span>
         </div>
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
             <FontAwesomeIcon icon={faLocationDot} className="text-gray-600" />
-            <span>{location}</span>
+            <span>{user?.work_location}</span>
           </div>
           <Link
             to="profile-edit"

@@ -8,13 +8,22 @@ import {
 import { jobDetails } from "../constant";
 import { Job } from "../type";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   job: Job;
-  // handleNavigate: (val: Job) => void;
+  showButton?: boolean;
 }
 
-const JobDetailContent = ({ job }: Props) => {
+const JobDetailContent = ({ job, showButton = true }: Props) => {
+  let navigate = useNavigate();
+
+  const handleNavigate = (item: any) => {
+    navigate(`/jobs/apply/${item.job_title}`, {
+      state: { state: item },
+    });
+  };
+
   return (
     <div>
       <div className="space-y-6 ">
@@ -24,9 +33,14 @@ const JobDetailContent = ({ job }: Props) => {
             <h1 className="text-2xl font-bold mb-2">{job?.job_title}</h1>
             <div className="flex items-center space-x-3">
               {/* Apply Now Button */}
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                Apply Now
-              </button>
+              {showButton && (
+                <button
+                  onClick={() => handleNavigate(job)}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                >
+                  Apply Now
+                </button>
+              )}
 
               {/* Bookmark Icon */}
               <button className="bg-gray-100 p-2 rounded-lg hover:bg-gray-200 transition">

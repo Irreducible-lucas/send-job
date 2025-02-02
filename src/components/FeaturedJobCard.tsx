@@ -4,9 +4,10 @@ import { FaBookmark, FaArrowRight } from "react-icons/fa";
 interface Props {
   job: Job;
   handleNavigate: (val: Job) => void;
+  saveJob: (val: Job) => void;
 }
 
-const FeaturedJobCard = ({ job, handleNavigate }: Props) => {
+const FeaturedJobCard = ({ job, handleNavigate, saveJob }: Props) => {
   const {
     employer_logo,
     employer_name,
@@ -17,6 +18,7 @@ const FeaturedJobCard = ({ job, handleNavigate }: Props) => {
     posted,
     job_salary_currency,
   } = job;
+
   return (
     <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-xs border border-gray-200">
       <div className="flex justify-between items-center text-sm mb-2">
@@ -42,7 +44,12 @@ const FeaturedJobCard = ({ job, handleNavigate }: Props) => {
         {/* <span className="text-black text-sm"> / Month</span> */}
       </p>
       <div className="flex justify-between items-center mt-4">
-        <button className="flex items-center space-x-2 text-sm border border-gray-300 rounded-lg px-4 py-2 hover:border-gray-400 transition-all">
+        <button
+          onClick={() => {
+            saveJob(job);
+          }}
+          className="flex items-center space-x-2 text-sm border border-gray-300 rounded-lg px-4 py-2 hover:border-gray-400 transition-all"
+        >
           <FaBookmark className="text-gray-600" />
           <span>Save</span>
         </button>

@@ -3,7 +3,6 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
-  Outlet,
 } from "react-router-dom";
 import {
   ErrorPage,
@@ -20,32 +19,35 @@ import {
   Home,
   TalentSolutions,
   HireTalent,
-  SkillAssessment,
   UpskillTeam,
   CareerAdvice,
   HiringTips,
   TrainingPrograms,
   Faqs,
-  PostJob,
   Resources,
   JobsPage,
   LoginPage,
   SignUpPage,
   JobDetail,
+  Application,
+  ApplicationSucessful,
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
-import SavedJobTab from "./components/SavedJobTab";
-
-// const ProfileLayout = () => {
-//   return (
-//     <div>
-//       <h1>Profile</h1>
-//       <Outlet />
-//     </div>
-//   );
-// };
+import JobsTab from "./pages/JobsTab";
+import { useEffect } from "react";
+import { fetchUser } from "./rtk/features/user/userSlice";
+import { useAppDispatch } from "./rtk/hooks";
 
 const App = () => {
+  //
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const testUserEmail = "ayt@gmail.com";
+    dispatch(fetchUser(testUserEmail));
+  }, []);
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" errorElement={<ErrorPage />}>
@@ -68,16 +70,19 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/applications" element={<JobsTab />} />
           <Route path="/talent-solution" element={<TalentSolutions />} />
           <Route path="/resources" element={<Resources />} />
           Talent Solutions Sub-Routes
           {/* <Route path="/talent-solution/post-job" element={<PostJob />} /> */}
           <Route path="/jobs/:slug" element={<JobDetail />} />
+          <Route path="/jobs/apply/:slug" element={<Application />} />
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
-          <Route
+          <Route path="/jobs/success" element={<ApplicationSucessful />} />
+          {/* <Route
             path="talent-solution/skill-assessment"
             element={<SavedJobTab />}
-          />
+          /> */}
           <Route path="upskill-team" element={<UpskillTeam />} />
           {/* Resources Sub-Routes */}
           <Route path="resources/career-advice" element={<CareerAdvice />} />

@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { store } from "..";
 import { BASE_URL } from "../../constant";
 import { APIResponse, Job } from "../../type";
 
@@ -17,7 +16,7 @@ export const jobsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Job", "JobByCompany"],
+  tagTypes: ["Job", "SavedJobs"],
   endpoints: (builder) => ({
     getFeaturedJobs: builder.query<APIResponse, string>({
       query: () => `jobs/featured`,
@@ -33,26 +32,51 @@ export const jobsApi = createApi({
       query: (id) => `jobs/company/${id}`,
     }),
 
+    getAllJobs: builder.query<APIResponse, { id: number }>({
+      query: (id) => `jobs/`,
+    }),
+
     getMatchedJobs: builder.query<APIResponse, { id: number }>({
       query: (id) => `jobs/matched/${id}`,
     }),
 
-    // createBooking: builder.mutation({
-    //   query: (newBooking: BookingModel) => ({
-    //     url: 'orders/',
-    //     method: 'POST',
-    //     body: newBooking,
-    //   }),
-    //   invalidatesTags: ['Booking'],
-    // }),
-    // get single booking
-    // getBooking: builder.query<BookingModel, {id: number}>({
-    //   query: ({id}) => `orders/${id}`,
-    // }),
-    // upfate booking status
-  }),
+    searchJob: builder.query({
+      query: ({ searchParamsObj = {}, pageNum = 1, limit = 10 }) => ({
+        url: "jobs/search",
+        params: {
+          page: pageNum, // Keep consistency with getJobs
+          limit,
+          ...searchParamsObj, // Spread additional search filters
+        },
+      }),
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+      merge: (currentCache, newItems, { arg }) => {
+        // If it's the first page, replace the cache, otherwise append
+        if (arg.pageNum === 1) {
+          currentCache.data = newItems.data; // Replace for first page
+        } else {
+          currentCache.data = [...(currentCache.data || []), ...newItems.data]; // Append for next pages
+        }
+        currentCache.hasMore = newItems.hasMore;
+      },
+      forceRefetch: ({ currentArg, previousArg }) =>
+        currentArg?.pageNum !== previousArg?.pageNum,
+    }),
 
-  // update rejected table
+    saveJob: builder.mutation({
+      query: (payload: Job) => ({
+        url: "jobs/saved",
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["SavedJobs"],
+    }),
+
+    getSavedJobs: builder.query<APIResponse, string>({
+      query: () => `jobs/saved`,
+      providesTags: ["SavedJobs"],
+    }),
+  }),
 });
 
 export const {
@@ -60,4 +84,7 @@ export const {
   useGetJobsByCompanyIdQuery,
   useGetJobsByCategoryQuery,
   useGetMatchedJobsQuery,
+  useSearchJobQuery,
+  useSaveJobMutation,
+  useGetSavedJobsQuery,
 } = jobsApi;

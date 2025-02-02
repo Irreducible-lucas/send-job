@@ -1,17 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import {
-  useGetFeaturedJobsQuery,
+  useGetMatchedJobsQuery,
   useSaveJobMutation,
 } from "../rtk/services/jobs";
 import { layout } from "../styles";
-import FeaturedJobCard from "./FeaturedJobCard";
+import Button from "./Button";
+
 import { Job } from "../type";
+import PostedJobCard from "./PostedJobCard";
 import { toast } from "react-toastify";
 
-const FeaturedJobList = () => {
-  const { data, isLoading } = useGetFeaturedJobsQuery("", {
+const MatchedJobs = () => {
+  const userId: any = 10;
+  const { data, error } = useGetMatchedJobsQuery(userId, {
     refetchOnMountOrArgChange: true,
   });
+
   let navigate = useNavigate();
 
   const handleNavigate = (item: any) => {
@@ -31,8 +35,8 @@ const FeaturedJobList = () => {
     let response: any = await saveJob(data);
 
     if (response?.data) {
-      if (response.data.message === "Job removed from saved jobs") {
-        toast.success("Job removed from saved job");
+      if (response.data.message === "Job Already Saved") {
+        toast.info("Job already save");
         return;
       }
       toast.success("Job saved");
@@ -46,15 +50,16 @@ const FeaturedJobList = () => {
   return (
     <section className={`${layout.section} bg-blue-50`}>
       <div className="text-center mb-10">
-        <h2 className="lg:text-4xl text-2xl font-bold text-gray-800 ">
-          Featured Jobs
+        <h2 className="lg:text-4xl text-2xl font-bold text-gray-800 mt-2">
+          Jobs For You
         </h2>
       </div>
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data &&
           data?.data.length > 0 &&
           data?.data.map((job: Job, index: number) => (
-            <FeaturedJobCard
+            <PostedJobCard
               key={index}
               job={job}
               handleNavigate={handleNavigate}
@@ -66,4 +71,4 @@ const FeaturedJobList = () => {
   );
 };
 
-export default FeaturedJobList;
+export default MatchedJobs;

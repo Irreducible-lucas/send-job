@@ -1,7 +1,7 @@
-import styles, { layout } from "../styles";
-import { SelectInput, JobCard } from ".";
+import { layout } from "../styles";
+import { Search, SelectInput } from ".";
 import { GeneralList, Job } from "../type";
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
   jobClassifications: GeneralList[];
@@ -10,27 +10,36 @@ type Props = {
 };
 
 const SearchJobs = ({ jobClassifications, jobs, regions }: Props) => {
-  const [selectedClassification, setSelectedClassification] =
-    useState<string>("");
-  const [selectedRegion, setSelectedRegion] = useState<string>("");
-  const [filter, setFilter] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
- 
+  const handleCategoryChange = (category: any) => {
+    if (searchParams.get("category") !== category) {
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
+        category: category,
+      });
+    }
+  };
+
+  const handleKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      const query = e.target.value;
+
+      setSearchParams({
+        ...Object.fromEntries(searchParams),
+        location: query,
+      });
+    }
+  };
 
   return (
     <section className={`bg-white ${layout.section}`}>
       <section className="grid grid-cols-1 lg:grid-cols-[1fr_150px] gap-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="relative">
-            <input
-              onChange={(e: any) => {
-                setFilter(e.target.value);
-              }}
-              id="search"
-              type="text"
-              placeholder="Search here..."
-              className="w-full h-[50px] px-4 focus:outline-secondary border border-lightgrey rounded-lg"
-            />
+            <div className="border h-[50px] border-lightgrey rounded-lg">
+              <Search />
+            </div>
             <label
               htmlFor="search"
               className="absolute top-1/2 -translate-y-[50%] -translate-x-2 right-0"
@@ -51,16 +60,14 @@ const SearchJobs = ({ jobClassifications, jobs, regions }: Props) => {
           </div>
           <div className="h-[50px]">
             <SelectInput
-              setSelectedValue={setSelectedClassification}
+              setSelectedValue={handleCategoryChange}
               data={jobClassifications}
               title="Select Job Classification"
             />
           </div>
           <div className="h-[50px]">
-          <input
-              onChange={(e: any) => {
-                setFilter(e.target.value);
-              }}
+            <input
+              onKeyDown={handleKeyPress}
               id="search"
               type="text"
               placeholder="location"
@@ -74,8 +81,6 @@ const SearchJobs = ({ jobClassifications, jobs, regions }: Props) => {
           </button>
         </div>
       </section>
-
-    
     </section>
   );
 };

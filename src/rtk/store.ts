@@ -3,6 +3,7 @@ import userReducer from "./features/user/userSlice";
 import jobInterestReducer from "./features/user/jobInterestSlice";
 
 import { jobsApi } from "./services/jobs";
+import { applicationApi } from "./services/application";
 
 const store = configureStore({
   reducer: {
@@ -11,10 +12,14 @@ const store = configureStore({
     user: userReducer,
     jobInterests: jobInterestReducer,
     [jobsApi.reducerPath]: jobsApi.reducer,
+    [applicationApi.reducerPath]: applicationApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(jobsApi.middleware),
+    getDefaultMiddleware().concat(
+      jobsApi.middleware,
+      applicationApi.middleware
+    ),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

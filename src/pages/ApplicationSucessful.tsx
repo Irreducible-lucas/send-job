@@ -35,12 +35,12 @@ const ApplicationSuccessful = () => {
           >
             Return Home
           </button>
-          <button
+          {/* <button
             onClick={handleGoBack}
             className="bg-transparent border-2 border-gray-300 text-gray-800 py-3 px-8 rounded-full text-lg font-semibold hover:bg-gray-200 transition-transform transform hover:scale-110"
           >
             Go Back
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

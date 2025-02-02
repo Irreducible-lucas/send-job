@@ -1,9 +1,8 @@
 import { Christiana, ellipse, event } from "../assets";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+
 import {
   FeaturedJobProps,
   FooterProps,
-  Job,
   JobCategory,
   JobDetailSidebarProps,
   Link,
@@ -12,18 +11,8 @@ import {
   recruiterProps,
   Testimonial,
 } from "../type";
-import {
-  FeaturedJobProps,
-  FooterProps,
-  Job,
-  JobCategory,
-  Link,
-  NewsCardProps,
-  recruiterProps,
-  Testimonial,
-} from "../type";
 
-export const BASE_URL = "http://localhost:8080/api/";
+export const BASE_URL = "http://localhost:3000/api/";
 
 export const links: Link[] = [
   {
@@ -36,6 +25,12 @@ export const links: Link[] = [
     id: 2,
     text: "Jobs",
     url: "/jobs",
+  },
+
+  {
+    id: 6,
+    text: "Application",
+    url: "/applications",
     child: null,
   },
 
@@ -90,110 +85,40 @@ export const links: Link[] = [
     ],
   },
 ];
+
 export const jobCategories: JobCategory[] = [
   {
     id: 1,
     title: "Marketing & Sale",
     jobsAvailable: 1526,
-    icon: Christiana,
   },
   {
     id: 2,
     title: "Customer Help",
     jobsAvailable: 1526,
-    icon: Christiana,
   },
   {
     id: 3,
     title: "Finance",
     jobsAvailable: 168,
-    icon: Christiana,
   },
   {
     id: 4,
     title: "Software",
     jobsAvailable: 300,
-    icon: Christiana,
   },
   {
     id: 5,
     title: "Human Resource",
     jobsAvailable: 125,
-    icon: Christiana,
   },
   {
     id: 6,
     title: "Customer Help",
     jobsAvailable: 1526,
-    icon: Christiana,
   },
 ];
-export const postedJobs: Job[] = [
-  {
-    id: 1,
-    companyLogo: ellipse,
-    companyName: "Facebook.com",
-    location: "New York, US",
-    jobTitle: "Graphic Designer fulltime",
-    jobType: "Fulltime",
-    postTime: "4 Minutes ago",
-    salary: "$500/hour",
-    description:
-      "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
-    applicants: {
-      profilePictures: [
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-      ],
-      total: 86,
-    },
-    skills: ["AdobeXd", "Figma", "Photoshop", "Corel"],
-  },
-  {
-    id: 2,
-    companyLogo: ellipse,
-    companyName: "Mackdonals.com",
-    location: "New York, US",
-    jobTitle: "Web Developer",
-    jobType: "Fulltime",
-    postTime: "4 Minutes ago",
-    salary: "$250/hour",
-    description:
-      "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
-    applicants: {
-      profilePictures: [Christiana, Christiana],
-      total: 50,
-    },
-    skills: ["AdobeXd", "Figma", "Photoshop", "Corel"],
-  },
-  {
-    id: 3,
-    companyLogo: ellipse,
-    companyName: "Cocacola.com",
-    location: "New York, US",
-    jobTitle: "Delivery Boy",
-    jobType: "Fulltime",
-    postTime: "4 Minutes ago",
-    salary: "$250/hour",
-    description:
-      "Lorem Ipsum is simply dummy text of printing and typesetting industry.",
-    applicants: {
-      profilePictures: [
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-        Christiana,
-      ],
-      total: 200,
-    },
-    skills: ["AdobeXd", "Figma", "Photoshop", "Corel"],
-  },
-];
+
 export const recruiters: recruiterProps[] = [
   {
     id: 1,
@@ -664,10 +589,11 @@ export const steps = [
     description: "Choose your desired work location to proceed.",
   },
 ];
-export  const processJobs = [
+export const processJobs = [
   {
     id: 1,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -676,7 +602,8 @@ export  const processJobs = [
   },
   {
     id: 2,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -685,7 +612,8 @@ export  const processJobs = [
   },
   {
     id: 3,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -701,13 +629,14 @@ export const processTabs = [
 export const finishTabs = [
   { label: "All", count: 1 },
   { label: "Received", count: 0 },
-  { label: "Rejected", count: 1 },
+  { label: "Rejected", count: 0 },
 ];
 
 export const finishJobs = [
   {
     id: 1,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -718,7 +647,8 @@ export const finishJobs = [
 export const savedJobs = [
   {
     id: 1,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Frontend Developer",
     salary: "$60,000",
     company: "Tech Corp",
@@ -727,7 +657,8 @@ export const savedJobs = [
   },
   {
     id: 2,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$55,000",
     company: "Creative Studio",
@@ -736,7 +667,8 @@ export const savedJobs = [
   },
   {
     id: 3,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Backend Developer",
     salary: "$70,000",
     company: "Data Systems",
@@ -745,7 +677,8 @@ export const savedJobs = [
   },
   {
     id: 4,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Marketing Specialist",
     salary: "$50,000",
     company: "Brand Solutions",
@@ -754,7 +687,8 @@ export const savedJobs = [
   },
   {
     id: 5,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Product Manager",
     salary: "$80,000",
     company: "Innovation Labs",
@@ -762,8 +696,4 @@ export const savedJobs = [
     status: "Applied",
   },
 ];
-export const savedTabs = [
-  { label: "All", count: 5 },
-  { label: "Saved", count: 3 },
-  { label: "Applied", count: 2 },
-];
+export const savedTabs = [{ label: "All", count: 5 }];

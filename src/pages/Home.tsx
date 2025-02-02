@@ -5,6 +5,7 @@ import {
   MatchedJob,
   NewsLetter,
   PostedJobs,
+  SavedJobsTab,
 } from "../components";
 import { useEffect } from "react";
 

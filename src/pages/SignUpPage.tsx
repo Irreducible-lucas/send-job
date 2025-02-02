@@ -1,155 +1,178 @@
 import { useState, FC } from "react";
 import SignUpStepOne from "../components/SignUpStepOne";
 import SignUpStepTwo from "../components/SignUpStepTwo";
-import SignUpStepThree from "../components/SignUpStepThree";
-import SignUpStepFour from "../components/SignUpStepFour";
-import { steps } from "../constant";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { UserFormInput, GenderEnum } from "../type";
+import { Stepper } from "react-form-stepper";
+import axios from "../axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../rtk";
+import { useNavigate } from "react-router-dom";
+import { Spinner } from "../assets";
+
+const schema = yup.object().shape({
+  firstname: yup.string().required("First name is required"),
+  lastname: yup.string().required("Last name is required"),
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .required("Password is required"),
+  telephone: yup.string().required("Telephone is required"),
+  gender: yup
+    .mixed<GenderEnum>()
+    .oneOf(Object.values(GenderEnum))
+    .required("Gender is required"),
+  birth_date: yup.string().required("Birth date is required"),
+});
 
 const SignUpPage: FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const job_interests = useSelector(
+    (state: RootState) => state.jobInterests.jobList
+  );
+  const {
+    register,
+    trigger,
+    getValues,
+    formState: { errors },
+  } = useForm<UserFormInput>({ resolver: yupResolver(schema) });
+
   const [step, setStep] = useState<number>(1);
 
-  const renderButtons = () => {
-    return (
-      <div className="mt-6 flex justify-between">
-        {step > 1 && (
-          <button
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-            onClick={() => setStep(step - 1)}
-          >
-            Previous
-          </button>
-        )}
+  const handleSubmit = async () => {
+    const data = getValues();
+    if (job_interests.length === 0) {
+      alert("Please add atleast one job you are interested in.");
+    }
 
-        {step < steps.length ? (
-          <button
-            className="ml-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            onClick={() => setStep(step + 1)}
-          >
-            Next
-          </button>
-        ) : (
-          <button
-            className="ml-auto px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-            onClick={() => alert("Get Started!")}
-          >
-            Get Started
-          </button>
-        )}
-      </div>
-    );
+    const body = {
+      name: `${data.firstname} ${data.lastname}`,
+      email: data.email,
+      password: data.password,
+      gender: data.gender,
+      telephone: data.telephone,
+      workLocation: "",
+      skills: "",
+      jobTitle: "",
+      domicile: "",
+      photoUrl: "https://avatars.githubusercontent.com/u/32225588",
+      jobInterests: job_interests,
+    };
+
+    try {
+      setIsLoading(true);
+      const { data }: any = await axios.post("/users/signup", body);
+      setIsLoading(false);
+      alert(data.message);
+      navigate("/");
+    } catch (error) {
+      setIsLoading(false);
+      console.log("Error occured:", error);
+    }
+  };
+
+  const validateStep = async () => {
+    let valid = false;
+    switch (step) {
+      case 1:
+        valid = await trigger([
+          "firstname",
+          "lastname",
+          "email",
+          "password",
+          "telephone",
+          "gender",
+          "birth_date",
+        ]);
+        break;
+      default:
+        break;
+    }
+    return valid;
+  };
+
+  const handleNext = async () => {
+    const valid = await validateStep();
+    if (valid && step === 1) {
+      setStep((prevStep) => Math.min(prevStep + 1, 2));
+    }
   };
 
   const renderContent = () => {
     switch (step) {
       case 1:
-        return <SignUpStepOne />;
+        return <SignUpStepOne register={register} errors={errors} />;
       case 2:
         return <SignUpStepTwo />;
-      case 3:
-        return <SignUpStepThree />;
-      case 4:
-        return <SignUpStepFour />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen lg:flex-row">
-      {/* Sidebar for Large Devices */}
-      <div className="hidden lg:flex lg:w-1/4 bg-gray-100 p-6 shadow-lg flex-col">
-        <div className="text-lg font-bold mb-10">Send Job</div>
-        <ul className="space-y-6 flex-1">
-          {steps.map((item, index) => (
-            <li
-              key={index}
-              className={`flex items-start space-x-4 cursor-pointer ${
-                index + 1 === step ? "text-black" : "text-gray-500"
-              }`}
-              onClick={() => setStep(index + 1)}
-            >
-              <span
-                className={`w-6 h-6 flex items-center justify-center rounded-full border ${
-                  index + 1 === step
-                    ? "bg-green-500 text-white border-green-500"
-                    : "border-gray-300"
-                }`}
-              >
-                {index + 1}
-              </span>
-              <div>
-                <p className="font-medium">{item.title}</p>
-                <p className="text-sm">{item.description}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-auto flex justify-between">
-          <a href="/">
-            <button className="text-sm text-gray-500 hover:underline flex items-center">
-              <span>&lt;</span> Back to home
-            </button>
-          </a>
-          <a href="login">
-            <button className="text-sm text-blue-500 hover:underline">
-              Sign In
-            </button>
-          </a>
+    <div className="h-screen w-full grid place-items-center bg-gray-100">
+      <div className="bg-white p-6 w-full lg:max-w-xl h-full lg:h-4/5 rounded-lg shadow-lg">
+        <div>
+          <h1 className="text-xl font-bold text-blue-600 text-center">
+            Create a Job Seeker Account
+          </h1>
+          <Stepper
+            styleConfig={{
+              activeBgColor: "rgb(37 99 235)",
+              completedBgColor: "rgb(37 99 235)",
+            }}
+            connectorStyleConfig={{
+              activeColor: "rgb(37 99 235)",
+              completedColor: "rgb(37 99 235)",
+            }}
+            connectorStateColors
+            steps={[{ label: "Personal Data" }, { label: "Interested Job" }]}
+            activeStep={step - 1}
+          />
         </div>
-      </div>
+        <form>
+          <div className="flex flex-1 flex-col justify-between">
+            <div className="lg:max-h-[250px] overflow-auto">
+              {renderContent()}
+            </div>
 
-      {/* Stepper for Small and Medium Devices */}
-      <div className="block lg:hidden w-full max-w-md mx-auto overflow-x-hidden">
-        <div className="flex items-center justify-around mt-6">
-          {steps.map((item, index) => (
-            <div key={index} className="flex items-center space-x-2">
-              {/* Circle with Step Number */}
-              <div
-                className={`w-10 h-10 flex items-center justify-center rounded-full text-white font-bold ${
-                  step > index
-                    ? "bg-blue-500"
-                    : step === index + 1
-                    ? "bg-blue-300"
-                    : "bg-gray-300"
-                }`}
-                onClick={() => setStep(index + 1)}
+            <div className="grid grid-cols-[150px_1fr] gap-8 mt-4">
+              <button
+                disabled={step === 1}
+                className="bg-black disabled:bg-black/10 py-2 w-full text-white rounded-lg"
+                type="button"
+                onClick={() => setStep((prevStep) => Math.max(prevStep - 1, 1))}
               >
-                {index + 1}
-              </div>
-
-              {/* Line Between Steps */}
-              {index < steps.length - 1 && (
-                <div
-                  className={`h-1 w-6 ${
-                    step > index ? "bg-blue-500" : "bg-gray-300"
-                  }`}
-                ></div>
+                Previous
+              </button>
+              {step === 2 ? (
+                <button
+                  className="bg-green-600 py-2 w-full disabled:bg-green-700/10 text-white rounded-lg flex justify-center items-center"
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Submitting..." : "Submit"}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="bg-blue-700 py-2 w-full text-white rounded-lg"
+                  onClick={handleNext}
+                >
+                  Next
+                </button>
               )}
             </div>
-          ))}
-        </div>
-
-        {/* Step Titles */}
-        <div className="flex justify-around mt-2">
-          {steps.map((item, index) => (
-            <p
-              key={index}
-              className={`text-sm ${
-                step === index + 1 ? "text-blue-500" : "text-gray-500"
-              } text-center w-10`}
-            >
-              {item.title}
-            </p>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center bg-white">
-        <div className="w-full p-6">
-          {renderContent()}
-          {renderButtons()}
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );

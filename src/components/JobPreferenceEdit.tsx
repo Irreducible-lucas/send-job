@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaBriefcase,
   FaDollarSign,
@@ -49,7 +50,6 @@ const JobPreferenceEdit: React.FC = () => {
       icon: <FaMapMarkerAlt className="text-black" />,
       modalComponent: RelocationModal,
     },
-   
   ];
 
   const handleOpenModal = (modalComponent: ModalComponent) => {
@@ -66,9 +66,16 @@ const JobPreferenceEdit: React.FC = () => {
     // Handle save logic here
     setIsModalOpen(false);
   };
+  const navigate = useNavigate();
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 h-screen max-w-2xl mx-auto flex flex-col justify-between">
+      <button
+        className="text-gray-600  text-start lg:text-lg"
+        onClick={() => navigate("/profile")}
+      >
+        &larr;
+      </button>
       <div>
         <h2 className="text-2xl sm:text-4xl font-bold mb-6 text-gray-700">
           Job Preferences
@@ -109,7 +116,7 @@ const JobPreferenceEdit: React.FC = () => {
         })}
 
       <footer className="mt-8 sm:mt-10 text-center text-sm text-gray-500">
-        ©2025 Indeed - Cookies, Privacy and Terms
+        ©2025 SendJob - Cookies, Privacy and Terms
       </footer>
     </div>
   );

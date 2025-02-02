@@ -1,11 +1,14 @@
 import { Christiana, ellipse, event } from "../assets";
 
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import {
   FeaturedJobProps,
   FooterProps,
   Job,
   JobCategory,
+  JobDetailSidebarProps,
   Link,
+  Location,
   NewsCardProps,
   recruiterProps,
   Testimonial,
@@ -590,25 +593,49 @@ export const files = [
 ];
 
 export const locations: Location[] = [
-  { id: 1, name: "Afrika Selatan" },
-  { id: 2, name: "Afganistan" },
-  { id: 3, name: "Arab Saudi" },
-  { id: 4, name: "Armenia" },
-  { id: 5, name: "Azerbaijan" },
-  { id: 6, name: "Albania" },
-  { id: 7, name: "Andorra" },
-  { id: 8, name: "Austria" },
-  { id: 9, name: "Amerika Serikat" },
-  { id: 10, name: "Antigua" },
-  { id: 11, name: "Argentina" },
-  { id: 12, name: "Australia" },
-  { id: 13, name: "Albania" },
-  { id: 14, name: "Andorra" },
-  { id: 15, name: "Austria" },
-  { id: 16, name: "Amerika Serikat" },
-  { id: 17, name: "Antigua" },
-  { id: 18, name: "Argentina" },
-  { id: 19, name: "Australia" },
+  { id: 1, name: "Bandajuma" },
+  { id: 2, name: "Bo" },
+  { id: 3, name: "Bombali" },
+  { id: 4, name: "Bonthe" },
+  { id: 5, name: "Conakry Dee" },
+  { id: 6, name: "Daru" },
+  { id: 7, name: "Falaba" },
+  { id: 8, name: "Freetown" },
+  { id: 9, name: "Gorama Chiefdom" },
+  { id: 10, name: "Kabala" },
+  { id: 11, name: "Kailahun" },
+  { id: 12, name: "Kamakwie" },
+  { id: 13, name: "Kamara Chiefdom" },
+  { id: 14, name: "Kambia" },
+  { id: 15, name: "Karene" },
+  { id: 16, name: "Kenema" },
+  { id: 17, name: "Koidu" },
+  { id: 18, name: "Koinadugu" },
+  { id: 19, name: "Kono" },
+  { id: 20, name: "Lunsar" },
+  { id: 21, name: "Magburaka" },
+  { id: 22, name: "Makeni" },
+  { id: 23, name: "Mambolo" },
+  { id: 24, name: "Marampa Mines" },
+  { id: 25, name: "Masanga" },
+  { id: 26, name: "Medicine" },
+  { id: 27, name: "Mile 91" },
+  { id: 28, name: "Moyamba" },
+  { id: 29, name: "Online-Remote" },
+  { id: 30, name: "Pendembu" },
+  { id: 31, name: "Port Loko" },
+  { id: 32, name: "Pujehun" },
+  { id: 33, name: "Rural" },
+  { id: 34, name: "Senegal" },
+  { id: 35, name: "Shenge" },
+  { id: 36, name: "Sierra Leone" },
+  { id: 37, name: "South South-East" },
+  { id: 38, name: "Tongo" },
+  { id: 39, name: "Tonkolili" },
+  { id: 40, name: "Waterloo" },
+  { id: 41, name: "West Africa" },
+  { id: 42, name: "Western Rural" },
+  { id: 43, name: "Western Urban" },
 ];
 
 export const steps = [
@@ -632,6 +659,8 @@ export const steps = [
 export const processJobs = [
   {
     id: 1,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -640,6 +669,8 @@ export const processJobs = [
   },
   {
     id: 2,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -648,6 +679,8 @@ export const processJobs = [
   },
   {
     id: 3,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -669,6 +702,8 @@ export const finishTabs = [
 export const finishJobs = [
   {
     id: 1,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$120 - $200/month",
     company: "Figma Company",
@@ -679,6 +714,8 @@ export const finishJobs = [
 export const savedJobs = [
   {
     id: 1,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Frontend Developer",
     salary: "$60,000",
     company: "Tech Corp",
@@ -687,6 +724,8 @@ export const savedJobs = [
   },
   {
     id: 2,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "UI/UX Designer",
     salary: "$55,000",
     company: "Creative Studio",
@@ -695,6 +734,8 @@ export const savedJobs = [
   },
   {
     id: 3,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Backend Developer",
     salary: "$70,000",
     company: "Data Systems",
@@ -703,6 +744,8 @@ export const savedJobs = [
   },
   {
     id: 4,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Marketing Specialist",
     salary: "$50,000",
     company: "Brand Solutions",
@@ -711,6 +754,8 @@ export const savedJobs = [
   },
   {
     id: 5,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png",
     title: "Product Manager",
     salary: "$80,000",
     company: "Innovation Labs",

@@ -1,14 +1,17 @@
 // SkillSelector.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { array } from "yup";
 
 interface SkillSelectorProps {
   skills: string[];
   maxSelection: number;
+  setInterestedJobs: any;
 }
 
 const SkillSelector: React.FC<SkillSelectorProps> = ({
   skills,
   maxSelection,
+  setInterestedJobs,
 }) => {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
@@ -20,20 +23,31 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({
     }
   };
 
+  useEffect(() => {
+    const jobs =
+      selectedSkills.length === 0
+        ? ""
+        : selectedSkills.reduce((acc, item, index) => {
+            return acc + item + (index < selectedSkills.length - 1 ? ", " : "");
+          }, "");
+    setInterestedJobs("interested_job", jobs);
+  }, [selectedSkills]);
+
   return (
-    <div className="bg-blue-600 text-white p-6 rounded-md w-full max-w-md">
+    <div className=" text-black p-6 rounded-md w-full">
       <p className="text-sm mb-4">
-        Select up to <span className="font-bold">{maxSelection}</span> skills
+        Select 1 to <span className="font-bold">{maxSelection}</span> jobs you
+        are interested in
       </p>
       <div className="flex flex-wrap gap-3">
         {skills.map((skill, index) => (
           <button
             key={index}
             onClick={() => toggleSkillSelection(skill)}
-            className={`px-4 py-2 rounded-full border transition ${
+            className={`px-3 py-2 rounded-full transition text-sm ${
               selectedSkills.includes(skill)
-                ? "bg-white text-blue-600 border-blue-600"
-                : "bg-blue-600 text-white border-white"
+                ? "bg-blue-600 text-white border-white"
+                : "bg-white text-blue-600 border-blue-600 border-2"
             }`}
           >
             {skill}
@@ -41,7 +55,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({
         ))}
       </div>
       <div className="mt-6">
-        <p className="text-sm">Selected Skills:</p>
+        <p className="text-sm font-bold">Selected Jobs:</p>
         <div className="flex flex-wrap gap-2 mt-2">
           {selectedSkills.length > 0 ? (
             selectedSkills.map((skill, index) => (
@@ -53,7 +67,9 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({
               </span>
             ))
           ) : (
-            <p className="text-gray-300 text-sm">No skills selected yet</p>
+            <p className="text-blue-700 text-sm">
+              No jobs selected yet, please select atleast one job
+            </p>
           )}
         </div>
       </div>

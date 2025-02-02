@@ -1,4 +1,4 @@
-import { UserModel } from "../../type";
+import { UserModel, UserType } from "../../type";
 
 // category
 export interface Category {
@@ -13,7 +13,7 @@ export interface LoginModel {
 }
 
 export interface UserState {
-  user: UserModel;
+  user: UserType;
   token: {};
   error: string | undefined;
   authenticated: Boolean;

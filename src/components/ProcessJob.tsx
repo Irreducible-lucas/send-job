@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { processJobs, processTabs } from "../constant";
-
+import { FaMapMarkerAlt } from "react-icons/fa";
 const ProcessJob = () => {
   const [activeTab, setActiveTab] = useState("All");
 
   return (
-    <div className="md:p-6  min-h-screen">
+    <div className="md:p-6 min-h-screen">
       <div className="flex space-x-3">
         {processTabs.map((tab) => (
           <button
@@ -30,13 +30,23 @@ const ProcessJob = () => {
               key={job.id}
               className="bg-white p-4 rounded-xl shadow-md border"
             >
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="font-semibold text-lg">{job.title}</h3>
-                  <p className="text-gray-500">{job.salary}</p>
-                  <p className="text-gray-500">{job.company}</p>
-                  <p className="text-gray-400">{job.location}</p>
+              <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-x-4">
+                  <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full">
+                    <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full">
+                      <img
+                        src={job.image}
+                        alt="Figma Logo"
+                        className="w-8 h-8"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid">
+                    <h3 className="font-semibold text-lg">{job.title}</h3>
+                    <p className="text-gray-500">{job.salary}</p>
+                  </div>
                 </div>
+
                 <span
                   className={`px-3 py-1 rounded-full text-sm font-medium ${
                     job.status === "Waiting"
@@ -47,6 +57,14 @@ const ProcessJob = () => {
                   Status: {job.status}
                 </span>
               </div>
+
+              <p className="font-semibold ">{job.company}</p>
+
+              <p className="text-gray-400 flex items-center gap-1">
+                <FaMapMarkerAlt className="text-gray-500" />
+                {job.location}
+              </p>
+
               <p className="mt-2 text-gray-600">Full time</p>
 
               {job.status === "Interview" && (

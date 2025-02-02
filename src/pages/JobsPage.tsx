@@ -11,14 +11,11 @@ const JobsPage = () => {
 
   const searchParamsObj = Object.fromEntries([...searchParams]);
 
-  console.log(searchParamsObj); // ouput {search: 'Computer', category: 'Finance'
-
   const { data, isLoading, error } = useSearchJobQuery(
     { searchParamsObj, pageNum: "1", limit: 10 }, // Pass an object
     { refetchOnMountOrArgChange: true }
   );
 
-  console.log(data);
   // if (isLoading) return <p>Loading jobs...</p>;
   // if (error) return <p>Error fetching jobs</p>;
 

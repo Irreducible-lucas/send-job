@@ -32,9 +32,11 @@ import {
   LoginPage,
   SignUpPage,
   JobDetail,
+  Application,
+  ApplicationSucessful,
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
-import SavedJobTab from "./components/SavedJobTab";
+import JobsTab from "./pages/JobsTab";
 
 // const ProfileLayout = () => {
 //   return (
@@ -68,16 +70,19 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/applications" element={<JobsTab />} />
           <Route path="/talent-solution" element={<TalentSolutions />} />
           <Route path="/resources" element={<Resources />} />
           Talent Solutions Sub-Routes
           {/* <Route path="/talent-solution/post-job" element={<PostJob />} /> */}
           <Route path="/jobs/:slug" element={<JobDetail />} />
+          <Route path="/jobs/apply/:slug" element={<Application />} />
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
-          <Route
+          <Route path="/jobs/success" element={<ApplicationSucessful />} />
+          {/* <Route
             path="talent-solution/skill-assessment"
             element={<SavedJobTab />}
-          />
+          /> */}
           <Route path="upskill-team" element={<UpskillTeam />} />
           {/* Resources Sub-Routes */}
           <Route path="resources/career-advice" element={<CareerAdvice />} />

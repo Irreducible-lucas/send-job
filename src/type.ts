@@ -13,6 +13,7 @@ export interface JobCategory {
 }
 
 export interface Job {
+  status: string;
   createdAt: Date;
   id: number;
   employer_name: string;

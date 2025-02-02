@@ -14,3 +14,4 @@ export { default as LoginPage } from "./LoginPage";
 export { default as SignUpPage } from "./SignUpPage";
 export { default as JobDetail } from "./JobDetail";
 export { default as Application } from "./Application";
+export { default as ApplicationSucessful } from "./ApplicationSucessful";

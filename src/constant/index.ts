@@ -27,6 +27,12 @@ export const links: Link[] = [
     id: 2,
     text: "Jobs",
     url: "/jobs",
+  },
+
+  {
+    id: 1,
+    text: "Application",
+    url: "/applications",
     child: null,
   },
 
@@ -696,7 +702,7 @@ export const processTabs = [
 export const finishTabs = [
   { label: "All", count: 1 },
   { label: "Received", count: 0 },
-  { label: "Rejected", count: 1 },
+  { label: "Rejected", count: 0 },
 ];
 
 export const finishJobs = [

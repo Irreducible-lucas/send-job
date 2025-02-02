@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { FaFileAlt, FaFilePdf, FaImage, FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ellipse } from "../assets";
 import { layout } from "../styles";
+import { Job } from "../type";
+import { JobDetailContent } from "../components";
+import { toast } from "react-toastify";
+import { useApplyForJobMutation } from "../rtk/services/application";
 
 const Application = () => {
   const navigate = useNavigate();
@@ -62,6 +66,43 @@ const Application = () => {
     navigate(-1); // Go back to the previous page
   };
 
+  const params = useLocation();
+
+  const { state } = params.state;
+  const [job, setJob] = useState<Job>(state);
+
+  const [applyForJob, isLoading] = useApplyForJobMutation();
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const data: any = {
+      jobId: job.id,
+      userId: 1,
+      status: "completed",
+      information: formData.get("desc"),
+    };
+
+    let response = await applyForJob(data);
+
+    console.log(response, "Saving response");
+
+    if (response?.data) {
+      if (response.data.message === "already applied!") {
+        toast.info("already applied!");
+        return;
+      }
+      toast.success("Application successful!");
+
+      navigate("/jobs/success");
+    } else {
+      console.log(response.error);
+      toast.error("Unable to apply for Job");
+      // setErrorMessage('Error saving quote');
+    }
+  };
+
   return (
     <div
       className={`${layout.section} min-h-screen bg-gray-100 flex justify-center items-center`}
@@ -96,82 +137,86 @@ const Application = () => {
           </div>
 
           {/* Content Section */}
-          <div className="p-6">
-            {[
-              { title: "CV/Resume", desc: "Add a resume to apply for a job" },
-              { title: "Portfolio", desc: "Add your best portfolio" },
-              {
-                title: "Technical Proposal",
-                desc: "Add your technical proposal",
-              },
-            ].map((item, index) => {
-              const fileData = files[item.title];
-              return (
-                <div
-                  key={index}
-                  className="flex justify-between items-center bg-gray-50 p-4 rounded-lg mb-3 shadow-sm"
-                >
-                  <div className="flex items-center space-x-3">
-                    {getFileIcon(fileData.file)}
-                    <div>
-                      <h3 className="text-sm font-semibold">{item.title}</h3>
-                      {fileData.file ? (
-                        <div>
-                          <a
-                            href="#"
-                            className="text-blue-600 font-semibold hover:underline"
-                          >
-                            {fileData.file.name}
-                          </a>
-                          <p className="text-xs text-gray-500">
-                            {getTimeAgo(fileData.uploadedAt)}
-                          </p>
-                        </div>
-                      ) : (
-                        <p className="text-xs text-gray-500">{item.desc}</p>
-                      )}
+          <form onSubmit={handleSubmit}>
+            <div className="p-6">
+              {[
+                { title: "CV/Resume", desc: "Add a resume to apply for a job" },
+                { title: "Portfolio", desc: "Add your best portfolio" },
+                {
+                  title: "Technical Proposal",
+                  desc: "Add your technical proposal",
+                },
+              ].map((item, index) => {
+                const fileData = files[item.title];
+                return (
+                  <div
+                    key={index}
+                    className="flex justify-between items-center bg-gray-50 p-4 rounded-lg mb-3 shadow-sm"
+                  >
+                    <div className="flex items-center space-x-3">
+                      {getFileIcon(fileData.file)}
+                      <div>
+                        <h3 className="text-sm font-semibold">{item.title}</h3>
+                        {fileData.file ? (
+                          <div>
+                            <a
+                              href="#"
+                              className="text-blue-600 font-semibold hover:underline"
+                            >
+                              {fileData.file.name}
+                            </a>
+                            <p className="text-xs text-gray-500">
+                              {getTimeAgo(fileData.uploadedAt)}
+                            </p>
+                          </div>
+                        ) : (
+                          <p className="text-xs text-gray-500">{item.desc}</p>
+                        )}
+                      </div>
                     </div>
+                    <label>
+                      <input
+                        type="file"
+                        className="hidden"
+                        onChange={(e) => handleFileChange(item.title, e)}
+                      />
+                      <FaFileAlt className="text-gray-400 cursor-pointer" />
+                    </label>
                   </div>
-                  <label>
-                    <input
-                      type="file"
-                      className="hidden"
-                      onChange={(e) => handleFileChange(item.title, e)}
-                    />
-                    <FaFileAlt className="text-gray-400 cursor-pointer" />
-                  </label>
-                </div>
-              );
-            })}
+                );
+              })}
 
-            {/* Additional Information */}
-            <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-              <h3 className="text-sm font-semibold">Additional Information</h3>
-              <p className="text-xs text-gray-500 mb-2">
-                Tell me why this job is right for you
-              </p>
-              <textarea
-                className="w-full p-2 border rounded-md text-sm outline-none resize-none"
-                rows={3}
-                placeholder="Tell me here ..."
-              ></textarea>
+              {/* Additional Information */}
+
+              <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                <h3 className="text-sm font-semibold">
+                  Additional Information
+                </h3>
+                <p className="text-xs text-gray-500 mb-2">
+                  Tell me why this job is right for you
+                </p>
+                <textarea
+                  name="desc"
+                  className="w-full p-2 border rounded-md text-sm outline-none resize-none"
+                  rows={3}
+                  placeholder="Tell me here ..."
+                ></textarea>
+              </div>
             </div>
-          </div>
 
-          {/* Apply Button */}
-          <div className="p-4">
-            <button
-              className="w-full bg-blue-600 text-white py-3 rounded-lg text-sm font-semibold"
-              onClick={() => console.log("Files:", files)}
-            >
-              Apply
-            </button>
-          </div>
+            {/* Apply Button */}
+
+            <div className="p-4">
+              <button className="w-full bg-blue-600 text-white py-3 rounded-lg text-sm font-semibold">
+                Apply
+              </button>
+            </div>
+          </form>
         </div>
 
         {/* Job Detail Section (Hidden on small screens) */}
         <div className="col-span-1 lg:block bg-white rounded-2xl shadow-lg p-6">
-          {/* <JobDetailContent /> */}
+          <JobDetailContent job={job} showButton={false} />
         </div>
       </div>
     </div>

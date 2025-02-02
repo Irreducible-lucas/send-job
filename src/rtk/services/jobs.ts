@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../constant";
-import { APIResponse } from "../../type";
+import { APIResponse, Job } from "../../type";
 
 // Define a service using a base URL and expected endpoints
 export const jobsApi = createApi({
@@ -63,14 +63,14 @@ export const jobsApi = createApi({
         currentArg?.pageNum !== previousArg?.pageNum,
     }),
 
-    // createBooking: builder.mutation({
-    //   query: (newBooking: BookingModel) => ({
-    //     url: 'orders/',
-    //     method: 'POST',
-    //     body: newBooking,
-    //   }),
-    //   invalidatesTags: ['Booking'],
-    // }),
+    applyForJob: builder.mutation({
+      query: (newApplication: Job) => ({
+        url: "application/",
+        method: "POST",
+        body: newApplication,
+      }),
+      // invalidatesTags: ['Booking'],
+    }),
     // get single booking
     // getBooking: builder.query<BookingModel, {id: number}>({
     //   query: ({id}) => `orders/${id}`,

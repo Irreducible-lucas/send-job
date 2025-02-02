@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { finishJobs, finishTabs } from "../constant";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { useGetMyApplicationsQuery } from "../rtk/services/application";
+import { Job } from "../type";
 
 const FinishedJob = () => {
   const [activeTab, setActiveTab] = useState("All");
+
+  const { data, isLoading } = useGetMyApplicationsQuery("", {});
+
+  const finishedJobs: Job[] = data?.data || [];
 
   return (
     <div className="md:p-6 min-h-screen">
@@ -18,13 +24,14 @@ const FinishedJob = () => {
             }`}
             onClick={() => setActiveTab(tab.label)}
           >
-            {tab.label} ({tab.count})
+            {tab.label}
+            {/* ({activeTab === "All" ? finishJobs.length : tab.count}) */}
           </button>
         ))}
       </div>
 
       <div className="mt-6 space-y-4">
-        {finishJobs
+        {finishedJobs
           .filter((job) => activeTab === "All" || job.status === activeTab)
           .map((job) => (
             <div
@@ -35,32 +42,36 @@ const FinishedJob = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-x-5 mb-2">
                   <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full">
-                    <img src={job.image} alt="Figma Logo" className="w-8 h-8" />
+                    <img
+                      src={job.employer_logo}
+                      alt="Figma Logo"
+                      className="w-full h-full rounded-full"
+                    />
                   </div>
 
                   {/* Job Details */}
                   <div className="flex-1">
                     <div className="flex justify-between items-center">
-                      <h3 className="font-semibold text-lg">{job.title}</h3>
+                      <h3 className="font-semibold text-lg">{job.job_title}</h3>
                     </div>
-                    <p className="text-gray-500">{job.salary}</p>
+                    <p className="text-gray-500">$ {job.job_max_salary}</p>
                   </div>
                 </div>
                 <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-500 text-white -mt-7">
                   Status: {job.status}
                 </span>
               </div>
-              <p className="font-semibold">{job.company}</p>
+              <p className="font-semibold">{job.employer_name}</p>
 
               {/* Job Location */}
               <div className="flex items-center justify-between">
                 <p className="text-gray-400 flex items-center gap-1">
                   <FaMapMarkerAlt className="text-gray-500" />
-                  {job.location}
+                  {job.job_city}
                 </p>
 
                 <p className="text-black px-5 py-1 bg-gray-300 rounded-full">
-                  Full time
+                  {job.job_employment_type}
                 </p>
               </div>
             </div>

@@ -1,10 +1,8 @@
 import { Christiana, ellipse, event } from "../assets";
 
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import {
   FeaturedJobProps,
   FooterProps,
-  Job,
   JobCategory,
   JobDetailSidebarProps,
   Link,
@@ -14,7 +12,7 @@ import {
   Testimonial,
 } from "../type";
 
-export const BASE_URL = "http://localhost:8080/api/";
+export const BASE_URL = "http://localhost:3000/api/";
 
 export const links: Link[] = [
   {

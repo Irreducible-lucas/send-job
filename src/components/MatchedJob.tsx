@@ -11,7 +11,7 @@ import PostedJobCard from "./PostedJobCard";
 import { toast } from "react-toastify";
 
 const MatchedJobs = () => {
-  const userId: any = 5;
+  const userId: any = 10;
   const { data, error } = useGetMatchedJobsQuery(userId, {
     refetchOnMountOrArgChange: true,
   });

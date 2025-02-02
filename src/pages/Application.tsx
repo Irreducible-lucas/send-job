@@ -7,8 +7,11 @@ import { Job } from "../type";
 import { JobDetailContent } from "../components";
 import { toast } from "react-toastify";
 import { useApplyForJobMutation } from "../rtk/services/application";
+import { useAppSelector } from "../rtk/hooks";
 
 const Application = () => {
+  const { user } = useAppSelector((state) => state.user);
+
   const navigate = useNavigate();
   const [files, setFiles] = useState<
     Record<string, { file: File | null; uploadedAt: Date | null }>
@@ -123,9 +126,9 @@ const Application = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <h2 className="text-lg font-semibold mt-3">Zaire Torff Dandelia</h2>
-            <p className="text-sm">UI/UX Designer</p>
-            <p className="text-sm">Ztorff@gmail.com</p>
+            <h2 className="text-lg font-semibold mt-3">{user?.name}</h2>
+            <p className="text-sm">{user?.telephone}</p>
+            <p className="text-sm">{user?.email}</p>
             <button
               onClick={handleEditProfile}
               className="bg-white text-blue-600 px-4 py-1 rounded-full mt-3 font-semibold text-sm"

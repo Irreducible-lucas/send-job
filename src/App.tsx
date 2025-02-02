@@ -3,7 +3,6 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
-  Outlet,
 } from "react-router-dom";
 import {
   ErrorPage,
@@ -20,13 +19,11 @@ import {
   Home,
   TalentSolutions,
   HireTalent,
-  SkillAssessment,
   UpskillTeam,
   CareerAdvice,
   HiringTips,
   TrainingPrograms,
   Faqs,
-  PostJob,
   Resources,
   JobsPage,
   LoginPage,
@@ -37,17 +34,20 @@ import {
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
 import JobsTab from "./pages/JobsTab";
-
-// const ProfileLayout = () => {
-//   return (
-//     <div>
-//       <h1>Profile</h1>
-//       <Outlet />
-//     </div>
-//   );
-// };
+import { useEffect } from "react";
+import { fetchUser } from "./rtk/features/user/userSlice";
+import { useAppDispatch } from "./rtk/hooks";
 
 const App = () => {
+  //
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const testUserEmail = "ayt@gmail.com";
+    dispatch(fetchUser(testUserEmail));
+  }, []);
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" errorElement={<ErrorPage />}>

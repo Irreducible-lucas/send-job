@@ -20,7 +20,7 @@ const SignUpStepOne = ({ register, errors }: StepProps) => {
             id="firstname"
             type="text"
             {...register("firstname")}
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             placeholder="First name"
           />
           {errors.firstname && (
@@ -38,7 +38,7 @@ const SignUpStepOne = ({ register, errors }: StepProps) => {
             id="lastname"
             type="text"
             {...register("lastname")}
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             placeholder="Last name"
           />
           {errors.lastname && (
@@ -59,7 +59,7 @@ const SignUpStepOne = ({ register, errors }: StepProps) => {
             id="email"
             type="email"
             {...register("email")}
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             placeholder="you@example.com"
           />
           {errors.email && (
@@ -78,7 +78,7 @@ const SignUpStepOne = ({ register, errors }: StepProps) => {
             id="password"
             type="password"
             {...register("password")}
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             placeholder="******"
           />
           {errors.password && (
@@ -98,7 +98,7 @@ const SignUpStepOne = ({ register, errors }: StepProps) => {
           type="tel"
           id="telephone"
           {...register("telephone")}
-          className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           placeholder="+2349011122233"
         />
         {errors.telephone && (
@@ -118,7 +118,7 @@ const SignUpStepOne = ({ register, errors }: StepProps) => {
             type="date"
             id="birth_date"
             {...register("birth_date")}
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
           {errors.birth_date && (
             <p className="text-red-600 text-sm">{errors.birth_date.message}</p>
@@ -134,7 +134,7 @@ const SignUpStepOne = ({ register, errors }: StepProps) => {
           <select
             id="gender"
             {...register("gender")}
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           >
             <option value="">Select Gender</option>
             <option value="male">male</option>

@@ -1,52 +1,86 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
-import { loginUser } from "../rtk/features/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
 
-  const [user, setUser] = useState({});
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    // setLoading(true);
+    // setError("");
+
+    console.log("Logging In");
+
+    // try {
+    //   const userCredential = await signInWithEmailAndPassword(
+    //     auth,
+    //     email,
+    //     password
+    //   );
+    //   // User logged in successfully, you can use userCredential.user
+    //   console.log("User logged in: ", userCredential.user);
+    //   setLoading(false);
+    // } catch (error) {
+    //   setError("Failed to log in. Please check your email and password.");
+    //   setLoading(false);
+    // }
+  };
   return (
     <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-8 h-full">
       <h2 className="text-xl font-bold mb-6">LOGIN</h2>
       <p className="text-gray-600 mb-6 text-center">
         Enter your username and password to access the job application
       </p>
-      <div className="w-full max-w-sm space-y-4">
-        {/* Username and Password Fields */}
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        {/* Remember Me and Forgot Password */}
-        <div className="flex items-center justify-between">
-          <label className="text-sm flex items-center">
-            <input type="checkbox" className="mr-2" />
-            Remember me
-          </label>
-          <a href="#" className="text-sm text-blue-600 hover:underline">
-            Forgot password?
-          </a>
+      <form onSubmit={handleLogin}>
+        <div className="w-full max-w-sm space-y-4">
+          {/* Username and Password Fields */}
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="email"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          {error && <p className="text-red-600 text-center">{error}</p>}
+          {/* Remember Me and Forgot Password */}
+          <div className="flex items-center justify-between">
+            <label className="text-sm flex items-center">
+              <input type="checkbox" className="mr-2" />
+              Remember me
+            </label>
+            <a href="#" className="text-sm text-blue-600 hover:underline">
+              Forgot password?
+            </a>
+          </div>
+          {/* Login Button */}
+          <button className="w-full py-3 disabled={loading} bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            {loading ? "Logging in..." : "Login"}
+          </button>
         </div>
-        {/* Login Button */}
-        <button className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-          Login
-        </button>
-      </div>
+      </form>
+
       {/* Signup Link */}
       <p className="mt-4 text-sm">
         Don’t have an account?{" "}
-        <a href="#" className="text-blue-600 hover:underline">
+        <a href="/sign-up" className="text-blue-600 hover:underline">
           Sign up
         </a>
       </p>

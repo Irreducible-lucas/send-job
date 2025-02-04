@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./features/user/userSlice";
+// import userReducer from "./features/user/userSlice";
 import authReducer from "./features/user/authSlice";
 import jobInterestReducer from "./features/user/jobInterestSlice";
 
@@ -10,7 +10,7 @@ const store = configureStore({
   reducer: {
     // cake: cakeReducer,
     // icecream: icecreamReducer,
-    user: userReducer,
+    // user: userReducer,
     auth: authReducer,
     jobInterests: jobInterestReducer,
     [jobsApi.reducerPath]: jobsApi.reducer,

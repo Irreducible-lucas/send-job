@@ -1,38 +1,29 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { login } from "../rtk/features/user/authSlice";
+import { AppDispatch, RootState } from "../rtk";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(auth.token) {
+      localStorage.setItem("accessToken", auth.token);
+      navigate("/");
+    }
+  }, [auth])
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    // setLoading(true);
-    // setError("");
-
-    console.log("Logging In");
-
-    // try {
-    //   const userCredential = await signInWithEmailAndPassword(
-    //     auth,
-    //     email,
-    //     password
-    //   );
-    //   // User logged in successfully, you can use userCredential.user
-    //   console.log("User logged in: ", userCredential.user);
-    //   setLoading(false);
-    // } catch (error) {
-    //   setError("Failed to log in. Please check your email and password.");
-    //   setLoading(false);
-    // }
+    dispatch(login({ email, password }));
   };
   return (
     <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-8 h-full">
@@ -59,7 +50,9 @@ const LoginForm = () => {
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
-          {error && <p className="text-red-600 text-center">{error}</p>}
+          {auth.error && auth.error !== "user not logged in" && (<div className="bg-red-100 p-3 grid place-items-center rounded-lg">
+            <p className="text-red-600">{auth.error}</p>
+          </div>)}
           {/* Remember Me and Forgot Password */}
           <div className="flex items-center justify-between">
             <label className="text-sm flex items-center">
@@ -72,7 +65,7 @@ const LoginForm = () => {
           </div>
           {/* Login Button */}
           <button className="w-full py-3 disabled={loading} bg-blue-600 text-white rounded-md hover:bg-blue-700">
-            {loading ? "Logging in..." : "Login"}
+            {auth.isLoading ? "Logging in..." : "Login"}
           </button>
         </div>
       </form>

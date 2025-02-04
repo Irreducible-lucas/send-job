@@ -8,7 +8,8 @@ import {
 import { Logo } from "../assets";
 import { links } from "../constant";
 import { FaUserCircle } from "react-icons/fa";
-import { useAppSelector } from "../rtk/hooks";
+import { useAppSelector, useAppDispatch } from "../rtk/hooks";
+import { logOut } from "../rtk/features/user/authSlice";
 
 const NavBarLinks = ({
   fill,
@@ -19,8 +20,12 @@ const NavBarLinks = ({
   isOpen: boolean;
   setIsOpen: any;
 }) => {
-  const { authenticated } = useAppSelector((state) => state.user);
+  const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
   return (
     <>
       <ul
@@ -140,21 +145,36 @@ const NavBarLinks = ({
             Post Job for Free
           </button>
 
-          {!authenticated ? (
-            <a href="/sign-up">
-              <button className="w-full md:w-auto px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition">
-                Sign Up
-              </button>
-            </a>
+          {!auth?.token ? (
+            <div className="flex gap-2">
+              <a href="/login">
+                <button className="w-full md:w-auto px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition">
+                  Login
+                </button>
+              </a>
+              <a href="/sign-up">
+                <button className="w-full md:w-auto px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition">
+                  Sign Up
+                </button>
+              </a>
+            </div>
           ) : (
-            <NavLink
-              to="/profile"
-              className={`flex items-center gap-2 text-lg hover:text-blue-500 ${
-                fill ? "text-blue-500" : "text-white"
-              }`}
-            >
-              <FaUserCircle className="w-8 h-8" />
-            </NavLink>
+            <div className="flex gap-2">
+              <NavLink
+                to="/profile"
+                className={`flex items-center gap-2 text-lg hover:text-blue-500 ${
+                  fill ? "text-blue-500" : "text-white"
+                }`}
+              >
+                <FaUserCircle className="w-8 h-8" />
+              </NavLink>
+              <button
+                onClick={() => handleLogout()}
+                className="px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition"
+              >
+                Logout
+              </button>
+            </div>
           )}
         </div>
       </ul>

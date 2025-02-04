@@ -35,18 +35,15 @@ import {
 import ProfileRoot from "./layout/ProfileRoot";
 import JobsTab from "./pages/JobsTab";
 import { useEffect } from "react";
-import { fetchUser } from "./rtk/features/user/userSlice";
+import { getCurrentUser } from "./rtk/features/user/authSlice";
 import { useAppDispatch } from "./rtk/hooks";
 
 const App = () => {
-  //
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const testUserEmail = "ayt@gmail.com";
-    dispatch(fetchUser(testUserEmail));
-  }, []);
+    dispatch(getCurrentUser());
+  }, [dispatch]);
 
   const router = createBrowserRouter(
     createRoutesFromElements(

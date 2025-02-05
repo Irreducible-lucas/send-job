@@ -32,7 +32,7 @@ const schema = yup.object().shape({
   birth_date: yup.string().required("Birth date is required"),
 });
 
-const SignUpPage: FC = () => {
+const SignUpFormPage: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const job_interests = useSelector(
@@ -50,7 +50,7 @@ const SignUpPage: FC = () => {
   const handleSubmit = async () => {
     const data = getValues();
     if (job_interests.length === 0) {
-      toast.warn("Please add atleast one interested job.", {
+      toast.warn("Please add at least one interested job.", {
         position: "top-center",
         theme: "light",
       });
@@ -87,7 +87,7 @@ const SignUpPage: FC = () => {
         position: "top-center",
         theme: "colored",
       });
-      console.log("Error occured:", error.response.data.message);
+      console.log("Error occurred:", error.response.data.message);
     }
   };
 
@@ -197,9 +197,8 @@ const SignUpPage: FC = () => {
           </a>
         </p>
       </div>
-      <img src={imageSrc} alt={title} className="w-14 h-14" />
     </div>
   );
 };
 
-export default SignUpPage;
+export default SignUpFormPage;

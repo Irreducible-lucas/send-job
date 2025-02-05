@@ -1,5 +1,7 @@
 import { Christiana, ellipse, event } from "../assets";
 
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { Applicant, CompanyApplicantProps, FeaturedJobProps, FooterProps, Job, JobCategory,JobDetailSidebarProps,Link, Location, NewsCardProps, recruiterProps, Testimonial } from "../type";
 import {
   FeaturedJobProps,
   FooterProps,
@@ -589,7 +591,19 @@ export const steps = [
     description: "Choose your desired work location to proceed.",
   },
 ];
-export const processJobs = [
+export const companySteps = [
+  {
+    title: "Personal Information",
+    description: "Fill in your personal details to get started.",
+  },
+  {
+    title: "Company Data",
+    description: "Enter your company's details, including name, category, and contact info.",
+  }
+];
+
+
+export  const processJobs = [
   {
     id: 1,
     image:
@@ -696,4 +710,204 @@ export const savedJobs = [
     status: "Applied",
   },
 ];
-export const savedTabs = [{ label: "All", count: 5 }];
+export const savedTabs = [
+  { label: "All", count: 5 },
+  { label: "Saved", count: 3 },
+  { label: "Applied", count: 2 },
+];
+export const stats = [
+  { count: 2, label: "Posted Jobs" },
+  { count: 1, label: "Saved Jobs" },
+  { count: 15, label: "Applicants" },
+];
+
+export const recommendedCandidates = [
+  {
+    id: 1,
+    name: "Cristofer Korsgaard",
+    role: "UI/UX Designer",
+    experience: ["Freelance IT (2 years)", "Graphic designer (3 years)"],
+    image: ellipse,
+  },
+  {
+    id: 2,
+    name: "Jane Doe",
+    role: "Frontend Developer",
+    experience: ["React Developer (4 years)", "Web Designer (2 years)"],
+    image: ellipse,
+  },{
+    id: 3,
+    name: "Cristofer Korsgaard",
+    role: "UI/UX Designer",
+    experience: ["Freelance IT (2 years)", "Graphic designer (3 years)"],
+    image: ellipse,
+  },
+  {
+    id: 4,
+    name: "Jane Doe",
+    role: "Frontend Developer",
+    experience: ["React Developer (4 years)", "Web Designer (2 years)"],
+    image: ellipse,
+  },
+];
+export const companyJobs = [
+  {
+    id: Date.now() + 1, 
+    title: "UI/UX Designer",
+    postedDate: "21 July 2022",
+    applicants: 15,
+    views: 20,
+    isActive: true,
+    status: "Active",
+    image: "https://via.placeholder.com/40", 
+  },
+  {
+    id: Date.now() + 2, 
+    title: "Frontend Developer",
+    postedDate: "2 August 2022",
+    applicants: 10,
+    views: 30,
+    isActive: false,
+    status: "Inactive",
+    image: "https://via.placeholder.com/40", 
+  },
+];
+
+export const companySavedJobs = [
+  {
+    id: 1,
+    title: "UI/UX Designer",
+    image: ellipse,
+    createdAt: "21 July 2022",
+    isActive: true,
+    applicants: 15,
+    views: 20,
+  },
+  {
+    id: 2,
+    title: "Frontend Developer",
+    image: ellipse,
+    createdAt: "10 August 2022",
+    isActive: false,
+    applicants: 10,
+    views: 30,
+  },
+  {
+    id: 3,
+    title: "UI/UX Designer",
+    image: ellipse,
+    createdAt: "21 July 2022",
+    isActive: true,
+    applicants: 12,
+    views: 25,
+  },
+  {
+    id: 4,
+    title: "Frontend Developer",
+    image: ellipse,
+    createdAt: "10 August 2022",
+    isActive: false,
+    applicants: 8,
+    views: 15,
+  },
+];
+
+export const applicants: Applicant[] = [
+  {
+    name: "Marilyn Carder",
+    role: "UI/UX Designer",
+    location: "Indonesia",
+    appliedDate: "Applied 1 day ago",
+    imageUrl: "https://randomuser.me/api/portraits/women/1.jpg",
+  },
+  {
+    name: "Ahmad Bator",
+    role: "UI/UX Designer",
+    location: "Japan",
+    appliedDate: "Applied 1 day ago",
+    status: "Interview",
+    imageUrl: "https://randomuser.me/api/portraits/men/1.jpg",
+  },
+];
+
+export const companyApplicants: CompanyApplicantProps[] = [
+  {
+    name: "Marilyn Carder",
+    role: "UI/UX Designer",
+    location: "Indonesia",
+    appliedDate: "Applied 1 day ago",
+    imageUrl: "https://randomuser.me/api/portraits/women/1.jpg",
+  },
+  {
+    name: "Ahmad Bator",
+    role: "UI/UX Designer",
+    location: "Japan",
+    appliedDate: "Applied 1 day ago",
+    status: "Interview",
+    imageUrl: "https://randomuser.me/api/portraits/men/1.jpg",
+  },
+];
+export const companyStats = [
+  { label: "Applicants", value: 15 },
+  { label: "Interview", value: 1 },
+  { label: "Received", value: 0 },
+];
+export const jobDescriptionData = {
+  title: "UI/UX Designer",
+  description:
+    "As a UI/UX Designer, you will create engaging and intuitive user interfaces to improve the user experience across platforms.",
+  responsibilities: [
+    "Conduct user research and testing",
+    "Create wireframes and prototypes",
+    "Collaborate with developers and product managers",
+    "Ensure design consistency and usability",
+  ],
+  skills: ["Figma", "UX Design", "UI Design", "Prototyping", "Wireframing"],
+  workplaceType: "Remote",
+  jobType: "Full-time",
+  specialization: "UI/UX",
+  role: "Designer",
+  experience: "2+ years",
+  budget: "$50,000 - $70,000",
+};
+
+export const companyJobDetails = [
+  {
+    logo: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
+    title: "UI/UX Designer",
+    company: "Figma Company",
+    postedDate: "Posted 21 July 2022",
+  }
+ 
+];
+
+export const profileData = {
+  name: "Marilyn Carder",
+  image: ellipse,
+  role: "UI/UX Designer",
+  location: "Indonesia",
+  appliedDate: "Applied 1 day ago",
+  avatar: "/avatar.png",
+  about: "Have interest in user interface and user experience design. I love research design for user experience, because I think design is not just about aesthetics but how we can create designs that are useful to many people and provide solutions around us.",
+  education: [
+    {
+      institution: "University of Indonesia",
+      duration: "2019 - 2022",
+      degree: "S1 - Computer Science",
+      experiences: ["Volunteer in national seminars", "Student association member"],
+    },
+  ],
+  workExperience: [
+    {
+      company: "PT. Figma Company",
+      duration: "2022 - Present",
+      role: "UI/UX Designer",
+      responsibilities: [
+        "Create UI/UX wireframe from a requirement brief",
+        "Rapid prototyping to help validate design concepts with internal stakeholders",
+        "Identify and troubleshoot UX problems",
+      ],
+    },
+  ],
+};
+

@@ -5,9 +5,12 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import {
+  CompanyRegistration,
   ErrorPage,
   HideJobDetails,
+  InstructorRegistration,
   JobPreferenceEdits,
+  JobSeekerRegistration,
   Profile,
   ProfileEdits,
   QualificationEdits,
@@ -37,6 +40,8 @@ import JobsTab from "./pages/JobsTab";
 import { useEffect } from "react";
 import { getCurrentUser } from "./rtk/features/user/authSlice";
 import { useAppDispatch } from "./rtk/hooks";
+import SignUp from "./pages/SignUp";
+import CompanyHome from "./components/CompanyHome";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -50,7 +55,17 @@ const App = () => {
       <Route path="/" errorElement={<ErrorPage />}>
         {/* Authentication Routes */}
         <Route path="login" element={<LoginPage />} />
-        <Route path="sign-up" element={<SignUpPage />} />
+        <Route path="sign-up" element={<SignUp />}>
+          <Route
+            path="sign-up/job-seeker"
+            element={<JobSeekerRegistration />}
+          />
+          <Route path="sign-up/company" element={<CompanyRegistration />} />
+          <Route
+            path="sign-up/instructor"
+            element={<InstructorRegistration />}
+          />
+        </Route>
 
         {/* Profile Route and sub-routes */}
         <Route path="profile" element={<ProfileRoot />}>
@@ -77,12 +92,17 @@ const App = () => {
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route path="/jobs/success" element={<ApplicationSucessful />} />
           {/* <Route
+          <Route
+            path="/talent-solution/hire-talent"
+            element={<CompanyHome />}
+          />
+          <Route
             path="talent-solution/skill-assessment"
             element={<SavedJobTab />}
           /> */}
           <Route path="upskill-team" element={<UpskillTeam />} />
           {/* Resources Sub-Routes */}
-          <Route path="resources/career-advice" element={<CareerAdvice />} />
+          <Route path="resources/career-advice" element={<CompanyHome />} />
           <Route path="resources/hiring-tips" element={<HiringTips />} />
           <Route path="resources/faqs" element={<Faqs />} />
           <Route

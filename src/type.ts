@@ -183,3 +183,52 @@ export interface Field {
     options: string[];
   }[];
 }
+
+export interface UserCardProps {
+  title: string;
+  description: string;
+  imageSrc: string;
+  onClick: () => void;
+}
+export interface CompanyDraftProps {
+  title: string;
+  createdDate: string;
+  applicants: number;
+  isActive: boolean;
+  image: string;
+}
+
+export interface Applicant {
+  name: string;
+  role: string;
+  location: string;
+  appliedDate: string;
+  status?: string;
+  imageUrl: string;
+}
+export interface JobDescriptionProps {
+  title: string;
+  description: string;
+  skills: string[];
+  workplaceType: string;
+  jobType: string;
+  specialization: string;
+  role: string;
+  experience: string;
+  budget: string;
+}
+export interface CompanyApplicantProps {
+  name: string;
+  role: string;
+  location: string;
+  appliedDate: string;
+  status?: string;
+  imageUrl: string;
+}
+export interface CompanyInfoProps{
+  logo: string;
+   title: string;
+  company: string;
+  postedDate: string;
+}
+

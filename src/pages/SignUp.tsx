@@ -1,69 +1,50 @@
-import { useNavigate, Outlet } from "react-router-dom";
-import { Company, Instructor, JobSeekerIcon } from "../assets";
-import { layout } from "../styles";
-import { UserCardProps } from "../type";
-import { LoginLeft } from "../components";
+import { FaRegUserCircle } from "react-icons/fa";
+import { IoBriefcaseOutline } from "react-icons/io5";
 
 const SignUp = () => {
   return (
-    <div>
-      <Outlet /> <MainSignUp />
-    </div>
-  );
-};
-
-const MainSignUp = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-2">
+    <div className="w-full h-screen py-4 md:py-6 lg:py-10">
       <div
-        className={`${layout.section} flex flex-col items-center min-h-screen bg-blue-600 p-4`}
+        className={`h-full overflow-y-auto bg-white text-black p-4`}
       >
         <div className="text-center">
-          <h1 className="text-white text-2xl font-bold">REGISTER</h1>
-          <p className="text-white text-sm mt-2">
-            Please select a user before registering in the Jobdream application.
-          </p>
+          <h1 className="text-black text-2xl lg:text-4xl font-bold font-nunito mb-4 lg:mb-8">Create your Account</h1>
         </div>
 
-        <div className="mt-8 lg:mt-14 w-full max-w-md space-y-2">
-          <UserCard
-            title="Job Seekers"
-            description="We have the best jobs for freelance, part-time, full-time, hybrid, or physical roles."
-            imageSrc={JobSeekerIcon}
-            onClick={() => navigate("sign-up/job-seeker")}
-          />
-          <UserCard
-            title="Company"
-            description="Find the best talent for your company here."
-            imageSrc={Company}
-            onClick={() => navigate("sign-up/company")}
-          />
-          <UserCard
-            title="Instructor"
-            description="Create a class according to your skills and earn."
-            imageSrc={Instructor}
-            onClick={() => navigate("sign-up/instructor")}
-          />
+        <div className="max-w-5xl mx-auto grid gap-8 grid-cols-1 lg:grid-cols-2">
+          <div
+            className="cursor-pointer flex flex-col items-center gap-4 bg-white p-6 md:p-8 rounded-lg shadow-lg hover:shadow-lg hover: border hover:border-blue-700 transition-shadow"
+          >
+            <div className="w-[100px] h-[100px] bg-blue-700 rounded-full grid place-items-center">
+              <FaRegUserCircle className="text-white h-[60px] w-[60px]" />
+            </div>
+            <h2 className="text-blue-700 font-semibold text-xl md:text-2xl text-center">Job Seeker</h2>
+            <div>
+              <p className="text-gray-600 text-center">Are you looking for your dream job?</p>
+              <p className="text-gray-600 text-center">We have the best jobs for you.</p>
+            </div>
+            <a href="/sign-up/job-seeker" className="bg-blue-700 hover:bg-blue-800 px-4 py-3 text-white rounded-lg text-sm font-bold font-barlow">
+              Sign up as Job Seeker
+            </a>
+          </div>
+
+          <div
+            className="cursor-pointer flex flex-col items-center gap-4 bg-white p-6 md:p-8 rounded-lg shadow-lg hover:shadow-lg hover: border hover:border-blue-700 transition-shadow"
+          >
+            <div className="w-[100px] h-[100px] bg-blue-700 rounded-full grid place-items-center">
+              <IoBriefcaseOutline className="text-white h-[60px] w-[60px]" />
+            </div>
+            <h2 className="text-blue-700 font-semibold text-xl md:text-2xl text-center">Employer</h2>
+            <div>
+              <p className="text-gray-600 text-center">Are you looking for quality candidates?</p>
+              <p className="text-gray-600 text-center">Find the best talent for your company here.</p>
+            </div>
+            <a href="/sign-up/employer" className="bg-blue-700 hover:bg-blue-800 px-4 py-3 text-white rounded-lg text-sm font-bold font-barlow">
+              Sign up as Employer
+            </a>
+          </div>
         </div>
       </div>
-      <LoginLeft />
-    </div>
-  );
-};
-
-const UserCard = ({ title, description, imageSrc, onClick }: UserCardProps) => {
-  return (
-    <div
-      onClick={onClick}
-      className="cursor-pointer flex items-center justify-between bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-    >
-      <div>
-        <h2 className="text-blue-700 font-semibold text-lg">{title}</h2>
-        <p className="text-gray-600 text-sm mt-2">{description}</p>
-      </div>
-      <img src={imageSrc} alt={title} className="w-14 h-14" />
     </div>
   );
 };

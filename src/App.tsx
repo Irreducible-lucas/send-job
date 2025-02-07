@@ -5,12 +5,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import {
-  CompanyRegistration,
   ErrorPage,
   HideJobDetails,
-  InstructorRegistration,
   JobPreferenceEdits,
-  JobSeekerRegistration,
   Profile,
   ProfileEdits,
   QualificationEdits,
@@ -31,17 +28,19 @@ import {
   JobsPage,
   LoginPage,
   SignUpPage,
+  JobSeekerSignUp,
   JobDetail,
   Application,
   ApplicationSucessful,
+  EmployerSignUp,
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
 import JobsTab from "./pages/JobsTab";
 import { useEffect } from "react";
 import { getCurrentUser } from "./rtk/features/user/authSlice";
 import { useAppDispatch } from "./rtk/hooks";
-import SignUp from "./pages/SignUp";
 import CompanyHome from "./components/CompanyHome";
+import SignUpRoot from "./layout/SignUpRoot";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -55,16 +54,13 @@ const App = () => {
       <Route path="/" errorElement={<ErrorPage />}>
         {/* Authentication Routes */}
         <Route path="login" element={<LoginPage />} />
-        <Route path="sign-up" element={<SignUp />}>
+        <Route path="sign-up" element={<SignUpRoot />}>
+          <Route index element={<SignUpPage />} />
           <Route
-            path="sign-up/job-seeker"
-            element={<JobSeekerRegistration />}
+            path="job-seeker"
+            element={<JobSeekerSignUp />}
           />
-          <Route path="sign-up/company" element={<CompanyRegistration />} />
-          <Route
-            path="sign-up/instructor"
-            element={<InstructorRegistration />}
-          />
+          <Route path="employer" element={<EmployerSignUp />} />
         </Route>
 
         {/* Profile Route and sub-routes */}

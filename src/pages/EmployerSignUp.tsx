@@ -1,17 +1,16 @@
 import { useState, FC } from "react";
-import SignUpStepOne from "../components/SignUpStepOne";
-import SignUpStepTwo from "../components/SignUpStepTwo";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { UserFormInput, GenderEnum } from "../type";
+import { EmpFormInput, GenderEnum } from "../type";
 import { Stepper } from "react-form-stepper";
 import axios from "../axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../rtk";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Logo } from "../assets";
+import EmpSignUpStepOne from "../components/EmpSignUpStepOne";
+import { DevTool } from '@hookform/devtools'
+import EmpSignUpStepTwo from "../components/EmpSignUpStepTwo";
 
 const schema = yup.object().shape({
   firstname: yup.string().required("First name is required"),
@@ -25,71 +24,31 @@ const schema = yup.object().shape({
     .min(8, "Password must be at least 8 characters long")
     .required("Password is required"),
   telephone: yup.string().required("Telephone is required"),
+  job_title: yup.string().required("Job Title is required"),
   gender: yup
     .mixed<GenderEnum>()
     .oneOf(Object.values(GenderEnum))
     .required("Gender is required"),
-  birth_date: yup.string().required("Birth date is required"),
+  company_name: yup.string().required("Company name is required"),
+  company_address: yup.string().required("Company address is required"),
+  company_email: yup.string().required("Company email is required"),
+  company_website: yup.string().required("Company website is required"),
+  company_contact_number: yup.string().required("Company contact number is required"),
+  company_overview: yup.string().required("About company information is required"),
 });
 
-const SignUpPage: FC = () => {
+const EmployerSignUp: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const job_interests = useSelector(
-    (state: RootState) => state.jobInterests.jobList
-  );
   const {
     register,
     trigger,
     getValues,
+    control,
     formState: { errors },
-  } = useForm<UserFormInput>({ resolver: yupResolver(schema) });
+  } = useForm<EmpFormInput>({ resolver: yupResolver(schema) });
 
   const [step, setStep] = useState<number>(1);
-
-  const handleSubmit = async () => {
-    const data = getValues();
-    if (job_interests.length === 0) {
-      toast.warn("Please add atleast one interested job.", {
-        position: "top-center",
-        theme: "light",
-      });
-      return;
-    }
-
-    const body = {
-      name: `${data.firstname} ${data.lastname}`,
-      email: data.email,
-      password: data.password,
-      gender: data.gender,
-      telephone: data.telephone,
-      birthDate: data.birth_date,
-      workLocation: "",
-      skills: "",
-      jobTitle: "",
-      domicile: "",
-      photoUrl: "https://avatars.githubusercontent.com/u/32225588",
-      jobInterests: job_interests,
-    };
-
-    try {
-      setIsLoading(true);
-      const { data }: any = await axios.post("/users/signup", body);
-      setIsLoading(false);
-      toast.success(data.message, {
-        position: "top-center",
-        theme: "colored",
-      });
-      navigate("/login");
-    } catch (error: any) {
-      setIsLoading(false);
-      toast.error(error.response.data.message, {
-        position: "top-center",
-        theme: "colored",
-      });
-      console.log("Error occured:", error.response.data.message);
-    }
-  };
 
   const validateStep = async () => {
     let valid = false;
@@ -102,7 +61,17 @@ const SignUpPage: FC = () => {
           "password",
           "telephone",
           "gender",
-          "birth_date",
+          "job_title",
+        ]);
+        break;
+      case 2:
+        valid = await trigger([
+          "company_name",
+          "company_address",
+          "company_email",
+          "company_website",
+          "company_contact_number",
+          "company_overview",
         ]);
         break;
       default:
@@ -118,12 +87,54 @@ const SignUpPage: FC = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    const valid = await validateStep();
+    if (valid) {
+      const data = getValues();
+  
+      const body = {
+        profile_image_url: "https://avatars.githubusercontent.com/u/32225588",
+        full_name: `${data.firstname} ${data.lastname}`,
+        email: data.email,
+        password: data.password,
+        job_title: data.job_title,
+        gender: data.gender,
+        telephone_number: data.telephone,
+        company_name: data.company_name,
+        company_address: data.company_address,
+        company_email: data.company_email,
+        company_website: data.company_website,
+        company_contact_number: data.company_contact_number,
+        company_overview: data.company_overview,
+        company_logo_url: "",
+      };
+
+      try {
+        setIsLoading(true);
+        const { data }: any = await axios.post("/companies/create", body);
+        setIsLoading(false);
+        toast.success(data.message, {
+          position: "top-center",
+          theme: "colored",
+        });
+        navigate("/login");
+      } catch (error: any) {
+        setIsLoading(false);
+        toast.error(error.response.data.message, {
+          position: "top-center",
+          theme: "colored",
+        });
+        console.log("Error occured:", error.response.data.message);
+      }
+    }
+  };
+
   const renderContent = () => {
     switch (step) {
       case 1:
-        return <SignUpStepOne register={register} errors={errors} />;
+        return <EmpSignUpStepOne control={control} register={register} errors={errors} />;
       case 2:
-        return <SignUpStepTwo />;
+        return <EmpSignUpStepTwo control={control} register={register} errors={errors} />;
       default:
         return null;
     }
@@ -139,7 +150,7 @@ const SignUpPage: FC = () => {
         />
         <div>
           <h1 className="text-xl font-bold text-blue-600 text-center">
-            Create a Job Seeker Account
+            Create an Employer Account
           </h1>
           <Stepper
             styleConfig={{
@@ -151,7 +162,7 @@ const SignUpPage: FC = () => {
               completedColor: "rgb(37 99 235)",
             }}
             connectorStateColors
-            steps={[{ label: "Personal Data" }, { label: "Interested Job" }]}
+            steps={[{ label: "Personal Info" }, { label: "Company Info" }]}
             activeStep={step - 1}
           />
         </div>
@@ -197,9 +208,9 @@ const SignUpPage: FC = () => {
           </a>
         </p>
       </div>
-      <img src={imageSrc} alt={title} className="w-14 h-14" />
+      <DevTool control={control} />
     </div>
   );
 };
 
-export default SignUpPage;
+export default EmployerSignUp;

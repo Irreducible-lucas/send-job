@@ -120,6 +120,22 @@ export interface UserFormInput {
   birth_date: string;
 }
 
+export interface EmpFormInput {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  telephone: string;
+  gender: GenderEnum;
+  job_title: string;
+  company_name: string;
+  company_address: string;
+  company_email: string;
+  company_website: string;
+  company_contact_number: string;
+  company_overview: string;
+}
+
 export interface UserModel {
   Id: string;
   Email: string;

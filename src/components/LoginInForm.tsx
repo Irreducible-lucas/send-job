@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { login } from "../rtk/features/user/authSlice";
+import { login, getCurrentUser } from "../rtk/features/user/authSlice";
 import { AppDispatch, RootState } from "../rtk";
 import { useNavigate } from "react-router-dom";
 
@@ -12,8 +12,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(auth.token) {
-      localStorage.setItem("accessToken", auth.token);
+    if (auth.token) {
       navigate("/");
     }
   }, [auth])
@@ -64,7 +63,7 @@ const LoginForm = () => {
             </a>
           </div>
           {/* Login Button */}
-          <button className="w-full py-3 disabled={loading} bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          <button disabled={auth.isLoading} className="w-full py-3 disabled:bg-blue-600/30 disabled:hover:cursor-not-allowed bg-blue-600 text-white rounded-md hover:bg-blue-700">
             {auth.isLoading ? "Logging in..." : "Login"}
           </button>
         </div>

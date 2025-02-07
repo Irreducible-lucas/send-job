@@ -32,7 +32,17 @@ export const login = createAsyncThunk(
       );
       // Get access token after user logged in successfully
       const accessToken = await userCredential.user.getIdToken();
-      return accessToken;
+      const response = await axios.get("/users/info", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("user_data", JSON.stringify(response.data.user));
+      return {
+        user: response.data.user,
+        token: accessToken,
+      };
     } catch (error: any) {
       let errorMessage = "An error occurred";
 
@@ -66,13 +76,24 @@ export const getCurrentUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = localStorage.getItem("accessToken") ?? "";
-      const response = await axios.get("/users/info", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log("Data recieved:", response);
-      return response.data.user;
+      const user = localStorage.getItem("user_data") ?? "";
+      let userData;
+      if (!user) {
+        const response = await axios.get("/users/info", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        localStorage.setItem("user_data", JSON.stringify(response.data.user));
+        userData = response.data.user;
+      } else {
+        userData = JSON.parse(user);
+      }
+      const data = {
+        user: userData,
+        token: token
+      }
+      return data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
@@ -81,6 +102,7 @@ export const getCurrentUser = createAsyncThunk(
 
 export const logOut = createAsyncThunk("auth/logout", async () => {
   localStorage.removeItem("accessToken");
+  localStorage.removeItem("user_data");
 });
 
 const authSlice = createSlice({
@@ -97,8 +119,8 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.currentUser = null;
-        state.token = action.payload;
+        state.currentUser = action.payload.user;
+        state.token = action.payload.token;
         state.error = "";
       })
       .addCase(login.rejected, (state, action) => {
@@ -115,8 +137,8 @@ const authSlice = createSlice({
       })
       .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.currentUser = action.payload;
-        state.token = "";
+        state.currentUser = action.payload.user;
+        state.token = action.payload.token;
         state.error = "";
       })
       .addCase(getCurrentUser.rejected, (state, action) => {

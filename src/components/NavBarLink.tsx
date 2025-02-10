@@ -136,7 +136,7 @@ const NavBarLinks = ({
         {/* Buttons section */}
         <div className="md:flex md:space-x-4 space-y-2 md:space-y-0 flex-col-reverse lg:flex-row">
           {(!auth?.currentUser || auth?.currentUser?.role === "company") && (
-            <a href="#" className="w-full text-sm font-bold md:w-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+            <a href="/employer" className="w-full text-sm font-bold md:w-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
               Post Job for Free
             </a>
           )}

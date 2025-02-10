@@ -20,7 +20,6 @@ import {
   TalentSolutions,
   HireTalent,
   UpskillTeam,
-  CareerAdvice,
   HiringTips,
   TrainingPrograms,
   Faqs,
@@ -41,6 +40,8 @@ import { getCurrentUser } from "./rtk/features/user/authSlice";
 import { useAppDispatch } from "./rtk/hooks";
 import CompanyHome from "./components/CompanyHome";
 import SignUpRoot from "./layout/SignUpRoot";
+import EmployerRoot from "./layout/EmployerRoot";
+import { EmployerDashboard } from "./pages/employer";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -105,6 +106,11 @@ const App = () => {
             path="resources/training-programs"
             element={<TrainingPrograms />}
           />
+        </Route>
+
+        {/* Employer Dashboard */}
+        <Route path="employer" element={<EmployerRoot/>}>
+          <Route index element={<EmployerDashboard/>} />
         </Route>
 
         {/* Admin Dashboard Layout */}

@@ -2,17 +2,7 @@ import { Christiana, ellipse, event } from "../assets";
 
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { Applicant, CompanyApplicantProps, FeaturedJobProps, FooterProps, Job, JobCategory,JobDetailSidebarProps,Link, Location, NewsCardProps, recruiterProps, Testimonial } from "../type";
-import {
-  FeaturedJobProps,
-  FooterProps,
-  JobCategory,
-  JobDetailSidebarProps,
-  Link,
-  Location,
-  NewsCardProps,
-  recruiterProps,
-  Testimonial,
-} from "../type";
+
 
 export const BASE_URL = "http://localhost:3000/api/";
 

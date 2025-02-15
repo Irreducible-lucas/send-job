@@ -17,7 +17,7 @@ const CompanyJobs = () => {
   const [jobs, setJobs] = useState(initialJobs);
   const [isAddingJob, setIsAddingJob] = useState(false);
 
-  const toggleJobStatus = (id) => {
+  const toggleJobStatus = (id: any) => {
     setJobs(
       jobs.map((job) =>
         job.id === id ? { ...job, isActive: !job.isActive } : job
@@ -25,12 +25,12 @@ const CompanyJobs = () => {
     );
   };
 
-  const viewJob = (job) => {
+  const viewJob = (job: any) => {
     console.log("Viewing job:", job);
   };
 
   // Function to handle adding a new job
-  const addJob = (newJob) => {
+  const addJob = (newJob: any) => {
     setJobs([...jobs, { id: Date.now(), ...newJob }]);
     setIsAddingJob(false); // Close the modal after adding the job
   };
@@ -38,7 +38,7 @@ const CompanyJobs = () => {
   return (
     <div className="p-6 min-h-screen">
       {/* Tabs */}
-      <div className="flex space-x-3 mb-6">
+      <div className="grid gap-4 grid-cols-3 mb-6">
         {CompanyTab.map((tab) => (
           <button
             key={tab.label}
@@ -63,7 +63,7 @@ const CompanyJobs = () => {
       </div>
 
       {/* Job List */}
-      <div className="grid gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {jobs
           .filter(
             (job) =>
@@ -121,21 +121,6 @@ const CompanyJobs = () => {
             </div>
           ))}
       </div>
-
-      {/* Add New Job Button (Only at the Bottom) */}
-      <div className="mt-6 flex justify-center">
-        <button
-          onClick={() => setIsAddingJob(true)} // Open the Add Job modal
-          className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition"
-        >
-          <FaPlus className="mr-2" /> Add Job
-        </button>
-      </div>
-
-      {/* Job Posting Modal */}
-      {isAddingJob && (
-        <JobAdModal onSave={addJob} onClose={() => setIsAddingJob(false)} />
-      )}
     </div>
   );
 };

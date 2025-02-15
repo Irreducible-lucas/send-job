@@ -18,3 +18,4 @@ export { default as ApplicationSucessful } from "./ApplicationSucessful";
 export { default as SignUpPage } from "./SignUp"
 export { default as JobSeekerSignUp } from "./SeekerSignUp";
 export { default as EmployerSignUp } from "./EmployerSignUp";
+export {default as OnlyEmployerRoute} from "./OnlyEmployerRoute";

@@ -26,8 +26,16 @@ export const applicationApi = createApi({
       providesTags: ["MyApplications"],
       keepUnusedDataFor: 12,
     }),
+
+    getJobApplicantsByCompanyId: builder.query<APIResponse, { id: number }>({
+      query: ({ id }) => `application/company/${id}`,
+    }),
+
+    getRecommendedApplicantsById: builder.query<APIResponse, { id: number }>({
+      query: ({ id }) => `application/recommended/${id}`,
+    }),
   }),
 });
 
-export const { useApplyForJobMutation, useGetMyApplicationsQuery } =
+export const { useApplyForJobMutation, useGetMyApplicationsQuery, useGetJobApplicantsByCompanyIdQuery, useGetRecommendedApplicantsByIdQuery } =
   applicationApi;

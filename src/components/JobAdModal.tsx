@@ -4,29 +4,25 @@ import AddJobStepperTwo from "./AddJobStepperTwo";
 import AddJobStepThree from "./AddJobStepThree";
 
 interface JobAdModalProps {
-  onSave: (job: any) => void;
   onClose: () => void;
 }
 
-const JobAdModal: React.FC<JobAdModalProps> = ({ onSave, onClose }) => {
+const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     title: "",
-    workplace: "",
-    jobType: "",
-    specialization: "",
-    role: "",
+    employment_type: "",
+    workplace_type: "",
+    city: "",
+    state: "",
+    country: "",
     experience: "",
-    postingSite: "",
-    budget: {
-      currency: "",
-      min: "",
-      max: "",
-      displaySalary: false,
-    },
+    currency: "",
+    min_salary: "",
+    max_salary: "",
+    description: "",
   });
 
-  const [jobDescription, setJobDescription] = useState("");
   const [skills, setSkills] = useState<string[]>(["Figma (software)"]);
   const [newSkill, setNewSkill] = useState("");
   const [screeningQuestions, setScreeningQuestions] = useState([
@@ -34,23 +30,10 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onSave, onClose }) => {
   ]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleBudgetChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      budget: {
-        ...formData.budget,
-        [name]: type === "checkbox" ? checked : value,
-      },
-    });
   };
 
   const addSkill = () => {
@@ -69,7 +52,7 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onSave, onClose }) => {
       alert("Job title cannot be empty.");
       return;
     }
-    onSave({ ...formData, jobDescription, skills, screeningQuestions });
+    // onSave({ ...formData, jobDescription, skills, screeningQuestions });
     onClose();
   };
 
@@ -90,6 +73,8 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onSave, onClose }) => {
   };
 
   const handleNext = () => {
+    console.log("Form data:", formData);
+    console.log("Skills:", skills);
     setStep(step + 1);
   };
 
@@ -99,7 +84,7 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onSave, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-2xl shadow-lg w-96 relative">
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-[90%] lg:w-[50%] relative">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold mx-auto">Job Ads</h2>
           <button
@@ -127,13 +112,12 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onSave, onClose }) => {
           <AddJobStepperOne
             formData={formData}
             handleChange={handleChange}
-            handleBudgetChange={handleBudgetChange}
           />
         )}
         {step === 2 && (
           <AddJobStepperTwo
-            jobDescription={jobDescription}
-            setJobDescription={setJobDescription}
+            formData={formData}
+            handleChange={handleChange}
             skills={skills}
             newSkill={newSkill}
             setNewSkill={setNewSkill}

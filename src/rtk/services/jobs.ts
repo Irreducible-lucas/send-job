@@ -29,7 +29,7 @@ export const jobsApi = createApi({
     }),
 
     getJobsByCompanyId: builder.query<APIResponse, { id: number }>({
-      query: (id) => `jobs/company/${id}`,
+      query: ({ id }) => `jobs/company/${id}`,
     }),
 
     getAllJobs: builder.query<APIResponse, { id: number }>({

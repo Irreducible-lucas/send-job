@@ -1,8 +1,10 @@
 import React from "react";
 
 interface Step2Props {
-  jobDescription: string;
-  setJobDescription: React.Dispatch<React.SetStateAction<string>>;
+  formData: any;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => void;
   skills: string[];
   newSkill: string;
   setNewSkill: React.Dispatch<React.SetStateAction<string>>;
@@ -11,8 +13,8 @@ interface Step2Props {
 }
 
 const AddJobStepperTwo: React.FC<Step2Props> = ({
-  jobDescription,
-  setJobDescription,
+  formData,
+  handleChange,
   skills,
   newSkill,
   setNewSkill,
@@ -27,37 +29,36 @@ const AddJobStepperTwo: React.FC<Step2Props> = ({
         </label>
         <textarea
           id="jobDescription"
+          name="description"
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           rows={5}
           placeholder="Describe your job description"
-          value={jobDescription}
-          onChange={(e) => setJobDescription(e.target.value)}
+          value={formData.description}
+          onChange={handleChange}
+          required
         ></textarea>
       </div>
 
-      <h3 className="block font-semibold mb-3 mt-4">Add skill</h3>
+      <div className="mb-4">
+        <h3 className="block font-semibold">Required skills</h3>
+        <p className="text-gray-500 text-sm">add skills to be seen by the right candidates (select up to 10)</p>
+      </div>
 
-      <label
-        htmlFor="newSkill"
-        className="block text-sm font-medium text-gray-700 mb-1"
-      >
-        New Skill
-      </label>
       <div className="flex gap-2 mb-4">
         <input
           id="newSkill"
           type="text"
-          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Add Skill"
+          className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Add a Skill"
           value={newSkill}
           onChange={(e) => setNewSkill(e.target.value)}
         />
 
         <button
           onClick={addSkill}
-          className="px-3 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
         >
-          Add
+          Add Skill
         </button>
       </div>
 

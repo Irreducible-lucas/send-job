@@ -15,7 +15,10 @@ const AddJobStepThree: React.FC<Step3Props> = ({
 }) => {
   return (
     <div className="flex-grow overflow-auto p-4 max-h-[60vh]  bg-white">
-      <h3 className=" font-semibold mb-4">Screening Questions</h3>
+      <div className="mb-4">
+        <h3 className=" font-semibold">Add screening questions</h3>
+        <p className="text-gray-500 text-sm">We recommend adding 3 or more questions. Applicants must answer each question.</p>
+      </div>
       {screeningQuestions.map((question, index) => (
         <div key={index} className="mb-4">
           <div className="mb-2">

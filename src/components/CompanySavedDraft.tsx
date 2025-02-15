@@ -9,24 +9,24 @@ const CompanySavedDraft = () => {
   const [isJobModalOpen, setIsJobModalOpen] = useState(false); // State for Job Modal
 
   // Function to add a new job
-  const addJob = (newJob) => {
+  const addJob = (newJob: any) => {
     setJobs([...jobs, { id: Date.now(), ...newJob }]); // Add new job
     setIsJobModalOpen(false); // Close the modal after adding job
   };
 
-  const updateJob = (updatedJob) => {
+  const updateJob = (updatedJob: any) => {
     setJobs(jobs.map((job) => (job.id === updatedJob.id ? updatedJob : job)));
     setEditingJob(null);
   };
 
-  const deleteJob = (jobId) => {
+  const deleteJob = (jobId: any) => {
     setJobs(jobs.filter((job) => job.id !== jobId));
   };
 
   return (
     <div className="md:p-6 min-h-screen">
       {/* Draft jobs list */}
-      <div className="mt-6 grid gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {jobs.map((job) => (
           <div
             key={job.id}
@@ -51,11 +51,10 @@ const CompanySavedDraft = () => {
                 Promote Job?
               </button>
               <span
-                className={`text-sm px-3 py-1 rounded-full ${
-                  job.isActive
+                className={`text-sm px-3 py-1 rounded-full ${job.isActive
                     ? "bg-green-100 text-green-600"
                     : "bg-red-100 text-red-600"
-                }`}
+                  }`}
               >
                 {job.isActive ? "Active" : "Inactive"}
               </span>
@@ -87,6 +86,7 @@ const CompanySavedDraft = () => {
           <FaPlus className="mr-2" /> Add Job
         </button>
       </div>
+
 
       {/* Job Posting Modal */}
       {isJobModalOpen && (

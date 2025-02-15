@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "../../components/button";
 import { FaArrowLeft, FaCalendarCheck, FaEnvelope } from "react-icons/fa";
 import { profileData } from "../constant";
+import { Link } from "react-router-dom";
 
 const CandidateProfile = () => {
   const [showActions, setShowActions] = useState(false);
@@ -10,10 +11,12 @@ const CandidateProfile = () => {
   return (
     <div className="min-h-screen">
       {/* Header */}
+      <Link to="/employer/jobs/1">
       <div className="flex items-center gap-3 mb-4">
         <FaArrowLeft className="text-lg cursor-pointer" />
-        <h2 className="text-lg font-semibold">Detail Profile</h2>
+        <h2 className="text-lg font-semibold">Job Details</h2>
       </div>
+      </Link>
 
       {/* Profile Card */}
       <div className="p-5 shadow-md rounded-lg bg-white">

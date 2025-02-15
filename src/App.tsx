@@ -32,6 +32,7 @@ import {
   Application,
   ApplicationSucessful,
   EmployerSignUp,
+  OnlyEmployerRoute,
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
 import JobsTab from "./pages/JobsTab";
@@ -41,7 +42,7 @@ import { useAppDispatch } from "./rtk/hooks";
 import CompanyHome from "./components/CompanyHome";
 import SignUpRoot from "./layout/SignUpRoot";
 import EmployerRoot from "./layout/EmployerRoot";
-import { EmployerDashboard } from "./pages/employer";
+import { ApplicantInfo, EmployerDashboard, JobDetails, MyJobs } from "./pages/employer";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -109,8 +110,13 @@ const App = () => {
         </Route>
 
         {/* Employer Dashboard */}
-        <Route path="employer" element={<EmployerRoot/>}>
-          <Route index element={<EmployerDashboard/>} />
+        <Route path="employer" element={<OnlyEmployerRoute><EmployerRoot /></OnlyEmployerRoute>}>
+          <Route index element={<EmployerDashboard />} />
+          <Route path="jobs">
+            <Route index element={<MyJobs />} />
+            <Route path=":id" element={<JobDetails />} />
+            <Route path=":id/applicant/:aid" element={<ApplicantInfo />} />
+          </Route>
         </Route>
 
         {/* Admin Dashboard Layout */}

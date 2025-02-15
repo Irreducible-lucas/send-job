@@ -12,8 +12,12 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (auth.token) {
+    if (auth?.currentUser?.role === "seeker") {
       navigate("/");
+    }
+
+    if (auth?.currentUser?.role === "company") {
+      navigate("/employer");
     }
   }, [auth])
 

@@ -58,7 +58,7 @@ const FinishedJob = () => {
                   </div>
                 </div>
                 <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-500 text-white -mt-7">
-                  Status: {job.status}
+                  {job.status}
                 </span>
               </div>
               <p className="font-semibold">{job.employer_name}</p>

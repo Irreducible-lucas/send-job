@@ -35,8 +35,8 @@ const MatchedJobs = () => {
     let response: any = await saveJob(data);
 
     if (response?.data) {
-      if (response.data.message === "Job Already Saved") {
-        toast.info("Job already save");
+      if (response.data.message === "Job removed from saved jobs") {
+        toast.success("Job removed from saved job");
         return;
       }
       toast.success("Job saved");

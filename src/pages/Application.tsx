@@ -83,7 +83,7 @@ const Application = () => {
     const data: any = {
       jobId: job.id,
       userId: 1,
-      status: "completed",
+      status: "processing",
       information: formData.get("desc"),
     };
 

@@ -2,9 +2,10 @@ import PostedJobCard from "./PostedJobCard";
 import { layout } from "../styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Job } from "../type";
-import { useSearchJobQuery } from "../rtk/services/jobs";
+import { useSaveJobMutation, useSearchJobQuery } from "../rtk/services/jobs";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface PostedJobProps {
   showHeading?: boolean;
@@ -28,6 +29,37 @@ const PostedJob = ({ showHeading = true }: PostedJobProps) => {
   const fetchMoreJobs = () => {
     if (!isFetching && hasMore) {
       setPage((prev) => prev + 1);
+    }
+  };
+
+  let navigate = useNavigate();
+
+  const handleNavigate = (item: any) => {
+    navigate(`/jobs/${item.job_title}`, {
+      state: { state: item },
+    });
+  };
+
+  const [saveJob] = useSaveJobMutation();
+
+  const onSaveJob = async (job: Job) => {
+    const data: any = {
+      jobId: job.id,
+      userId: 1,
+    };
+
+    let response: any = await saveJob(data);
+
+    if (response?.data) {
+      if (response.data.message === "Job removed from saved jobs") {
+        toast.success("Job removed from saved job");
+        return;
+      }
+      toast.success("Job saved");
+    } else {
+      console.log(response.error);
+      toast.error("Unable to save Job");
+      // setErrorMessage('Error saving quote');
     }
   };
 
@@ -56,7 +88,12 @@ const PostedJob = ({ showHeading = true }: PostedJobProps) => {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {data?.data.map((job: Job) => (
-            <PostedJobCard key={job.id} job={job} />
+            <PostedJobCard
+              handleNavigate={handleNavigate}
+              saveJob={saveJob}
+              key={job.id}
+              job={job}
+            />
           ))}
         </div>
       </InfiniteScroll>

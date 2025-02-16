@@ -10,7 +10,8 @@ import axios from "../axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../rtk";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "../assets";
+import { toast } from "react-toastify";
+import { Logo } from "../assets";
 
 const schema = yup.object().shape({
   firstname: yup.string().required("First name is required"),
@@ -31,7 +32,7 @@ const schema = yup.object().shape({
   birth_date: yup.string().required("Birth date is required"),
 });
 
-const SignUpPage: FC = () => {
+const SignUpFormPage: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const job_interests = useSelector(
@@ -49,7 +50,11 @@ const SignUpPage: FC = () => {
   const handleSubmit = async () => {
     const data = getValues();
     if (job_interests.length === 0) {
-      alert("Please add atleast one job you are interested in.");
+      toast.warn("Please add at least one interested job.", {
+        position: "top-center",
+        theme: "light",
+      });
+      return;
     }
 
     const body = {
@@ -58,6 +63,7 @@ const SignUpPage: FC = () => {
       password: data.password,
       gender: data.gender,
       telephone: data.telephone,
+      birthDate: data.birth_date,
       workLocation: "",
       skills: "",
       jobTitle: "",
@@ -70,11 +76,18 @@ const SignUpPage: FC = () => {
       setIsLoading(true);
       const { data }: any = await axios.post("/users/signup", body);
       setIsLoading(false);
-      alert(data.message);
-      navigate("/");
-    } catch (error) {
+      toast.success(data.message, {
+        position: "top-center",
+        theme: "colored",
+      });
+      navigate("/login");
+    } catch (error: any) {
       setIsLoading(false);
-      console.log("Error occured:", error);
+      toast.error(error.response.data.message, {
+        position: "top-center",
+        theme: "colored",
+      });
+      console.log("Error occurred:", error.response.data.message);
     }
   };
 
@@ -117,8 +130,13 @@ const SignUpPage: FC = () => {
   };
 
   return (
-    <div className="h-screen w-full grid place-items-center bg-gray-100">
-      <div className="bg-white p-6 w-full lg:max-w-xl h-full lg:h-4/5 rounded-lg shadow-lg">
+    <div className="h-screen w-full grid place-items-center bg-[url('/src/assets/signup-bg.jpg')] overflow-y-auto">
+      <div className="bg-white p-6 w-full lg:max-w-xl rounded-lg shadow-lg my-10">
+        <img
+          src={Logo}
+          className="w-[50px] h-[50px] mx-auto my-4"
+          alt="Our Logo"
+        />
         <div>
           <h1 className="text-xl font-bold text-blue-600 text-center">
             Create a Job Seeker Account
@@ -139,9 +157,7 @@ const SignUpPage: FC = () => {
         </div>
         <form>
           <div className="flex flex-1 flex-col justify-between">
-            <div className="lg:max-h-[250px] overflow-auto">
-              {renderContent()}
-            </div>
+            <div>{renderContent()}</div>
 
             <div className="grid grid-cols-[150px_1fr] gap-8 mt-4">
               <button
@@ -154,7 +170,7 @@ const SignUpPage: FC = () => {
               </button>
               {step === 2 ? (
                 <button
-                  className="bg-green-600 py-2 w-full disabled:bg-green-700/10 text-white rounded-lg flex justify-center items-center"
+                  className="bg-green-600 py-2 w-full disabled:bg-green-700/30 text-white rounded-lg flex justify-center items-center"
                   type="button"
                   onClick={handleSubmit}
                   disabled={isLoading}
@@ -173,9 +189,16 @@ const SignUpPage: FC = () => {
             </div>
           </div>
         </form>
+        <p className="text-center mt-8">
+          {" "}
+          <span className="mr-2">Have an Account?</span>
+          <a className="font-bold text-blue-700 hover:underline" href="/login">
+            Login
+          </a>
+        </p>
       </div>
     </div>
   );
 };
 
-export default SignUpPage;
+export default SignUpFormPage;

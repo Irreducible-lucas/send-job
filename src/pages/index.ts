@@ -11,7 +11,11 @@ export { default as TrainingPrograms } from "./TrainingProgram";
 export { default as Resources } from "./Resources";
 export { default as JobsPage } from "./JobsPage";
 export { default as LoginPage } from "./LoginPage";
-export { default as SignUpPage } from "./SignUpPage";
 export { default as JobDetail } from "./JobDetail";
 export { default as Application } from "./Application";
 export { default as ApplicationSucessful } from "./ApplicationSucessful";
+// Sign up pages
+export { default as SignUpPage } from "./SignUp"
+export { default as JobSeekerSignUp } from "./SeekerSignUp";
+export { default as EmployerSignUp } from "./EmployerSignUp";
+export {default as OnlyEmployerRoute} from "./OnlyEmployerRoute";

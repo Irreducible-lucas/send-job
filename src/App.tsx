@@ -20,7 +20,6 @@ import {
   TalentSolutions,
   HireTalent,
   UpskillTeam,
-  CareerAdvice,
   HiringTips,
   TrainingPrograms,
   Faqs,
@@ -28,32 +27,43 @@ import {
   JobsPage,
   LoginPage,
   SignUpPage,
+  JobSeekerSignUp,
   JobDetail,
   Application,
   ApplicationSucessful,
+  EmployerSignUp,
+  OnlyEmployerRoute,
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
 import JobsTab from "./pages/JobsTab";
 import { useEffect } from "react";
-import { fetchUser } from "./rtk/features/user/userSlice";
+import { getCurrentUser } from "./rtk/features/user/authSlice";
 import { useAppDispatch } from "./rtk/hooks";
+import CompanyHome from "./components/CompanyHome";
+import SignUpRoot from "./layout/SignUpRoot";
+import EmployerRoot from "./layout/EmployerRoot";
+import { ApplicantInfo, EmployerDashboard, JobDetails, MyJobs } from "./pages/employer";
 
 const App = () => {
-  //
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const testUserEmail = "ayt@gmail.com";
-    dispatch(fetchUser(testUserEmail));
-  }, []);
+    dispatch(getCurrentUser());
+  }, [dispatch]);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" errorElement={<ErrorPage />}>
         {/* Authentication Routes */}
         <Route path="login" element={<LoginPage />} />
-        <Route path="sign-up" element={<SignUpPage />} />
+        <Route path="sign-up" element={<SignUpRoot />}>
+          <Route index element={<SignUpPage />} />
+          <Route
+            path="job-seeker"
+            element={<JobSeekerSignUp />}
+          />
+          <Route path="employer" element={<EmployerSignUp />} />
+        </Route>
 
         {/* Profile Route and sub-routes */}
         <Route path="profile" element={<ProfileRoot />}>
@@ -80,18 +90,33 @@ const App = () => {
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route path="/jobs/success" element={<ApplicationSucessful />} />
           {/* <Route
+          <Route
+            path="/talent-solution/hire-talent"
+            element={<CompanyHome />}
+          />
+          <Route
             path="talent-solution/skill-assessment"
             element={<SavedJobTab />}
           /> */}
           <Route path="upskill-team" element={<UpskillTeam />} />
           {/* Resources Sub-Routes */}
-          <Route path="resources/career-advice" element={<CareerAdvice />} />
+          <Route path="resources/career-advice" element={<CompanyHome />} />
           <Route path="resources/hiring-tips" element={<HiringTips />} />
           <Route path="resources/faqs" element={<Faqs />} />
           <Route
             path="resources/training-programs"
             element={<TrainingPrograms />}
           />
+        </Route>
+
+        {/* Employer Dashboard */}
+        <Route path="employer" element={<OnlyEmployerRoute><EmployerRoot /></OnlyEmployerRoute>}>
+          <Route index element={<EmployerDashboard />} />
+          <Route path="jobs">
+            <Route index element={<MyJobs />} />
+            <Route path=":id" element={<JobDetails />} />
+            <Route path=":id/applicant/:aid" element={<ApplicantInfo />} />
+          </Route>
         </Route>
 
         {/* Admin Dashboard Layout */}

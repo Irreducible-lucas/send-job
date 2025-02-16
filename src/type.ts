@@ -98,9 +98,11 @@ export interface UserType {
   password: string;
   telephone: string;
   gender: GenderEnum;
-  birth_date: string;
-  interested_job: string;
-  work_location: string;
+  birthDate: string;
+  domicile: string;
+  skills: string;
+  photoUrl: string;
+  about_me: string;
 }
 
 export interface InterestedJobType {
@@ -116,6 +118,22 @@ export interface UserFormInput {
   telephone: string;
   gender: GenderEnum;
   birth_date: string;
+}
+
+export interface EmpFormInput {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  telephone: string;
+  gender: GenderEnum;
+  job_title: string;
+  company_name: string;
+  company_address: string;
+  company_email: string;
+  company_website: string;
+  company_contact_number: string;
+  company_overview: string;
 }
 
 export interface UserModel {
@@ -181,3 +199,52 @@ export interface Field {
     options: string[];
   }[];
 }
+
+export interface UserCardProps {
+  title: string;
+  description: string;
+  imageSrc: string;
+  onClick: () => void;
+}
+export interface CompanyDraftProps {
+  title: string;
+  createdDate: string;
+  applicants: number;
+  isActive: boolean;
+  image: string;
+}
+
+export interface Applicant {
+  name: string;
+  role: string;
+  location: string;
+  appliedDate: string;
+  status?: string;
+  imageUrl: string;
+}
+export interface JobDescriptionProps {
+  title: string;
+  description: string;
+  skills: string[];
+  workplaceType: string;
+  jobType: string;
+  specialization: string;
+  role: string;
+  experience: string;
+  budget: string;
+}
+export interface CompanyApplicantProps {
+  name: string;
+  role: string;
+  location: string;
+  appliedDate: string;
+  status?: string;
+  imageUrl: string;
+}
+export interface CompanyInfoProps{
+  logo: string;
+   title: string;
+  company: string;
+  postedDate: string;
+}
+

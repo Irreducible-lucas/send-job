@@ -1,11 +1,15 @@
 import React, { useState, FormEvent } from "react";
+import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/style.css';
+import { Controller } from "react-hook-form";
 
 interface StepProps {
+  control: any;
   register: any;
   errors: any;
 }
 
-const SignUpStepOne = ({ register, errors }: StepProps) => {
+const EmpSignUpStepOne = ({ control, register, errors }: StepProps) => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -89,64 +93,67 @@ const SignUpStepOne = ({ register, errors }: StepProps) => {
 
       <div>
         <label
+          htmlFor="job_title"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Job Title
+        </label>
+        <input
+          type="text"
+          id="job_title"
+          {...register("job_title")}
+          className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          placeholder="Your job title"
+        />
+        {errors.job_title && (
+          <p className="text-red-600 text-sm">{errors.job_title.message}</p>
+        )}
+      </div>
+
+      <div>
+        <label
           htmlFor="telephone"
           className="block text-sm font-medium text-gray-700"
         >
-          Telephone
+          Phone Number
         </label>
-        <input
-          type="tel"
-          id="telephone"
-          {...register("telephone")}
-          className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          placeholder="+2349011122233"
-        />
+        <Controller
+          name="telephone"
+          control={control}
+          render={({ field }) => <PhoneInput
+            {...field}
+            country={"sl"}
+            enableSearch={true}
+            regions={'africa'}
+            inputClass="!w-full"
+          />} />
         {errors.telephone && (
           <p className="text-red-600 text-sm">{errors.telephone.message}</p>
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label
-            htmlFor="birth_date"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Birth Date
-          </label>
-          <input
-            type="date"
-            id="birth_date"
-            {...register("birth_date")}
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          />
-          {errors.birth_date && (
-            <p className="text-red-600 text-sm">{errors.birth_date.message}</p>
-          )}
-        </div>
-        <div>
-          <label
-            htmlFor="gender"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Gender
-          </label>
-          <select
-            id="gender"
-            {...register("gender")}
-            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          >
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-          {errors.gender && (
-            <p className="text-red-600 text-sm">{errors.gender.message}</p>
-          )}
-        </div>
+      <div>
+        <label
+          htmlFor="gender"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Gender
+        </label>
+        <select
+          id="gender"
+          {...register("gender")}
+          className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        >
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        {errors.gender && (
+          <p className="text-red-600 text-sm">{errors.gender.message}</p>
+        )}
       </div>
     </div>
   );
 };
 
-export default SignUpStepOne;
+export default EmpSignUpStepOne;

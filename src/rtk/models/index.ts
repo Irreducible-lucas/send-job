@@ -8,8 +8,8 @@ export interface Category {
 }
 
 export interface LoginModel {
-  UserName: string;
-  Password: String;
+  email: string;
+  password: String;
 }
 
 export interface UserState {

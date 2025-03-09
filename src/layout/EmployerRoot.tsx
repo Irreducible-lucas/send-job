@@ -6,11 +6,12 @@ import { GoSignOut } from "react-icons/go";
 import { logOut } from "../rtk/features/user/authSlice";
 import { useAppDispatch, useAppSelector } from "../rtk/hooks";
 import JobAdModal from "../components/JobAdModal";
-import { setJobModalOpen } from "../rtk/features/employer/jobSlice";
+import { setJobModalOpen, setEmpJobDetailsModalOpen, setEditJobModalOpen } from "../rtk/features/employer/jobSlice";
+import { EditJobAdModal, EmployerJobDetails } from "../components";
 
 const EmployerRoot = () => {
   const dispatch = useAppDispatch();
-  const {isJobModalOpen} = useAppSelector((state) => state.job);
+  const { isJobModalOpen, isEditJobModalOpen, isEmpJobDetailsModalOpen } = useAppSelector((state) => state.job);
   const handleLogout = () => {
     dispatch(logOut());
   };
@@ -48,8 +49,14 @@ const EmployerRoot = () => {
       <section className="overflow-y-auto">
         <Outlet />
         {isJobModalOpen && (
-        <JobAdModal onClose={() => dispatch(setJobModalOpen(false))} />
-      )}
+          <JobAdModal onClose={() => dispatch(setJobModalOpen(false))} />
+        )}
+        {isEditJobModalOpen && (
+          <EditJobAdModal onClose={() => dispatch(setEditJobModalOpen(false))} />
+        )}
+        {isEmpJobDetailsModalOpen && (
+          <EmployerJobDetails onClose={() => dispatch(setEmpJobDetailsModalOpen(false))} />
+        )}
       </section>
     </main>
   );

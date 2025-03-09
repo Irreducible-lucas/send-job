@@ -1,156 +1,140 @@
-import { useState } from "react";
-import { FaTrashAlt, FaBriefcase, FaPlus } from "react-icons/fa";
-import { companyJobs as initialJobs } from "../constant";
-import JobAdModal from "./JobAdModal"; // Import the modal component
+import { useAppDispatch } from "../rtk/hooks";
+import { FaTrashAlt, FaBriefcase, FaRegEdit, FaBoxOpen } from "react-icons/fa";
+import { useDeleteJobByIdMutation, useUpdateJobByIdMutation } from "../rtk/services/jobs";
+import { setEditJobModalOpen, setJobInfo } from "../rtk/features/employer/jobSlice";
+import { Job } from "../type";
+import { Bounce, toast } from "react-toastify";
 
-const CompanySavedDraft = () => {
-  const [jobs, setJobs] = useState(initialJobs);
-  const [editingJob, setEditingJob] = useState(null);
-  const [isJobModalOpen, setIsJobModalOpen] = useState(false); // State for Job Modal
+const CompanySavedDraft = ({ jobs }: any) => {
+  const dispatch = useAppDispatch();
+  const [deleteJobById, { isLoading: isDeleting }] = useDeleteJobByIdMutation();
+  const [updateJobById, { isLoading: isPosting }] = useUpdateJobByIdMutation();
 
-  // Function to add a new job
-  const addJob = (newJob: any) => {
-    setJobs([...jobs, { id: Date.now(), ...newJob }]); // Add new job
-    setIsJobModalOpen(false); // Close the modal after adding job
+  const editJob = (job: any) => {
+    dispatch(setEditJobModalOpen(true));
+    dispatch(setJobInfo(job));
+  }
+
+  const postJob = async (job_id: number) => {
+    try {
+      await updateJobById({ id: job_id, data: { posted: true } })
+      toast.success('job posted successfully', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } catch (error) {
+      toast.error('Sorry, error occured while posting job', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
 
-  const updateJob = (updatedJob: any) => {
-    setJobs(jobs.map((job) => (job.id === updatedJob.id ? updatedJob : job)));
-    setEditingJob(null);
-  };
-
-  const deleteJob = (jobId: any) => {
-    setJobs(jobs.filter((job) => job.id !== jobId));
+  const deleteJob = async (jobId: number) => {
+    try {
+      await deleteJobById(jobId)
+      toast.success('job deleted successfully', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } catch (error) {
+      toast.error('Sorry, error occured while deleting job', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
 
   return (
-    <div className="md:p-6 min-h-screen">
+    <div className="p-4 md:p-6 min-h-screen">
+      {jobs?.length === 0 && (<div className="bg-white rounded-lg w-full grid place-items-center text-center p-8 mt-8 gap-3">
+        <FaBoxOpen size={100} className="text-blue-600" />
+        <h3>No saved jobs at the moment</h3>
+        <p>Click on the <span className="font-bold">Add Job Button</span> at the bottom right corner to create a new Job</p>
+      </div>)}
       {/* Draft jobs list */}
-      <div className="grid grid-cols-3 gap-4">
-        {jobs.map((job) => (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {jobs?.map((job: Job) => (
           <div
             key={job.id}
-            className="bg-white p-4 rounded-2xl shadow-md border"
+            className="bg-white p-4 lg:p-6 rounded-lg shadow-md border"
           >
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center gap-2">
-                <img src={job.image} alt="Logo" className="w-10 h-10" />
-                <div>
-                  <h3 className="text-lg font-semibold">{job.title}</h3>
-                  <p className="text-sm text-gray-500">
-                    Created at {job.postedDate}
-                  </p>
+            <div className="flex gap-4">
+              <div className="h-[100px] w-[100px] p-2 rounded-lg border-gray-200 bg-white border-2">
+                {job?.employer_logo === "" ? (<div className="h-full grid place-items-center w-full rounded-full bg-blue-700">
+                  <FaBriefcase className="text-white" size={50} />
+                </div>) : (<img src={job?.employer_logo} alt="Logo" className="w-10 h-10" />)}
+              </div>
+              <div className="flex flex-col justify-center gap-2">
+                <h3 className="text-lg font-semibold">{job?.job_title}</h3>
+                <p className="text-sm text-gray-500">
+                  {job?.employer_name}
+                </p>
+                <div className="flex gap-4 flex-wrap">
+                  <div className="bg-blue-50 text-blue-600 text-sm rounded-lg py-1 px-3">
+                    {job?.job_employment_type}
+                  </div>
+                  <div className="bg-blue-50 text-blue-600 text-sm rounded-lg py-1 px-3">
+                    {job?.workplace_type}
+                  </div>
+                  <div className="bg-gray-100 text-black text-sm rounded-lg py-1 px-3">
+                    {job?.job_city}{", "}{job?.job_state}
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-gray-700 text-sm">
-                {job.applicants} Applicant{job.applicants !== 1 ? "s" : ""}
-              </span>
-              <button className="text-blue-600 text-sm font-semibold hover:underline">
-                Promote Job?
-              </button>
-              <span
-                className={`text-sm px-3 py-1 rounded-full ${job.isActive
-                    ? "bg-green-100 text-green-600"
-                    : "bg-red-100 text-red-600"
-                  }`}
-              >
-                {job.isActive ? "Active" : "Inactive"}
-              </span>
-            </div>
             <div className="grid grid-cols-2 mt-5 gap-5">
               <button
-                onClick={() => setEditingJob(job)}
+                onClick={() => editJob(job)}
                 className="flex items-center justify-center border-[1px] rounded-xl py-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-white"
               >
-                <FaBriefcase className="mr-2" /> Edit Draft
+                <FaRegEdit className="mr-2" /> Edit
               </button>
               <button
                 onClick={() => deleteJob(job.id)}
-                className="flex items-center justify-center border-[1px] rounded-xl py-2 border-red-500 text-red-500 hover:bg-red-600 hover:text-white"
+                disabled={isDeleting ? true : false}
+                className="flex items-center justify-center border-[1px] rounded-xl py-2 disabled:bg-red-100 border-red-500 text-red-500 hover:bg-red-600 hover:text-white"
               >
-                <FaTrashAlt className="mr-2" /> Delete Draft
+                <FaTrashAlt className="mr-2" /> {isDeleting ? "Deleting..." : "Delete"}
               </button>
             </div>
+            <button
+              onClick={() => postJob(job.id)}
+              className="flex items-center justify-center rounded-lg py-2 w-full mt-4 text-white bg-blue-600 hover:bg-blue-800 hover:text-white"
+            >{isPosting ? "Posting..." : "Post Job"}
+            </button>
           </div>
         ))}
       </div>
-
-      {/* Add New Job Button */}
-      <div className="mt-6 flex justify-center">
-        <button
-          onClick={() => setIsJobModalOpen(true)} // Open the modal
-          className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition"
-        >
-          <FaPlus className="mr-2" /> Add Job
-        </button>
-      </div>
-
-
-      {/* Job Posting Modal */}
-      {isJobModalOpen && (
-        <JobAdModal onSave={addJob} onClose={() => setIsJobModalOpen(false)} />
-      )}
-
-      {/* Edit Job Form (Visible when editingJob is set) */}
-      {editingJob && (
-        <div className="bg-white p-6 mt-6 rounded-2xl shadow-md">
-          <EditJobForm
-            job={editingJob}
-            onSave={updateJob}
-            onClose={() => setEditingJob(null)}
-          />
-        </div>
-      )}
     </div>
   );
 };
-
-// Edit Job Form Component
-const EditJobForm = ({ job, onSave, onClose }) => {
-  const [formData, setFormData] = useState(job);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSave = () => {
-    if (!formData.title.trim()) {
-      alert("Job title cannot be empty.");
-      return;
-    }
-    onSave(formData);
-  };
-
-  return (
-    <div>
-      <h2 className="text-lg font-semibold mb-4">Edit Job Draft</h2>
-      <input
-        type="text"
-        name="title"
-        value={formData.title}
-        onChange={handleChange}
-        className="w-full p-2 border rounded mb-4"
-        placeholder="Job Title"
-      />
-      <div className="flex gap-4">
-        <button
-          onClick={handleSave}
-          className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition"
-        >
-          Save Changes
-        </button>
-        <button
-          onClick={onClose}
-          className="px-4 py-2 bg-gray-300 text-gray-700 rounded-xl hover:bg-gray-400 transition"
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  );
-};
-
 export default CompanySavedDraft;

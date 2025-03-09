@@ -1,7 +1,5 @@
 import { Christiana, ellipse, event } from "../assets";
-
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { Applicant, CompanyApplicantProps, FeaturedJobProps, FooterProps, Job, JobCategory,JobDetailSidebarProps,Link, Location, NewsCardProps, recruiterProps, Testimonial } from "../type";
+import { Applicant, CompanyApplicantProps, FeaturedJobProps, FooterProps, JobCategory, Link, Location, NewsCardProps, recruiterProps, Testimonial } from "../type";
 
 
 export const BASE_URL = "http://localhost:3000/api/";
@@ -438,7 +436,7 @@ export const jobDetails = {
   ],
 };
 
-export const jobDeatilsSidebar: JobDetailSidebarProps[] = [
+export const jobDeatilsSidebar = [
   {
     id: 1,
     title: "Lead UI Designer",
@@ -476,7 +474,7 @@ export const jobDeatilsSidebar: JobDetailSidebarProps[] = [
     logo: ellipse,
   },
 ];
-export const otherJobs: JobDetailSidebarProps[] = [
+export const otherJobs = [
   {
     id: 1,
     title: "UI Designer",

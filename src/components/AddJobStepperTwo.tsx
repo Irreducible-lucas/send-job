@@ -64,7 +64,7 @@ const AddJobStepperTwo: React.FC<Step2Props> = ({
 
       {/* Skill List */}
       <div className="flex flex-wrap gap-2">
-        {skills.map((skill) => (
+        {skills.length > 0 && skills.map((skill) => (
           <div
             key={skill}
             className="flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded-full shadow"

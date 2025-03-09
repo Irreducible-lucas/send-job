@@ -1,27 +1,47 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface initialState {
-    job: any;
+    jobInfo: any;
     isJobModalOpen: boolean;
+    isEditJobModalOpen: boolean;
+    isEmpJobDetailsModalOpen: boolean;
+    isViewingApplicantProfile: boolean;
+    applicantInfo: any;
   }
   
   const initialState: initialState = {
-    job: {},
+    jobInfo: {},
     isJobModalOpen: false,
+    isEditJobModalOpen: false,
+    isEmpJobDetailsModalOpen: false,
+    isViewingApplicantProfile: false,
+    applicantInfo: {},
   };
 
 const jobSlice = createSlice({
     name: "job",
     initialState,
     reducers: {
-        addJob: (state, action) => {
-            console.log(action.payload);
+        setJobInfo: (state, action) => {
+           state.jobInfo = action.payload; 
         },
         setJobModalOpen: (state, action) => {
             state.isJobModalOpen = action.payload;
-        }
+        },
+        setEditJobModalOpen: (state, action) => {
+            state.isEditJobModalOpen = action.payload;
+        },
+        setEmpJobDetailsModalOpen: (state, action) => {
+            state.isEmpJobDetailsModalOpen = action.payload;
+        },
+        setIsViewingApplicantProfile: (state, action) => {
+            state.isViewingApplicantProfile = action.payload;
+        },
+        setApplicantInfo: (state, action) => {
+            state.applicantInfo = action.payload;
+        },
     }
 })
 
 export default jobSlice.reducer;
-export const {addJob, setJobModalOpen} = jobSlice.actions;
+export const {setJobInfo, setJobModalOpen, setEditJobModalOpen, setEmpJobDetailsModalOpen, setIsViewingApplicantProfile, setApplicantInfo} = jobSlice.actions;

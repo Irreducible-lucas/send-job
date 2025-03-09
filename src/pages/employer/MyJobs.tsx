@@ -1,9 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Header from '../../components/employer/Header'
 import { CompanyJob, CompanySavedDraft } from '../../components';
 import { FaPlus } from "react-icons/fa";
+import { useGetJobsByCompanyIdQuery } from '../../rtk/services/jobs';
+import { useAppSelector } from '../../rtk/hooks';
+import { useGetJobApplicantsByCompanyIdQuery } from '../../rtk/services/application';
 
 const MyJobs = () => {
+  const { currentUser } = useAppSelector((state) => state.auth);
+  const {data: company_jobs}: any = useGetJobsByCompanyIdQuery({id: currentUser?.id});
+  const { data: application }: any = useGetJobApplicantsByCompanyIdQuery({ id: currentUser?.id });
+  const saved_jobs = company_jobs?.data.filter((job: any) => job.posted == false);
   const [selectedTab, setSelectedTab] = useState("saved");
   const [isAddingJob, setIsAddingJob] = useState(false);
   return (
@@ -18,7 +25,7 @@ const MyJobs = () => {
               }`}
             onClick={() => setSelectedTab("saved")}
           >
-            Saved Draft
+            Saved Jobs
           </button>
           <button
             className={`py-3 px-6 text-lg font-medium transition-colors duration-200 ${selectedTab === "posted"
@@ -31,8 +38,8 @@ const MyJobs = () => {
           </button>
         </div>
         <div>
-          {selectedTab === "saved" && <CompanySavedDraft />}
-          {selectedTab === "posted" && <CompanyJob />}
+          {selectedTab === "saved" && <CompanySavedDraft jobs={saved_jobs} />}
+          {selectedTab === "posted" && <CompanyJob jobs={application?.data} />}
         </div>
       </div>
       <div className="mt-6 flex justify-center fixed bottom-10 right-10 z-20">

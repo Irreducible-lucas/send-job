@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../constant";
-import { APIResponse, Job } from "../../type";
+import { APIResponse, Job, JobData } from "../../type";
 
 // Define a service using a base URL and expected endpoints
 export const jobsApi = createApi({
@@ -16,7 +16,7 @@ export const jobsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Job", "SavedJobs"],
+  tagTypes: ["Job", "SavedJobs", "CompanyJobs"],
   endpoints: (builder) => ({
     getFeaturedJobs: builder.query<APIResponse, string>({
       query: () => `jobs/featured`,
@@ -30,6 +30,7 @@ export const jobsApi = createApi({
 
     getJobsByCompanyId: builder.query<APIResponse, { id: number }>({
       query: ({ id }) => `jobs/company/${id}`,
+      providesTags: ["CompanyJobs"]
     }),
 
     getAllJobs: builder.query<APIResponse, { id: number }>({
@@ -76,6 +77,36 @@ export const jobsApi = createApi({
       query: () => `jobs/saved`,
       providesTags: ["SavedJobs"],
     }),
+
+    createJob: builder.mutation<{ job: Job, message: string }, JobData>({
+      query: (job) => ({
+        url: "jobs/create",
+        method: "POST",
+        body: job,
+      }),
+      invalidatesTags: ["CompanyJobs"],
+    }),
+
+    updateJobById: builder.mutation<any, { id: number, data: any }>({
+      query: ({ id, data }) => (
+        {
+          url: `/jobs/update/${id}`,
+          method: "PATCH",
+          body: data
+        }
+      ),
+      invalidatesTags: ["CompanyJobs"],
+    }),
+
+    deleteJobById: builder.mutation<any, number>({
+      query: (id) => (
+        {
+          url: `/jobs/${id}`,
+          method: "DELETE"
+        }
+      ),
+      invalidatesTags: ["CompanyJobs"],
+    })
   }),
 });
 
@@ -87,4 +118,7 @@ export const {
   useSearchJobQuery,
   useSaveJobMutation,
   useGetSavedJobsQuery,
+  useCreateJobMutation,
+  useDeleteJobByIdMutation,
+  useUpdateJobByIdMutation,
 } = jobsApi;

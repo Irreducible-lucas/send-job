@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import AddJobStepperOne from "./AddJobStepperOne";
 import AddJobStepperTwo from "./AddJobStepperTwo";
-import AddJobStepThree from "./AddJobStepThree";
 import { Bounce, toast } from "react-toastify";
 import { useAppSelector } from "../rtk/hooks";
-import Axios from "../axios"
-import { useCreateJobMutation } from "../rtk/services/jobs";
+import { useUpdateJobByIdMutation } from "../rtk/services/jobs";
+import EditJobStepThree from "./EditJobStepThree";
 
 interface JobAdModalProps {
     onClose: () => void;
 }
 
 const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
-    const [createJobMutation, { isLoading: isCreatingJob }] = useCreateJobMutation();
-    const { currentUser } = useAppSelector((state) => state.auth);
     const { jobInfo } = useAppSelector((state) => state.job);
+    const [updateJobMutation, {isLoading: isUpdatingJob}] = useUpdateJobByIdMutation();
+    const { currentUser } = useAppSelector((state) => state.auth);
     
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
@@ -31,117 +30,8 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
         max_salary: jobInfo?.job_max_salary,
     });
 
-    const [quiz, setQuiz] = useState<any>([]);
-    const [question, setQuestion] = useState("");
-    const [options, setOptions] = useState([]);
     const [skills, setSkills] = useState<string[]>(JSON.parse(jobInfo?.job_required_skills));
     const [newSkill, setNewSkill] = useState("");
-
-    // Function to create a job
-    const createJob = async (jobData: any) => {
-        try {
-            const response = await createJobMutation(jobData);
-            return response.data;
-        } catch (error) {
-            toast.error('Sorry, error occured while creating job', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
-            return;
-        }
-    };
-
-    // Function to create a quiz with the job ID
-    const createQuiz = async (jobId: any, quizData: any) => {
-        const data = {
-            jobId: jobId,
-            quiz: quizData
-        }
-        try {
-            const response = await Axios.post('/jobs/quiz', data);
-            return response.data;  // Assuming response.data contains the quiz details
-        } catch (error) {
-            toast.error('Sorry, error occured while creating job test', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
-            return;
-        }
-    };
-
-    const addQuestion = () => {
-        if (question === "") {
-            toast.warn('Question field cannot be empty.', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
-            return;
-        }
-
-        if (options.length < 2) {
-            toast.warn('Options must be more than two(2)', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
-            return;
-        }
-
-        const checkEmptyOption = options.filter((option: any) => option.option === "");
-
-        if (checkEmptyOption.length > 0) {
-            toast.warn('An Option field cannot be empty', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
-            return;
-        }
-
-        const newQuiz = {
-            question: question,
-            options: options,
-        };
-
-        console.log("New Quiz", newQuiz);
-
-        setQuiz((prevQuiz: any) => [...prevQuiz, newQuiz]);
-        setQuestion("");
-        setOptions([]);
-    };
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -166,41 +56,11 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
             alert("Job title cannot be empty.");
             return;
         }
-        if (quiz.length === 0) {
-            toast.warn('Please add screening questions', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
-            return;
-        }
-
-        if (quiz.length < 3) {
-            toast.warn('Please add atleast 3 screening questions', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
-            return;
-        }
 
         const job_data = { ...formData, employer_name: currentUser?.company_name, employer_logo: currentUser?.company_logo_url, employer_website: currentUser?.company_website, companyId: currentUser?.id, required_skills: JSON.stringify(skills) };
         try {
-            const res = await createJob(job_data);
-            await createQuiz(res?.job?.id, quiz);
-            toast.success('Job created successfully', {
+            await updateJobMutation({id: jobInfo.id, data: job_data});
+            toast.success('Job data updated successful', {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -212,8 +72,7 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
                 transition: Bounce,
             });
         } catch (error) {
-            console.log("Error:", error)
-            toast.error('Sorry, error occured.', {
+            toast.error('Sorry, error occured while updating job', {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -281,14 +140,7 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
                     />
                 )}
                 {step === 3 && (
-                    <AddJobStepThree
-                        setOptions={setOptions}
-                        addQuestion={addQuestion}
-                        quiz={quiz}
-                        options={options}
-                        question={question}
-                        setQuestion={setQuestion}
-                    />
+                    <EditJobStepThree jobId={jobInfo?.id} />
                 )}
                 <hr className="border-gray-300 my-3" /> {/* Line above the buttons */}
                 <div className="flex justify-between gap-3 mt-4">
@@ -312,7 +164,7 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
                             onClick={handleSave}
                             className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition ml-auto"
                         >
-                            {isCreatingJob ? "Saving job..." : "Save Job"}
+                            {isUpdatingJob ? "updating job..." : "Update Job"}
                         </button>
                     )}
                 </div>

@@ -16,7 +16,7 @@ export const jobsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Job", "SavedJobs", "CompanyJobs"],
+  tagTypes: ["Job", "SavedJobs", "CompanyJobs", "JobTest"],
   endpoints: (builder) => ({
     getFeaturedJobs: builder.query<APIResponse, string>({
       query: () => `jobs/featured`,
@@ -31,6 +31,22 @@ export const jobsApi = createApi({
     getJobsByCompanyId: builder.query<APIResponse, { id: number }>({
       query: ({ id }) => `jobs/company/${id}`,
       providesTags: ["CompanyJobs"]
+    }),
+
+    getTestbyJobId: builder.query<APIResponse, { job_id: number }>({
+      query: (job_id) => `jobs/test/${job_id}`,
+      providesTags: ["JobTest"]
+    }),
+
+    updateTestQuestion: builder.mutation<any, any>({
+      query: (data) => (
+        {
+          url: "/jobs/test/question",
+          method: "PATCH",
+          body: data
+        }
+      ),  
+      invalidatesTags: ["JobTest"],
     }),
 
     getAllJobs: builder.query<APIResponse, { id: number }>({
@@ -91,6 +107,17 @@ export const jobsApi = createApi({
       query: ({ id, data }) => (
         {
           url: `/jobs/update/${id}`,
+          method: "PUT",
+          body: data
+        }
+      ),
+      invalidatesTags: ["CompanyJobs"],
+    }),
+
+    updateJobInfo: builder.mutation<any, { id: number, data: any }>({
+      query: ({ id, data }) => (
+        {
+          url: `/jobs/update/${id}`,
           method: "PATCH",
           body: data
         }
@@ -113,6 +140,7 @@ export const jobsApi = createApi({
 export const {
   useGetFeaturedJobsQuery,
   useGetJobsByCompanyIdQuery,
+  useGetTestbyJobIdQuery,
   useGetJobsByCategoryQuery,
   useGetMatchedJobsQuery,
   useSearchJobQuery,
@@ -121,4 +149,6 @@ export const {
   useCreateJobMutation,
   useDeleteJobByIdMutation,
   useUpdateJobByIdMutation,
+  useUpdateJobInfoMutation,
+  useUpdateTestQuestionMutation,
 } = jobsApi;

@@ -63,7 +63,7 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
       quiz: quizData
     }
     try {
-      const response = await Axios.post('/jobs/quiz', data);
+      const response = await Axios.post('/jobs/test', data);
       return response.data;  // Assuming response.data contains the quiz details
     } catch (error) {
       toast.error('Sorry, error occured while creating job test', {
@@ -134,8 +134,6 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
       options: options,
     };
 
-    console.log("New Quiz", newQuiz);
-
     setQuiz((prevQuiz: any) => [...prevQuiz, newQuiz]);
     setQuestion("");
     setOptions([]);
@@ -151,13 +149,6 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
 
   const [skills, setSkills] = useState<string[]>([]);
   const [newSkill, setNewSkill] = useState("");
-  // const [screeningQuestions, setScreeningQuestions] = useState([
-  //   { question: "" },
-  // ]);
-
-  // useEffect(() => {
-  //   console.log(screeningQuestions)
-  // }, [screeningQuestions])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>

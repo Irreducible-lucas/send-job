@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../rtk/hooks";
 import { FaTrashAlt, FaBriefcase, FaRegEdit, FaBoxOpen } from "react-icons/fa";
-import { useDeleteJobByIdMutation, useUpdateJobByIdMutation } from "../rtk/services/jobs";
+import { useDeleteJobByIdMutation, useUpdateJobInfoMutation } from "../rtk/services/jobs";
 import { setEditJobModalOpen, setJobInfo } from "../rtk/features/employer/jobSlice";
 import { Job } from "../type";
 import { Bounce, toast } from "react-toastify";
@@ -8,7 +8,7 @@ import { Bounce, toast } from "react-toastify";
 const CompanySavedDraft = ({ jobs }: any) => {
   const dispatch = useAppDispatch();
   const [deleteJobById, { isLoading: isDeleting }] = useDeleteJobByIdMutation();
-  const [updateJobById, { isLoading: isPosting }] = useUpdateJobByIdMutation();
+  const [postJobById, { isLoading: isPosting }] = useUpdateJobInfoMutation();
 
   const editJob = (job: any) => {
     dispatch(setEditJobModalOpen(true));
@@ -17,7 +17,7 @@ const CompanySavedDraft = ({ jobs }: any) => {
 
   const postJob = async (job_id: number) => {
     try {
-      await updateJobById({ id: job_id, data: { posted: true } })
+      await postJobById({ id: job_id, data: { posted: true } })
       toast.success('job posted successfully', {
         position: "top-center",
         autoClose: 5000,

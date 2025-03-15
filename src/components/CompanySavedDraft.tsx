@@ -1,7 +1,7 @@
 import { useAppDispatch } from "../rtk/hooks";
 import { FaTrashAlt, FaBriefcase, FaRegEdit, FaBoxOpen } from "react-icons/fa";
 import { useDeleteJobByIdMutation, useUpdateJobInfoMutation } from "../rtk/services/jobs";
-import { setEditJobModalOpen, setJobInfo } from "../rtk/features/employer/jobSlice";
+import { setEditJobModalOpen, setJobInfo } from "../rtk/features/user/jobSlice";
 import { Job } from "../type";
 import { Bounce, toast } from "react-toastify";
 

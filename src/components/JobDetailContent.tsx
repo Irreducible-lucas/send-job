@@ -8,7 +8,10 @@ import {
 import { jobDetails } from "../constant";
 import { Job } from "../type";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "../rtk/hooks";
+import { setJobAppModalOpen, setJobInfo } from "../rtk/features/user/jobSlice";
+import { FaBriefcase } from "react-icons/fa";
 
 interface Props {
   job: Job;
@@ -16,12 +19,16 @@ interface Props {
 }
 
 const JobDetailContent = ({ job, showButton = true }: Props) => {
-  let navigate = useNavigate();
+  const {token} = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
-  const handleNavigate = (item: any) => {
-    navigate(`/jobs/apply/${item.job_title}`, {
-      state: { state: item },
-    });
+  const applyToJob = () => {
+    if(!token) {
+      toast.error("Please login to apply for job");
+      return;
+    }
+    dispatch(setJobInfo(job));
+    dispatch(setJobAppModalOpen(true));
   };
 
   return (
@@ -35,7 +42,7 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
               {/* Apply Now Button */}
               {showButton && (
                 <button
-                  onClick={() => handleNavigate(job)}
+                  onClick={() => applyToJob()}
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                 >
                   Apply Now
@@ -61,11 +68,16 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
           </div>
 
           <div className="flex items-center gap-5">
-            <img
+          {job?.employer_logo === "" ? (
+            <div className="w-16 h-16 rounded-full bg-blue-600 grid place-items-center">
+              <FaBriefcase size={30} className="text-white"/>
+            </div>
+          ) : (<img
               src={job.employer_logo}
               className="w-16 h-16 rounded-full"
               alt="Company Logo"
-            />
+            />)}
+            
             <div>
               <div className="flex items-center gap-3">
                 <p className="text-blue-500 text-sm">{job.employer_name}</p>

@@ -13,7 +13,7 @@ export const applicationApi = createApi({
   tagTypes: ["MyApplications"],
   endpoints: (builder) => ({
     applyForJob: builder.mutation({
-      query: (newApplication: Job) => ({
+      query: (newApplication: any) => ({
         url: "application/",
         method: "POST",
         body: newApplication,
@@ -21,8 +21,8 @@ export const applicationApi = createApi({
       invalidatesTags: ["MyApplications"],
     }),
 
-    getMyApplications: builder.query<APIResponse, string>({
-      query: () => `application/`,
+    getMyApplications: builder.query<APIResponse, number>({
+      query: (id) => `application/user/${id}`,
       providesTags: ["MyApplications"],
       keepUnusedDataFor: 12,
     }),

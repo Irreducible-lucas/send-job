@@ -9,10 +9,10 @@ import JobAdModal from "../components/JobAdModal";
 import { setJobModalOpen, setEmpJobDetailsModalOpen, setEditJobModalOpen } from "../rtk/features/user/jobSlice";
 import { EditJobAdModal, EmployerJobDetails } from "../components";
 
-const EmployerRoot = () => {
-  const {currentUser}: any = useAppSelector((state) => state.auth)
+const EmployeeRoot = () => {
+  const auth = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch();
-  const { isJobModalOpen, isEditJobModalOpen, isEmpJobDetailsModalOpen } = useAppSelector((state) => state.job);
+  // const { isJobModalOpen, isEditJobModalOpen, isEmpJobDetailsModalOpen } = useAppSelector((state) => state.job);
   const handleLogout = () => {
     dispatch(logOut());
   };
@@ -27,17 +27,17 @@ const EmployerRoot = () => {
               <h1 className="font-bold text-2xl font-barlow">Logo</h1>
             </div>
             <div className="flex flex-col items-center gap-4">
-              <img src={currentUser?.profile_image_url ?? "https://gravatar.com/avatar/e5607a7ede604ade06cfbd847d9b5a02?s=400&d=robohash&r=x"} className="bg-slate-300 rounded-full border w-[80px] h-[80px]" alt="User profile picture" />
-              <h2 className="text-center text-black font-barlow font-bold">{currentUser?.full_name}</h2>
+              <img src={"https://gravatar.com/avatar/e5607a7ede604ade06cfbd847d9b5a02?s=400&d=robohash&r=x"} className="bg-slate-300 rounded-full border w-[80px] h-[80px]" alt="User profile picture" />
+              <h2 className="text-center text-black font-barlow font-bold">{auth?.currentUser?.name}</h2>
             </div>
             <div className="flex flex-col">
-              <Link to={"/employer"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
+              <Link to={"/employee"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
                 <RxDashboard size={30} />
                 <p className="text-lg group-hover:font-bold">Dashboard</p>
               </Link>
-              <Link to={"/employer/jobs"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
+              <Link to={"/employee/jobs"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
                 <IoBriefcaseOutline size={30} />
-                <p className="text-lg group-hover:font-bold">My Jobs</p>
+                <p className="text-lg group-hover:font-bold">Jobs</p>
               </Link>
             </div>
           </section>
@@ -49,7 +49,7 @@ const EmployerRoot = () => {
       </aside>
       <section className="overflow-y-auto">
         <Outlet />
-        {isJobModalOpen && (
+        {/* {isJobModalOpen && (
           <JobAdModal onClose={() => dispatch(setJobModalOpen(false))} />
         )}
         {isEditJobModalOpen && (
@@ -57,10 +57,10 @@ const EmployerRoot = () => {
         )}
         {isEmpJobDetailsModalOpen && (
           <EmployerJobDetails onClose={() => dispatch(setEmpJobDetailsModalOpen(false))} />
-        )}
+        )} */}
       </section>
     </main>
   );
 };
 
-export default EmployerRoot;
+export default EmployeeRoot;

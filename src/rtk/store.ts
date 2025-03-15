@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 // import userReducer from "./features/user/userSlice";
 import authReducer from "./features/user/authSlice";
 import jobInterestReducer from "./features/user/jobInterestSlice";
-import jobReducer from "./features/employer/jobSlice"
+import jobReducer from "./features/user/jobSlice"
 
 import { jobsApi } from "./services/jobs";
 import { applicationApi } from "./services/application";

@@ -8,8 +8,8 @@ import { useGetJobsByCompanyIdQuery } from '../../rtk/services/jobs';
 
 const Dashboard = () => {
     const { currentUser }: any = useAppSelector((state) => state.auth);
-    const { data: application }: any = useGetJobApplicantsByCompanyIdQuery({ id: currentUser?.id });
-    const {data: company_jobs}: any = useGetJobsByCompanyIdQuery({id: currentUser?.id});
+    const { data: application, isLoading: isLoadingApplication }: any = useGetJobApplicantsByCompanyIdQuery({ id: currentUser?.id });
+    const {data: company_jobs, isLoading}: any = useGetJobsByCompanyIdQuery({id: currentUser?.id});
     
     const saved = company_jobs?.data.filter((job: any) => job.posted == false);
     const posted = company_jobs?.data.filter((job: any) => job.posted == true);
@@ -22,7 +22,7 @@ const Dashboard = () => {
                 <div className="mt-8 grid grid-cols-3 gap-4">
                     <div className="bg-white py-4 px-8  rounded-lg shadow-md flex justify-between items-center">
                         <div>
-                            <p className="text-3xl font-bold text-blue-700">{posted?.length}</p>
+                            <p className="text-3xl font-bold text-blue-700">{isLoading ? 0 : posted?.length}</p>
                             <p className="text-gray-500 mt-1">Posted Jobs</p>
                         </div>
                         <div className='bg-blue-700 p-4 rounded-full text-white grid place-items-center'>
@@ -32,7 +32,7 @@ const Dashboard = () => {
 
                     <div className="bg-white py-4 px-8  rounded-lg shadow-md flex justify-between items-center">
                         <div>
-                            <p className="text-3xl font-bold text-blue-700">{application?.applicants}</p>
+                            <p className="text-3xl font-bold text-blue-700">{isLoadingApplication ? 0 : application?.applicants}</p>
                             <p className="text-gray-500 mt-1">Applicants</p>
                         </div>
                         <div className='bg-blue-700 p-4 rounded-full text-white grid place-items-center'>
@@ -42,7 +42,7 @@ const Dashboard = () => {
 
                     <div className="bg-white py-4 px-8  rounded-lg shadow-md flex justify-between items-center">
                         <div>
-                            <p className="text-3xl font-bold text-blue-700">{saved?.length}</p>
+                            <p className="text-3xl font-bold text-blue-700">{isLoading ? 0 : saved?.length}</p>
                             <p className="text-gray-500 mt-1">Saved Jobs</p>
                         </div>
                         <div className='bg-blue-700 p-4 rounded-full text-white grid place-items-center'>

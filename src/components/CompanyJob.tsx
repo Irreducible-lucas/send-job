@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaBriefcase, FaEye, FaPlus } from "react-icons/fa";
 import { useAppDispatch } from "../rtk/hooks";
-import { setEmpJobDetailsModalOpen, setJobInfo } from "../rtk/features/employer/jobSlice";
+import { setEmpJobDetailsModalOpen, setJobInfo } from "../rtk/features/user/jobSlice";
 
 export const CompanyTab = [
   { label: "All" },

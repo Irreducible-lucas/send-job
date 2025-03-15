@@ -13,7 +13,7 @@ interface JobAdModalProps {
 const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
     const { jobInfo } = useAppSelector((state) => state.job);
     const [updateJobMutation, {isLoading: isUpdatingJob}] = useUpdateJobByIdMutation();
-    const { currentUser } = useAppSelector((state) => state.auth);
+    const { currentUser} = useAppSelector((state) => state.auth);
     
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({

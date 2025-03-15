@@ -2,25 +2,36 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../rtk/hooks";
 import { useNavigate } from "react-router-dom";
 
-
 const OnlyEmployerRoute = ({ children }: any) => {
-    const auth = useAppSelector((state) => state.auth);
-    const navigate = useNavigate();
+  const auth = useAppSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const [isChecking, setIsChecking] = useState(true);
 
-    useEffect(() => {
-        if (!auth.token) {
-            navigate("/login", { replace: true });
-        } else if (!auth.currentUser || auth.currentUser.role === "seeker") {
-            navigate("/", { replace: true });
-        }
-    }, [auth, navigate]);
-
-    // Render children only when auth is loaded and valid
+  useEffect(() => {
+    // Wait for auth to finish loading
     if (auth.isLoading) {
-        return <div>Loading...</div>;
+        console.log("loading...")
+      return;
     }
 
-    return <>{children}</>;
-}
+    // If no token, redirect to login
+    if (!auth.token) {
+      navigate("/login", { replace: true });
+      return;
+    }
 
-export default OnlyEmployerRoute
+    // Auth check complete
+    setIsChecking(false);
+  }, [auth, navigate]);
+
+  // Show loading while authentication check is in progress
+  if (auth.isLoading || isChecking) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
+
+  console.log("AUTH:", auth.token)
+  // Only render children when user is authenticated as employer
+  return <>{children}</>;
+};
+
+export default OnlyEmployerRoute;

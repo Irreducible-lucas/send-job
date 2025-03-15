@@ -1,6 +1,6 @@
 import { companyApplicants } from "../../constant"
 import { useAppDispatch } from "../../rtk/hooks"
-import { setIsViewingApplicantProfile, setApplicantInfo } from "../../rtk/features/employer/jobSlice"
+import { setIsViewingApplicantProfile, setApplicantInfo } from "../../rtk/features/user/jobSlice"
 
 const ApplicantsListTab = () => {
     const dispatch = useAppDispatch();

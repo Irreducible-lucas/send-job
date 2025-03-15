@@ -267,10 +267,37 @@ export interface CompanyApplicantProps {
   status?: string;
   imageUrl: string;
 }
-export interface CompanyInfoProps{
+export interface CompanyInfoProps {
   logo: string;
-   title: string;
+  title: string;
   company: string;
   postedDate: string;
+}
+
+export interface SeekerSavedJob {
+  id: number;
+  userId: number;
+  jobId: number;
+  employer_name: string;
+  employer_logo: string;
+  employer_website: string;
+  job_title: string;
+  job_employment_type: string;
+  job_salary_currency: string;
+  job_min_salary: number,
+  job_max_salary: number,
+  job_description: string;
+  job_required_skills: string;
+  job_is_remote: boolean,
+  job_city: string;
+  job_state: string;
+  job_country: string;
+  companyId: number;
+  category_id: number;
+  featured: boolean,
+  posted: boolean,
+  closed: boolean,
+  required_docs: string;
+  experience: string;
 }
 

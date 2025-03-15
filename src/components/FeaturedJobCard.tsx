@@ -1,67 +1,79 @@
 import { Job } from "../type";
-import { FaBookmark, FaArrowRight } from "react-icons/fa";
+import { FaBookmark, FaArrowRight, FaBriefcase } from "react-icons/fa";
 
 interface Props {
   job: Job;
   handleNavigate: (val: Job) => void;
   saveJob: (val: Job) => void;
+  loading: boolean;
 }
 
-const FeaturedJobCard = ({ job, handleNavigate, saveJob }: Props) => {
+const FeaturedJobCard = ({ job, handleNavigate, saveJob, loading }: Props) => {
   const {
     employer_logo,
     employer_name,
     job_city,
+    job_state,
     job_title,
     job_min_salary,
+    job_max_salary,
     job_employment_type,
     posted,
     job_salary_currency,
   } = job;
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-xs border border-gray-200">
-      <div className="flex justify-between items-center text-sm mb-2">
-        <span className="text-blue-600 font-medium">{job_employment_type}</span>
-        <span className=" text-gray-500">{posted}</span>
-      </div>
-      <div className="flex items-center space-x-3 mb-4">
-        <img
-          src={employer_logo}
-          alt={employer_name}
-          className="w-10 h-10 rounded-full"
-        />
-        <div>
-          <p className="text-gray-800 font-medium">{employer_name}</p>
-          <p className="text-gray-500 text-xs">{job_city}</p>
+    <div className="bg-white shadow-md rounded-lg p-4 w-full border border-gray-200 flex flex-col gap-4">
+      <div className="flex gap-2 w-full">
+        <div className="w-[40px] h-[40px]">
+          {employer_logo === "" ? (<div className="w-[40px] h-[40px] rounded-full bg-blue-600 grid place-items-center">
+            <FaBriefcase size={20} className="text-white"/>
+          </div>) : (<img
+            src={employer_logo}
+            alt={employer_name}
+            className="w-[40px] h-[40px] rounded-full"
+          />)}
+        </div>
+        <div className="flex-1">
+          <p className="text-gray-800 font-bold">{job_title}</p>
+          <p className="text-gray-500 text-xs">{job_salary_currency + job_min_salary + " - " + job_max_salary + " /month"}</p>
         </div>
       </div>
-      <h3 className="text-gray-800 font-semibold text-lg mb-2 border-b-[1px] pb-3">
-        {job_title}
-      </h3>
-      <p className="text-blue-600 font-bold text-lg">
-        {job_salary_currency + " " + job_min_salary}
-        {/* <span className="text-black text-sm"> / Month</span> */}
-      </p>
-      <div className="flex justify-between items-center mt-4">
-        <button
-          onClick={() => {
-            saveJob(job);
-          }}
-          className="flex items-center space-x-2 text-sm border border-gray-300 rounded-lg px-4 py-2 hover:border-gray-400 transition-all"
-        >
-          <FaBookmark className="text-gray-600" />
-          <span>Save</span>
-        </button>
 
+      <div className="flex items-center gap-2">
+        <div className="flex-1">
+          <h3 className="text-black font-semibold text-base">
+            {employer_name}
+          </h3>
+          <p className="text-gray-500 text-sm">
+            {job_city + ", " + job_state}
+          </p>
+        </div>
+        <div className="p-2 rounded-lg text-sm bg-blue-100">
+          <p className="text-blue-600 font-medium">{job_employment_type}</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-4">
         <button
           onClick={() => {
             handleNavigate(job);
           }}
-          className="flex items-center space-x-2 text-sm border border-blue-600 text-blue-600 rounded-lg px-4 py-2 hover:bg-blue-600 hover:text-white transition-all"
+          className="flex flex-1 items-center justify-center text-sm border gap-2 border-blue-600 text-blue-600 rounded-lg px-4 py-2 hover:bg-blue-600 hover:text-white transition-all"
         >
           <span>Apply</span>
           <FaArrowRight />
+        </button>
+        <button
+          onClick={() => {
+            saveJob(job);
+          }}
+          disabled={loading}
+          className="flex items-center space-x-2 text-sm border-2 border-gray-300 rounded-lg px-4 py-2 hover:border-blue-600 transition-all"
+        >
+          {loading ? (<span className="text-blue-600">saving...</span>) : (<>
+            <FaBookmark className="text-gray-600" />
+            <span>Save</span></>)
+          }
         </button>
       </div>
     </div>

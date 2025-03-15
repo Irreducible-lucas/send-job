@@ -14,7 +14,7 @@ import {
   ReadyToWork,
 } from "./components";
 import Root from "./layout/Root";
-import DashboardRoot from "./layout/DashboardRoot";
+
 import {
   Home,
   TalentSolutions,
@@ -32,7 +32,9 @@ import {
   Application,
   ApplicationSucessful,
   EmployerSignUp,
-  OnlyEmployerRoute,
+  OnlyLoggedInUserRoute,
+  EmployeeDashboard,
+  EmployeeJobsPage,
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
 import JobsTab from "./pages/JobsTab";
@@ -42,6 +44,7 @@ import { useAppDispatch } from "./rtk/hooks";
 import CompanyHome from "./components/CompanyHome";
 import SignUpRoot from "./layout/SignUpRoot";
 import EmployerRoot from "./layout/EmployerRoot";
+import EmployeeRoot from "./layout/EmployeeRoot";
 import { ApplicantInfo, EmployerDashboard, JobDetails, MyJobs } from "./pages/employer";
 
 const App = () => {
@@ -110,7 +113,7 @@ const App = () => {
         </Route>
 
         {/* Employer Dashboard */}
-        <Route path="employer" element={<OnlyEmployerRoute><EmployerRoot /></OnlyEmployerRoute>}>
+        <Route path="employer" element={<OnlyLoggedInUserRoute><EmployerRoot /></OnlyLoggedInUserRoute>}>
           <Route index element={<EmployerDashboard />} />
           <Route path="jobs">
             <Route index element={<MyJobs />} />
@@ -119,9 +122,14 @@ const App = () => {
           </Route>
         </Route>
 
-        {/* Admin Dashboard Layout */}
-        <Route path="dashboard" element={<DashboardRoot />}>
-          {/* Add dashboard-related routes here */}
+        {/* Employee Dashboard */}
+        <Route path="employee" element={<EmployeeRoot />}>
+          <Route index element={<EmployeeDashboard />} />
+          <Route path="jobs">
+            <Route index element={<EmployeeJobsPage />} />
+            {/* <Route path=":id" element={<JobDetails />} />
+            <Route path=":id/applicant/:aid" element={<ApplicantInfo />} /> */}
+          </Route>
         </Route>
 
         {/* Catch-all Route */}

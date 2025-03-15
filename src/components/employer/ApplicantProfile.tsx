@@ -3,7 +3,7 @@ import { profileData } from "../../constant"
 import { Button } from "../../../components/button";
 import { FaArrowLeft, FaCalendarCheck } from "react-icons/fa";
 import { useAppDispatch } from "../../rtk/hooks";
-import { setIsViewingApplicantProfile } from "../../rtk/features/employer/jobSlice";
+import { setIsViewingApplicantProfile } from "../../rtk/features/user/jobSlice";
 
 const ApplicantProfile = () => {
     const dispatch = useAppDispatch();

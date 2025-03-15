@@ -33,7 +33,7 @@ export const jobsApi = createApi({
       providesTags: ["CompanyJobs"]
     }),
 
-    getTestbyJobId: builder.query<APIResponse, { job_id: number }>({
+    getTestbyJobId: builder.query<APIResponse, number>({
       query: (job_id) => `jobs/test/${job_id}`,
       providesTags: ["JobTest"]
     }),
@@ -89,8 +89,8 @@ export const jobsApi = createApi({
       invalidatesTags: ["SavedJobs"],
     }),
 
-    getSavedJobs: builder.query<APIResponse, string>({
-      query: () => `jobs/saved`,
+    getSavedJobs: builder.query<APIResponse, {id: number}>({
+      query: (id) => `jobs/saved/${id}`,
       providesTags: ["SavedJobs"],
     }),
 

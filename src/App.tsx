@@ -35,6 +35,7 @@ import {
   OnlyLoggedInUserRoute,
   EmployeeDashboard,
   EmployeeJobsPage,
+  EmployeeProfile,
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
 import JobsTab from "./pages/JobsTab";
@@ -130,6 +131,7 @@ const App = () => {
             {/* <Route path=":id" element={<JobDetails />} />
             <Route path=":id/applicant/:aid" element={<ApplicantInfo />} /> */}
           </Route>
+          <Route path="profile" element={<EmployeeProfile />} />
         </Route>
 
         {/* Catch-all Route */}

@@ -100,6 +100,39 @@ export const getCurrentUser = createAsyncThunk(
   }
 );
 
+// thunk action to update user profile
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async (userData: any, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken") ?? "";
+
+      // Send updated user data to your backend
+      const response = await axios.patch(`/users/update/${userData.get("id")}`, userData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      
+      const updatedUser = response.data.user;
+      localStorage.setItem("user_data", JSON.stringify(updatedUser));
+
+      return {
+        user: updatedUser,
+        token: token
+      };
+    } catch (error: any) {
+      let errorMessage = "Failed to update profile";
+
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      }
+
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const logOut = createAsyncThunk("auth/logout", async () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("user_data");
@@ -152,6 +185,19 @@ const authSlice = createSlice({
         state.currentUser = null;
         state.token = "";
         state.error = "";
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = "";
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentUser = action.payload.user;
+        state.error = "";
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       })
   },
 });

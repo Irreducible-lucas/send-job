@@ -4,7 +4,7 @@ import AddJobStepperTwo from "./AddJobStepperTwo";
 import { Bounce, toast } from "react-toastify";
 import { useAppSelector } from "../rtk/hooks";
 import { useUpdateJobByIdMutation } from "../rtk/services/jobs";
-import EditJobStepThree from "./EditJobStepThree";
+// import EditJobStepThree from "./EditJobStepThree";
 
 interface JobAdModalProps {
     onClose: () => void;
@@ -139,9 +139,9 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
                         removeSkill={removeSkill}
                     />
                 )}
-                {step === 3 && (
+                {/* {step === 3 && (
                     <EditJobStepThree jobId={jobInfo?.id} />
-                )}
+                )} */}
                 <hr className="border-gray-300 my-3" /> {/* Line above the buttons */}
                 <div className="flex justify-between gap-3 mt-4">
                     {step > 1 && (
@@ -152,7 +152,7 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
                             Back
                         </button>
                     )}
-                    {step < 3 ? (
+                    {step < 2 ? (
                         <button
                             onClick={handleNext}
                             className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition ml-auto"

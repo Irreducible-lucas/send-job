@@ -58,6 +58,8 @@ export { default as EmployeeProcessJobs } from "./EmployeeProcessJobs";
 export { default as EmployeeFinishedJobs } from "./EmployeeFinishedJobs";
 export { default as EmployeeJobCard } from "./EmployeeJobCard";
 export { default as JobApplicationModal } from "./JobApplicationModal";
+export {default as ProfileImageUpload} from "./ProfileImageUpload";
+export {default as ProfileImageUploadModal} from "./ProfileImageUploadModal"
 
 
 

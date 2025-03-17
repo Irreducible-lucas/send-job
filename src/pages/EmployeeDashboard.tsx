@@ -11,7 +11,7 @@ const Dashboard = () => {
 
     return (
         <div className={"grid grid-rows-[70px_1fr] pb-6"}>
-            <header className='h-[70px] px-[40px] bg-white flex items-center'>
+            <header className='h-[70px] px-[40px] bg-white flex items-center border-b-2 border-gray-300'>
                 <h2 className='text-xl font-bold'>Dashboard</h2>
             </header>
             <section className='px-[40px]'>

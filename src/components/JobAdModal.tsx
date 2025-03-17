@@ -173,40 +173,40 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
       alert("Job title cannot be empty.");
       return;
     }
-    if (quiz.length === 0) {
-      toast.warn('Please add screening questions', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-      return;
-    }
+    // if (quiz.length === 0) {
+    //   toast.warn('Please add screening questions', {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: false,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //     transition: Bounce,
+    //   });
+    //   return;
+    // }
 
-    if (quiz.length < 3) {
-      toast.warn('Please add atleast 3 screening questions', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-      return;
-    }
+    // if (quiz.length < 3) {
+    //   toast.warn('Please add atleast 3 screening questions', {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: false,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //     transition: Bounce,
+    //   });
+    //   return;
+    // }
 
     const job_data = { ...formData, employer_name: currentUser?.company_name, employer_logo: currentUser?.company_logo_url, employer_website: currentUser?.company_website, companyId: currentUser?.id, required_skills: JSON.stringify(skills) };
     try {
-      const res = await createJob(job_data);
-      await createQuiz(res?.job?.id, quiz);
+      await createJob(job_data);
+      // await createQuiz(res?.job?.id, quiz);
       toast.success('Job created successfully', {
         position: "top-center",
         autoClose: 5000,
@@ -287,7 +287,7 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
             removeSkill={removeSkill}
           />
         )}
-        {step === 3 && (
+        {/* {step === 3 && (
           <AddJobStepThree
             setOptions={setOptions}
             addQuestion={addQuestion}
@@ -296,7 +296,7 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
             question={question}
             setQuestion={setQuestion}
           />
-        )}
+        )} */}
         <hr className="border-gray-300 my-3" /> {/* Line above the buttons */}
         <div className="flex justify-between gap-3 mt-4">
           {step > 1 && (
@@ -307,7 +307,7 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
               Back
             </button>
           )}
-          {step < 3 ? (
+          {step < 2 ? (
             <button
               onClick={handleNext}
               className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition ml-auto"

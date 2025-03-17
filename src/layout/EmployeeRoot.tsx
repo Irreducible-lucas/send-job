@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import { IoBriefcaseOutline } from "react-icons/io5";
+import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { GoSignOut } from "react-icons/go";
 import { logOut } from "../rtk/features/user/authSlice";
@@ -38,6 +39,10 @@ const EmployeeRoot = () => {
               <Link to={"/employee/jobs"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
                 <IoBriefcaseOutline size={30} />
                 <p className="text-lg group-hover:font-bold">Jobs</p>
+              </Link>
+              <Link to={"/employee/profile"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
+                <CgProfile size={30} />
+                <p className="text-lg group-hover:font-bold">Profile</p>
               </Link>
             </div>
           </section>

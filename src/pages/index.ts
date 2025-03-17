@@ -17,6 +17,7 @@ export { default as ApplicationSucessful } from "./ApplicationSucessful";
 export {default as OnlyLoggedInUserRoute} from "./OnlyEmployerRoute";
 export { default as EmployeeDashboard} from "./EmployeeDashboard";
 export { default as EmployeeJobsPage } from "./Jobs";
+export { default as EmployeeProfile } from "./EmployeeProfile";
 // Sign up pages
 export { default as SignUpPage } from "./SignUp"
 export { default as JobSeekerSignUp } from "./SeekerSignUp";

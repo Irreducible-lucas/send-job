@@ -10,7 +10,6 @@ import {
   DialogTrigger,
 } from "../../components/dialog"
 import ProfileImageUpload from "./ProfileImageUpload"
-import Axios from "../axios";
 import { useAppSelector, useAppDispatch } from "../rtk/hooks";
 import { toast } from "react-toastify";
 import { updateUserProfile } from "../rtk/features/user/authSlice";

@@ -6,14 +6,13 @@ import { Link } from "react-router-dom";
 import { GoSignOut } from "react-icons/go";
 import { logOut } from "../rtk/features/user/authSlice";
 import { useAppDispatch, useAppSelector } from "../rtk/hooks";
-import JobAdModal from "../components/JobAdModal";
-import { setJobModalOpen, setEmpJobDetailsModalOpen, setEditJobModalOpen } from "../rtk/features/user/jobSlice";
-import { EditJobAdModal, EmployerJobDetails } from "../components";
+import { setJobAppModalOpen } from "../rtk/features/user/jobSlice";
+import { JobApplicationModal } from "../components";
 
 const EmployeeRoot = () => {
   const auth = useAppSelector((state) => state.auth)
+  const { isJobAppModalOpen } = useAppSelector((state) => state.job)
   const dispatch = useAppDispatch();
-  // const { isJobModalOpen, isEditJobModalOpen, isEmpJobDetailsModalOpen } = useAppSelector((state) => state.job);
   const handleLogout = () => {
     dispatch(logOut());
   };
@@ -54,15 +53,9 @@ const EmployeeRoot = () => {
       </aside>
       <section className="overflow-y-auto">
         <Outlet />
-        {/* {isJobModalOpen && (
-          <JobAdModal onClose={() => dispatch(setJobModalOpen(false))} />
+        {isJobAppModalOpen && (
+          <JobApplicationModal onClose={() => dispatch(setJobAppModalOpen(false))} />
         )}
-        {isEditJobModalOpen && (
-          <EditJobAdModal onClose={() => dispatch(setEditJobModalOpen(false))} />
-        )}
-        {isEmpJobDetailsModalOpen && (
-          <EmployerJobDetails onClose={() => dispatch(setEmpJobDetailsModalOpen(false))} />
-        )} */}
       </section>
     </main>
   );

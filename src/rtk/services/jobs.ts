@@ -92,6 +92,7 @@ export const jobsApi = createApi({
     getSavedJobs: builder.query<APIResponse, {id: number}>({
       query: (id) => `jobs/saved/${id}`,
       providesTags: ["SavedJobs"],
+      keepUnusedDataFor: 10,
     }),
 
     createJob: builder.mutation<{ job: Job, message: string }, JobData>({

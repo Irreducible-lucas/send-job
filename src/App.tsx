@@ -93,15 +93,6 @@ const App = () => {
           <Route path="/jobs/apply/:slug" element={<Application />} />
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route path="/jobs/success" element={<ApplicationSucessful />} />
-          {/* <Route
-          <Route
-            path="/talent-solution/hire-talent"
-            element={<CompanyHome />}
-          />
-          <Route
-            path="talent-solution/skill-assessment"
-            element={<SavedJobTab />}
-          /> */}
           <Route path="upskill-team" element={<UpskillTeam />} />
           {/* Resources Sub-Routes */}
           <Route path="resources/career-advice" element={<CompanyHome />} />

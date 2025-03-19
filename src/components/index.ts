@@ -60,6 +60,13 @@ export { default as EmployeeJobCard } from "./EmployeeJobCard";
 export { default as JobApplicationModal } from "./JobApplicationModal";
 export {default as ProfileImageUpload} from "./ProfileImageUpload";
 export {default as ProfileImageUploadModal} from "./ProfileImageUploadModal"
+export {default as AboutMeUpdateModal} from "./AboutMeUpdateModal"
+export {default as ProfileInfoModal} from "./ProfileInfoModal"
+export {default as AddEducationModal} from "./AddEducationModal"
+export {default as AddWorkModal} from "./AddWorkModal"
+export {default as EditWorkModal} from "./EditWorkModal"
+export {default as EditEducationModal} from "./EditEducationModal"
+export {default as DeleteDialog} from "./DeleteDialog"
 
 
 

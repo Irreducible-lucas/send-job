@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../constant";
-import { APIResponse, Job } from "../../type";
+import { APIResponse } from "../../type";
 
 export const applicationApi = createApi({
   reducerPath: "applicationApi",
@@ -24,7 +24,6 @@ export const applicationApi = createApi({
     getMyApplications: builder.query<APIResponse, number>({
       query: (id) => `application/user/${id}`,
       providesTags: ["MyApplications"],
-      keepUnusedDataFor: 12,
     }),
 
     getJobApplicantsByCompanyId: builder.query<APIResponse, { id: number }>({

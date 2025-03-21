@@ -1,12 +1,23 @@
 import { useState } from "react";
-import { profileData } from "../../constant"
 import { Button } from "../../../components/button";
 import { FaArrowLeft, FaCalendarCheck } from "react-icons/fa";
-import { useAppDispatch } from "../../rtk/hooks";
+import { useAppDispatch, useAppSelector } from "../../rtk/hooks";
 import { setIsViewingApplicantProfile } from "../../rtk/features/user/jobSlice";
+import moment from "moment";
+import { useGetMyEducationalHistoryQuery } from "../../rtk/services/education";
+import { useGetMyWorkHistoryQuery } from "../../rtk/services/work";
+import { CgFileDocument } from "react-icons/cg";
+import { useGetDocumentsQuery } from "../../rtk/services/application";
+import { Link } from "react-router-dom";
+import SendInterviewDialog from "../SendInterviewInviteDialog";
 
 const ApplicantProfile = () => {
     const dispatch = useAppDispatch();
+    const { applicantInfo, jobInfo } = useAppSelector((state) => state.job);
+    const { data: response } = useGetMyEducationalHistoryQuery(applicantInfo?.userId);
+    const { data: work_response } = useGetMyWorkHistoryQuery(applicantInfo?.userId);
+    const { data: documents } = useGetDocumentsQuery({ userId: applicantInfo?.userId, jobId: jobInfo?.job_id });
+
     const [showActions, setShowActions] = useState<boolean>(false);
     const [decision, setDecision] = useState<string>("");
 
@@ -24,27 +35,22 @@ const ApplicantProfile = () => {
             <div className="p-4">
                 <div className="flex items-center gap-4">
                     <img
-                        src={profileData.image}
-                        className="w-16 h-16 rounded-full"
-                        alt="profile"
+                        src={applicantInfo?.photoUrl}
+                        className="w-16 h-16 object-cover object-center rounded-full"
+                        alt="profile picture"
                     />
                     <div>
-                        <h3 className="text-lg font-semibold">{profileData.name}</h3>
-                        <p className="text-sm text-gray-500">{profileData.role}</p>
-                        <p className="text-xs text-gray-400">{profileData.location}</p>
-                        <p className="text-xs text-gray-400">{profileData.appliedDate}</p>
+                        <h3 className="text-lg font-semibold">{applicantInfo?.name}</h3>
+                        <p className="text-sm text-gray-500">{applicantInfo?.email}</p>
+                        <p className="text-xs text-gray-400">{applicantInfo?.gender}</p>
+                        <p className="text-xs text-gray-400">Applied {moment(applicantInfo?.date_applied).fromNow()}</p>
                     </div>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="mt-4">
-                    <Button
-                        className="w-full bg-blue-600 text-white flex items-center gap-2 hover:bg-blue-700"
-                        onClick={() => setShowActions(true)}
-                    >
-                        <FaCalendarCheck className="text-lg" />
-                        Send Interview Invitation
-                    </Button>
+                    {applicantInfo?.status === "processing" ? (<SendInterviewDialog />) : (<div className={`w-full bg-gray-300/85 flex items-center justify-center p-2 rounded-lg ${applicantInfo?.status === "rejected" ? "text-red-600" : "text-green-600"}`}>{applicantInfo?.status === "interview" ? "Interview Invitation sent" : applicantInfo?.status}</div>)}
+
                     {/* <div className="flex gap-2">
                         {showActions ? (
                             <>
@@ -86,47 +92,57 @@ const ApplicantProfile = () => {
             {/* About Me */}
             <div className="border-t-2 border-b-2 border-gray-500 p-5">
                 <h4 className="text-md font-bold text-black">About me</h4>
-                <p className="text-sm text-gray-600 mt-1">{profileData.about}</p>
+                <p className="text-sm text-gray-600 mt-1">{applicantInfo?.about_me}</p>
             </div>
 
             {/* Education */}
             <div className="p-5 border-b-2 border-gray-500">
-                <h4 className="text-md font-bold text-black">Education</h4>
-                {profileData.education.map((edu, index) => (
-                    <div key={index} >
+                <h4 className="text-md font-bold text-black mb-4">Education</h4>
+                {response?.data?.map((edu: any) => (
+                    <div key={edu?.id} className="mb-4" >
                         <div className="flex justify-between text-sm text-gray-600 mt-1">
-                            <p className="font-bold">{edu.institution}</p>
-                            <p className="font-bold">{edu.duration}</p>
+                            <p className="font-bold">{edu?.school}</p>
+                            <p className="font-bold">{moment(edu?.startDate).format("YYYY")} - {edu?.endDate === "Present" ? "Present" : moment(edu?.endDate).format("YYYY")}</p>
                         </div>
-                        <p className="text-sm text-gray-500 font-bold">{edu.degree}</p>
-                        <ul className="list-disc list-inside text-sm text-gray-500 mt-1">
-                            {edu.experiences.map((exp, i) => (
-                                <li key={i}>{exp}</li>
-                            ))}
-                        </ul>
+                        <p className="text-sm text-gray-500 font-semibold">{edu?.educationalLevel} - {edu?.department}</p>
                     </div>
                 ))}
             </div>
-
 
             {/* Work Experience */}
             <div className="p-5 border-b-2 border-gray-500">
-                <h4 className="text-md font-bold text-black">Education</h4>
-                {profileData.workExperience.map((work, index) => (
-                    <div key={index}>
+                <h4 className="text-md font-bold text-black mb-4">Work Experience</h4>
+                {work_response?.data?.map((work: any) => (
+                    <div key={work?.id} className="mb-4">
                         <div className="flex justify-between text-sm text-gray-600 mt-1">
-                            <p className="font-bold">{work.company}</p>
-                            <p className="font-bold">{work.duration}</p>
+                            <p className="font-bold">{work.companyName}</p>
+                            <p className="font-bold">{moment(work?.startDate).format("YYYY")} - {work?.endDate === "Present" ? "Present" : moment(work?.endDate).format("YYYY")}</p>
                         </div>
-                        <p className="text-sm text-gray-500 font-bold">{work.role}</p>
+                        <p className="text-sm text-gray-500 font-bold">{work.jobTitle}</p>
                         <ul className="list-disc list-inside text-sm text-gray-500 mt-1">
-                            {work.responsibilities.map((resp, i) => (
-                                <li key={i}>{resp}</li>
+                            {JSON.parse(work?.jobDescription).map((description: any) => (
+                                <li key={description?.id}>{description?.text}</li>
                             ))}
                         </ul>
                     </div>
                 ))}
             </div>
+
+            {/* Uploaded File */}
+            <div className="p-4">
+                <h4 className="text-md font-bold text-black mb-4">Uploaded Documents</h4>
+                <div className="grid grid-cols-3">
+                    {documents?.map((document: any) => (
+                        <Link key={document?.id} to={document?.url} target="_blank">
+                            <div className="group flex flex-col gap-2 items-center bg-blue-50 hover:bg-blue-600 p-4 rounded-lg">
+                                <CgFileDocument size={50} className="text-blue-600 group-hover:text-white" />
+                                <p className="group-hover:text-white">{document?.type}</p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
         </div>
     )
 }

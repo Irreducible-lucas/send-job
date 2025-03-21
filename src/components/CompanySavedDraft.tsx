@@ -17,7 +17,7 @@ const CompanySavedDraft = ({ jobs }: any) => {
 
   const postJob = async (job_id: number) => {
     try {
-      await postJobById({ id: job_id, data: { posted: true } })
+      await postJobById({ id: job_id, data: { posted: true, featured: true } })
       toast.success('job posted successfully', {
         position: "top-center",
         autoClose: 5000,

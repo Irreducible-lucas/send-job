@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { FaBriefcase, FaEye, FaPlus } from "react-icons/fa";
+import { FaBoxOpen, FaBriefcase, FaEye, FaPlus } from "react-icons/fa";
 import { useAppDispatch } from "../rtk/hooks";
 import { setEmpJobDetailsModalOpen, setJobInfo } from "../rtk/features/user/jobSlice";
+import { useUpdateJobInfoMutation } from "../rtk/services/jobs";
+import { toast } from "react-toastify";
 
 export const CompanyTab = [
   { label: "All" },
@@ -14,16 +16,7 @@ export const CompanyTab = [
 const CompanyJobs = ({ jobs }: any) => {
   const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState("All");
-  // const [jobs, setJobs] = useState(initialJobs);
-  const [isAddingJob, setIsAddingJob] = useState(false);
-
-  const toggleJobStatus = (id: any) => {
-    // setJobs(
-    //   jobs.map((job) =>
-    //     job.id === id ? { ...job, isActive: !job.isActive } : job
-    //   )
-    // );
-  };
+  const [updateJob, { isLoading }] = useUpdateJobInfoMutation();
 
   const viewJob = (job: any) => {
     dispatch(setJobInfo(job))
@@ -31,9 +24,13 @@ const CompanyJobs = ({ jobs }: any) => {
   };
 
   // Function to handle adding a new job
-  const addJob = (newJob: any) => {
-    // setJobs([...jobs, { id: Date.now(), ...newJob }]);
-    // setIsAddingJob(false); // Close the modal after adding the job
+  const closeJob = async (jobId: any) => {
+    try {
+      await updateJob({ id: jobId, data: { closed: true } });
+      toast.success("Job successfully closed");
+    } catch (error) {
+      toast.error("Error occured while closing jobs");
+    }
   };
 
   return (
@@ -53,6 +50,12 @@ const CompanyJobs = ({ jobs }: any) => {
           </button>
         ))}
       </div>
+
+      {jobs?.length === 0 && (<div className="bg-white rounded-lg w-full grid place-items-center text-center p-8 mt-8 gap-3">
+        <FaBoxOpen size={100} className="text-blue-600" />
+        <h3>No posted job at the moment</h3>
+        <p>Click on the <span className="font-bold">Add Job Button</span> at the bottom right corner to create a new Job</p>
+      </div>)}
 
       {/* Job List */}
       <div className="grid grid-cols-3 gap-4">
@@ -86,9 +89,9 @@ const CompanyJobs = ({ jobs }: any) => {
                   <div className="text-gray-700 text-sm">
                     <span className="font-bold mr-1">{job?.applicants}</span> applicant{job?.applicants > 1 ? "s" : ""}
                   </div>
-                  <div className="text-gray-700 text-sm flex items-center">
+                  {/* <div className="text-gray-700 text-sm flex items-center">
                     <FaEye className="mr-1" /> <span className="font-bold mr-1">{job?.views}</span> views
-                  </div>
+                  </div> */}
                 </div>
                 <div
                   className={`text-sm px-3 py-1 rounded-full ${!job?.closed
@@ -99,16 +102,16 @@ const CompanyJobs = ({ jobs }: any) => {
                   {!job?.closed ? "Active" : "Inactive"}
                 </div>
               </div>
-              <div className="grid grid-cols-2 mt-5 gap-5">
+              <div className="flex mt-6 gap-4">
                 <button
-                  className="border-[1px] rounded-xl py-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-white flex items-center justify-center"
-                  onClick={() => toggleJobStatus(job.id)}
+                  className={`flex-1 border-[1px] rounded-lg py-2 flex items-center justify-center ${job?.closed ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-white" : "border-red-500 text-red-500 hover:bg-red-600 hover:text-white"}`}
+                  onClick={() => closeJob(job?.job_id)}
                 >
                   <FaBriefcase className="mr-2" />
-                  {job.isActive ? "Close Job" : "Reopen Job"}
+                  {!job?.closed ? <p>{isLoading ? "closing..." : "Close Job"}</p> : "Reopen Job"}
                 </button>
                 <button
-                  className="border-[1px] rounded-xl py-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-white"
+                  className="flex-1 border-[1px] rounded-lg py-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-white"
                   onClick={() => viewJob(job)}
                 >
                   View Job

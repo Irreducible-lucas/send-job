@@ -10,7 +10,7 @@ const MyJobs = () => {
   const { currentUser } = useAppSelector((state) => state.auth);
   const {data: company_jobs}: any = useGetJobsByCompanyIdQuery({id: currentUser?.id});
   const { data: application }: any = useGetJobApplicantsByCompanyIdQuery({ id: currentUser?.id });
-  const saved_jobs = company_jobs?.data.filter((job: any) => job.posted == false);
+  const saved_jobs = company_jobs?.data.filter((job: any) => job.posted === false);
   const [selectedTab, setSelectedTab] = useState("saved");
   const [isAddingJob, setIsAddingJob] = useState(false);
   return (

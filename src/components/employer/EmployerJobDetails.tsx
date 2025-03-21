@@ -101,7 +101,7 @@ const EmployerJobDetails = ({ onClose }: any) => {
                 </button>
               </div>
               <div>
-                {selectedTab === "applicants" && <ApplicantsListTab />}
+                {selectedTab === "applicants" && <ApplicantsListTab jobId={jobInfo?.job_id}/>}
                 {selectedTab === "description" && <JobDescriptionTab job={jobInfo} />}
               </div>
             </div>

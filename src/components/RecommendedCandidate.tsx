@@ -14,7 +14,7 @@ const RecommendedCandidate = () => {
           <p>No recommended applicants yet</p>
         </div>
       ) : (
-        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4`}>
           {applicants?.data?.map((applicant: any, index: number) => (
             <div key={index} className="bg-white p-4 rounded-lg shadow-md">
               <div className="flex items-center gap-3">

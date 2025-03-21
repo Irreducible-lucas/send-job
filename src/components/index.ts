@@ -67,6 +67,7 @@ export {default as AddWorkModal} from "./AddWorkModal"
 export {default as EditWorkModal} from "./EditWorkModal"
 export {default as EditEducationModal} from "./EditEducationModal"
 export {default as DeleteDialog} from "./DeleteDialog"
+export {default as SendInterviewInviteDialog} from "./SendInterviewInviteDialog"
 
 
 

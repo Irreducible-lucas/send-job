@@ -10,7 +10,7 @@ export const applicationApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["MyApplications"],
+  tagTypes: ["MyApplications", "Documents"],
   endpoints: (builder) => ({
     applyForJob: builder.mutation({
       query: (newApplication: any) => ({
@@ -18,7 +18,12 @@ export const applicationApi = createApi({
         method: "POST",
         body: newApplication,
       }),
-      invalidatesTags: ["MyApplications"],
+      invalidatesTags: ["MyApplications", "Documents"],
+    }),
+
+    getDocuments: builder.query<any, {userId: number, jobId: any}>({
+      query: ({userId, jobId}) => `documents?userId=${userId}&jobId=${jobId}`,
+      providesTags: ["Documents"],
     }),
 
     getMyApplications: builder.query<APIResponse, number>({
@@ -26,15 +31,29 @@ export const applicationApi = createApi({
       providesTags: ["MyApplications"],
     }),
 
+    getApplicantsByJobId: builder.query<any, number>({
+      query: (id) => `application/job/${id}`,
+    }),
+
     getJobApplicantsByCompanyId: builder.query<APIResponse, { id: number }>({
       query: ({ id }) => `application/company/${id}`,
+      keepUnusedDataFor: 15,
     }),
 
     getRecommendedApplicantsById: builder.query<APIResponse, { id: number }>({
       query: ({ id }) => `application/recommended/${id}`,
     }),
+
+    updateApplication: builder.mutation({
+      query: ({appId, update}: any) => ({
+        url: `application/status/${appId}`,
+        method: "PATCH",
+        body: update,
+      }),
+      invalidatesTags: ["MyApplications"],
+    }),
   }),
 });
 
-export const { useApplyForJobMutation, useGetMyApplicationsQuery, useGetJobApplicantsByCompanyIdQuery, useGetRecommendedApplicantsByIdQuery } =
+export const { useApplyForJobMutation, useGetDocumentsQuery, useGetMyApplicationsQuery, useGetApplicantsByJobIdQuery, useGetJobApplicantsByCompanyIdQuery, useGetRecommendedApplicantsByIdQuery, useUpdateApplicationMutation } =
   applicationApi;

@@ -123,7 +123,7 @@ export const jobsApi = createApi({
           body: data
         }
       ),
-      invalidatesTags: ["CompanyJobs"],
+      invalidatesTags: ["CompanyJobs", "Job"],
     }),
 
     deleteJobById: builder.mutation<any, number>({

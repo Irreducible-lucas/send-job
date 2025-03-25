@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { Button } from "../../../components/button";
-import { FaArrowLeft, FaCalendarCheck } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../../rtk/hooks";
 import { setIsViewingApplicantProfile } from "../../rtk/features/user/jobSlice";
 import moment from "moment";
@@ -17,9 +15,6 @@ const ApplicantProfile = () => {
     const { data: response } = useGetMyEducationalHistoryQuery(applicantInfo?.userId);
     const { data: work_response } = useGetMyWorkHistoryQuery(applicantInfo?.userId);
     const { data: documents } = useGetDocumentsQuery({ userId: applicantInfo?.userId, jobId: jobInfo?.job_id });
-
-    const [showActions, setShowActions] = useState<boolean>(false);
-    const [decision, setDecision] = useState<string>("");
 
     return (
         <div className="h-full overflow-y-auto">
@@ -50,42 +45,6 @@ const ApplicantProfile = () => {
                 {/* Action Buttons */}
                 <div className="mt-4">
                     {applicantInfo?.status === "processing" ? (<SendInterviewDialog />) : (<div className={`w-full bg-gray-300/85 flex items-center justify-center p-2 rounded-lg ${applicantInfo?.status === "rejected" ? "text-red-600" : "text-green-600"}`}>{applicantInfo?.status === "interview" ? "Interview Invitation sent" : applicantInfo?.status}</div>)}
-
-                    {/* <div className="flex gap-2">
-                        {showActions ? (
-                            <>
-                                <Button
-                                    className="flex-1 bg-green-600 text-white hover:bg-green-700"
-                                    onClick={() => setDecision("Accepted")}
-                                >
-                                    Accept
-                                </Button>
-                                <Button
-                                    className="flex-1 bg-red-600 text-white hover:bg-red-700"
-                                    onClick={() => setDecision("Rejected")}
-                                >
-                                    Reject
-                                </Button>
-                            </>
-                        ) : (
-                            <Button
-                                className="flex-1 bg-blue-600 text-white flex items-center gap-2 hover:bg-blue-700"
-                                onClick={() => setShowActions(true)}
-                            >
-                                <FaCalendarCheck className="text-lg" />
-                                Interview Invitation
-                            </Button>
-                        )}
-                    </div> */}
-                    {/* <div className="mt-2">
-                        <Button
-                            variant="outline"
-                            className="w-full flex items-center gap-2"
-                        >
-                            <FaEnvelope className="text-lg" />
-                            Message
-                        </Button>
-                    </div> */}
                 </div>
             </div>
 
@@ -142,7 +101,6 @@ const ApplicantProfile = () => {
                     ))}
                 </div>
             </div>
-
         </div>
     )
 }

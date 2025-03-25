@@ -9,10 +9,10 @@ const OnlyEmployerRoute = ({ children }: any) => {
 
   useEffect(() => {
     // Wait for auth to finish loading
-    if (auth.isLoading) {
-        console.log("loading...")
-      return;
-    }
+    // if (auth.isLoading) {
+    //     console.log("loading...")
+    //   return;
+    // }
 
     // If no token, redirect to login
     if (!auth.token) {
@@ -25,11 +25,11 @@ const OnlyEmployerRoute = ({ children }: any) => {
   }, [auth, navigate]);
 
   // Show loading while authentication check is in progress
-  if (auth.isLoading || isChecking) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
-  }
+  // if (auth.isLoading || isChecking) {
+  //   return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  // }
 
-  console.log("AUTH:", auth.token)
+  // console.log("AUTH:", auth.token)
   // Only render children when user is authenticated as employer
   return <>{children}</>;
 };

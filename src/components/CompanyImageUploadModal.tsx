@@ -22,7 +22,7 @@ interface ProfileImage {
   file?: any; // Store the original file for upload
 }
 
-export default function ProfileImageUploadModal() {
+export default function CompanyImageUploadModal() {
   const dispatch = useAppDispatch();
   const [image, setImage] = useState<ProfileImage | null>(null);
   const { currentUser } = useAppSelector((state) => state.auth)
@@ -31,27 +31,27 @@ export default function ProfileImageUploadModal() {
   const submitImage = async () => {
     try {
       const formData = new FormData();
-      formData.append("image", image?.file);
+      formData.append("logo", image?.file);
       formData.append("id", currentUser?.id);
       setIsUpdating(true);
       await dispatch(updateUserProfile(formData)).unwrap();
       setIsUpdating(false);
-      toast.success("Profile picture updated successfully")
+      toast.success("Company logo updated successfully")
     } catch (error) {
       setIsUpdating(false);
-      toast.error("Error occured while uploading profile picture")
+      toast.error("Error occured while uploading company logo")
     }
   }
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-blue-700 hover:bg-blue-900 text-white">Upload new photo</Button>
+        <Button className="bg-blue-700 hover:bg-blue-900 text-white">Upload new logo</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-center">Change Profile Photo</DialogTitle>
+          <DialogTitle className="text-center">Change Company Logo</DialogTitle>
           <DialogDescription className="text-center">
-            Change your profile picture here. Click save when you're done.
+            Change your company logo here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <ProfileImageUpload image={image} setImage={setImage} />

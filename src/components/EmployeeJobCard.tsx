@@ -1,6 +1,6 @@
 import { FaBookmark, FaArrowRight, FaBriefcase } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../rtk/hooks";
-import { setJobAppModalOpen, setJobInfo } from "../rtk/features/user/jobSlice";
+import { setJobAppModalOpen, setJobInfo, setSeekerJobDetailsModalOpen } from "../rtk/features/user/jobSlice";
 import { toast } from "react-toastify";
 
 interface Props {
@@ -15,24 +15,29 @@ const EmployeeJobCard = ({ job, saved }: Props) => {
         "accepted": "bg-green-600 text-white px-3 py-1 rounded-lg text-sm",
         "rejected": "bg-red-600 text-white px-3 py-1 rounded-lg text-sm",
     }
-    
-    const {token} = useAppSelector((state) => state.auth);
-      const dispatch = useAppDispatch();
-    
-      const applyToJob = () => {
-        if(!token) {
-          toast.error("Please login to apply for job");
-          return;
+
+    const { token } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
+
+    const applyToJob = () => {
+        if (!token) {
+            toast.error("Please login to apply for job");
+            return;
         }
         const job_info = {
             id: job?.jobId,
         }
         dispatch(setJobInfo(job_info));
         dispatch(setJobAppModalOpen(true));
-      };
+    };
+
+    const viewJob = (job: any) => {
+        dispatch(setJobInfo(job));
+        dispatch(setSeekerJobDetailsModalOpen(true));
+    }
 
     return (
-        <div className="bg-white hover:border-2 hover:border-blue-600 hover: cursor-pointer shadow-md rounded-lg p-4 w-full border border-gray-200 flex flex-col gap-4">
+        <div className="group bg-white hover:border-2 hover:border-blue-600 hover: cursor-pointer shadow-md rounded-lg p-4 w-full border border-gray-200 flex flex-col gap-4">
             <div className="flex gap-2 w-full items-center">
                 <div className="w-[40px] h-[40px]">
                     {job?.employer_logo === "" ? (<div className="w-[40px] h-[40px] rounded-full bg-blue-600 grid place-items-center">
@@ -63,6 +68,12 @@ const EmployeeJobCard = ({ job, saved }: Props) => {
                     <p className="text-blue-600 font-medium">{job?.job_employment_type}</p>
                 </div>
             </div>
+            <button
+                onClick={() => viewJob(job)}
+                className="group-hover:flex hidden flex-1 font-bold items-center justify-center text-sm border gap-2 bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-all"
+            >
+                View Job
+            </button>
             {!job?.status && (
                 <div className="flex items-center gap-4">
                     <button

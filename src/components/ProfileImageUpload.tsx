@@ -132,7 +132,7 @@ const ProfileImageUpload = ({image, setImage}: any) => {
           className={`w-full ${image ? "border-blue-700 text-blue-700 hover:text-blue-900 hover:border-blue-900": "bg-blue-700 hover:bg-blue-900 text-white"} `}
           onClick={handleButtonClick}
         >
-          {image ? "Change Photo" : "Upload Photo"}
+          {image ? "Change image" : "Upload image"}
         </Button>
       </div>
     </div>

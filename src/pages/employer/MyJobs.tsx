@@ -3,16 +3,18 @@ import Header from '../../components/employer/Header'
 import { CompanyJob, CompanySavedDraft } from '../../components';
 import { FaPlus } from "react-icons/fa";
 import { useGetJobsByCompanyIdQuery } from '../../rtk/services/jobs';
-import { useAppSelector } from '../../rtk/hooks';
+import { useAppSelector, useAppDispatch } from '../../rtk/hooks';
 import { useGetJobApplicantsByCompanyIdQuery } from '../../rtk/services/application';
+import { setJobModalOpen } from '../../rtk/features/user/jobSlice';
 
 const MyJobs = () => {
+  const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
   const {data: company_jobs}: any = useGetJobsByCompanyIdQuery({id: currentUser?.id});
   const { data: application }: any = useGetJobApplicantsByCompanyIdQuery({ id: currentUser?.id });
   const saved_jobs = company_jobs?.data.filter((job: any) => job.posted === false);
   const [selectedTab, setSelectedTab] = useState("saved");
-  const [isAddingJob, setIsAddingJob] = useState(false);
+  
   return (
     <div className={"grid grid-rows-[70px_1fr] pb-6"}>
       <Header title='Job Ads' />
@@ -44,7 +46,7 @@ const MyJobs = () => {
       </div>
       <div className="mt-6 flex justify-center fixed bottom-10 right-10 z-20">
         <button
-          onClick={() => setIsAddingJob(true)} // Open the Add Job modal
+          onClick={() => dispatch(setJobModalOpen(true))}
           className="flex items-center text-lg px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-900 transition"
         >
           <FaPlus className="mr-2" /> Add Job

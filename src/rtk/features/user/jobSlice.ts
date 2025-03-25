@@ -8,6 +8,7 @@ interface initialState {
     isViewingApplicantProfile: boolean;
     applicantInfo: any;
     isJobAppModalOpen: any;
+    isSeekerJobDetailsModalOpen: boolean;
 }
 
 const initialState: initialState = {
@@ -18,6 +19,7 @@ const initialState: initialState = {
     isViewingApplicantProfile: false,
     applicantInfo: {},
     isJobAppModalOpen: false,
+    isSeekerJobDetailsModalOpen: false,
 };
 
 const jobSlice = createSlice({
@@ -44,9 +46,12 @@ const jobSlice = createSlice({
         },
         setJobAppModalOpen: (state, action) => {
             state.isJobAppModalOpen = action.payload;
+        },
+        setSeekerJobDetailsModalOpen: (state, action) => {
+            state.isSeekerJobDetailsModalOpen = action.payload;
         }
     }
 })
 
 export default jobSlice.reducer;
-export const { setJobInfo, setJobModalOpen, setEditJobModalOpen, setEmpJobDetailsModalOpen, setIsViewingApplicantProfile, setApplicantInfo, setJobAppModalOpen } = jobSlice.actions;
+export const { setJobInfo, setJobModalOpen, setEditJobModalOpen, setEmpJobDetailsModalOpen, setIsViewingApplicantProfile, setApplicantInfo, setJobAppModalOpen, setSeekerJobDetailsModalOpen } = jobSlice.actions;

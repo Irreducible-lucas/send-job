@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaBoxOpen, FaBriefcase, FaEye, FaPlus } from "react-icons/fa";
+import { FaBoxOpen, FaBriefcase } from "react-icons/fa";
 import { useAppDispatch } from "../rtk/hooks";
 import { setEmpJobDetailsModalOpen, setJobInfo } from "../rtk/features/user/jobSlice";
 import { useUpdateJobInfoMutation } from "../rtk/services/jobs";
@@ -24,10 +24,10 @@ const CompanyJobs = ({ jobs }: any) => {
   };
 
   // Function to handle adding a new job
-  const closeJob = async (jobId: any) => {
+  const closeJob = async (jobId: any, closed: boolean) => {
     try {
-      await updateJob({ id: jobId, data: { closed: true } });
-      toast.success("Job successfully closed");
+      await updateJob({ id: jobId, data: { closed: !closed } });
+      toast.success(`Job successfully ${!closed ? "closed" : "reopened"}`);
     } catch (error) {
       toast.error("Error occured while closing jobs");
     }
@@ -105,10 +105,10 @@ const CompanyJobs = ({ jobs }: any) => {
               <div className="flex mt-6 gap-4">
                 <button
                   className={`flex-1 border-[1px] rounded-lg py-2 flex items-center justify-center ${job?.closed ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-white" : "border-red-500 text-red-500 hover:bg-red-600 hover:text-white"}`}
-                  onClick={() => closeJob(job?.job_id)}
+                  onClick={() => closeJob(job?.job_id, job?.closed)}
                 >
                   <FaBriefcase className="mr-2" />
-                  {!job?.closed ? <p>{isLoading ? "closing..." : "Close Job"}</p> : "Reopen Job"}
+                  {!job?.closed ? <p>{isLoading ? "closing..." : "Close Job"}</p> : <p>{isLoading ? "reopening..." : "Reopen Job"}</p>}
                 </button>
                 <button
                   className="flex-1 border-[1px] rounded-lg py-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-white"

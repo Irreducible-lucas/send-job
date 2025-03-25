@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import { useGetRecommendedApplicantsByIdQuery } from "../rtk/services/application";
 import { useAppSelector } from "../rtk/hooks";
+import ViewApplicantModal from "./employer/ViewApplicantModal";
 
 const RecommendedCandidate = () => {
   const { currentUser } = useAppSelector((state) => state.auth);
-  const navigate = useNavigate();
   const { data: applicants }: any = useGetRecommendedApplicantsByIdQuery({ id: currentUser?.id });
 
   return (
@@ -28,17 +27,7 @@ const RecommendedCandidate = () => {
                   <p className="text-gray-500 text-sm">{applicant?.job_title}</p>
                 </div>
               </div>
-              {/* {candidate.experience.map((exp, index) => (
-              <p key={index} className="text-sm text-gray-600 mt-2">
-                {exp}
-              </p>
-            ))} */}
-              <button
-                className="mt-4 w-full border-[1px] border-blue-600 text-blue-600 py-2 rounded-lg hover:bg-blue-600 hover:text-white"
-                onClick={() => navigate(`/profile/${applicant?.userId}`)}
-              >
-                View Profile
-              </button>
+              <ViewApplicantModal/>
             </div>
           ))}
         </div>

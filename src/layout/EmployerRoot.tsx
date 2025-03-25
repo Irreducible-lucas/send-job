@@ -8,9 +8,10 @@ import { useAppDispatch, useAppSelector } from "../rtk/hooks";
 import JobAdModal from "../components/JobAdModal";
 import { setJobModalOpen, setEmpJobDetailsModalOpen, setEditJobModalOpen } from "../rtk/features/user/jobSlice";
 import { EditJobAdModal, EmployerJobDetails } from "../components";
+import { CgProfile } from "react-icons/cg";
 
 const EmployerRoot = () => {
-  const {currentUser}: any = useAppSelector((state) => state.auth)
+  const { currentUser }: any = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch();
   const { isJobModalOpen, isEditJobModalOpen, isEmpJobDetailsModalOpen } = useAppSelector((state) => state.job);
   const handleLogout = () => {
@@ -38,6 +39,10 @@ const EmployerRoot = () => {
               <Link to={"/employer/jobs"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
                 <IoBriefcaseOutline size={30} />
                 <p className="text-lg group-hover:font-bold">My Jobs</p>
+              </Link>
+              <Link to={"/employer/profile"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
+                <CgProfile size={30} />
+                <p className="text-lg group-hover:font-bold">Profile</p>
               </Link>
             </div>
           </section>

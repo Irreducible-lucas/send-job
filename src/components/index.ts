@@ -58,16 +58,23 @@ export { default as EmployeeProcessJobs } from "./EmployeeProcessJobs";
 export { default as EmployeeFinishedJobs } from "./EmployeeFinishedJobs";
 export { default as EmployeeJobCard } from "./EmployeeJobCard";
 export { default as JobApplicationModal } from "./JobApplicationModal";
-export {default as ProfileImageUpload} from "./ProfileImageUpload";
-export {default as ProfileImageUploadModal} from "./ProfileImageUploadModal"
-export {default as AboutMeUpdateModal} from "./AboutMeUpdateModal"
-export {default as ProfileInfoModal} from "./ProfileInfoModal"
-export {default as AddEducationModal} from "./AddEducationModal"
-export {default as AddWorkModal} from "./AddWorkModal"
-export {default as EditWorkModal} from "./EditWorkModal"
-export {default as EditEducationModal} from "./EditEducationModal"
-export {default as DeleteDialog} from "./DeleteDialog"
-export {default as SendInterviewInviteDialog} from "./SendInterviewInviteDialog"
+export { default as ProfileImageUpload } from "./ProfileImageUpload";
+export { default as ProfileImageUploadModal } from "./ProfileImageUploadModal"
+export { default as AboutMeUpdateModal } from "./AboutMeUpdateModal"
+export { default as ProfileInfoModal } from "./ProfileInfoModal"
+export { default as AddEducationModal } from "./AddEducationModal"
+export { default as AddWorkModal } from "./AddWorkModal"
+export { default as EditWorkModal } from "./EditWorkModal"
+export { default as EditEducationModal } from "./EditEducationModal"
+export { default as DeleteDialog } from "./DeleteDialog"
+export { default as SendInterviewInviteDialog } from "./SendInterviewInviteDialog"
+export { default as EmployeeJobDetails } from "./EmployeeJobDetails"
+export { default as EmployerProfileEdit } from "./employer/EmployerProfileEdit"
+export { default as CompanyProfileEdit } from "./employer/CompanyProfileEdit"
+export { default as EmpProfileInfoModal } from "./employer/EmpProfileInfoModal"
+export { default as CompanyInfoModal } from "./employer/CompanyInfoModal"
+export { default as ViewApplicantModal } from "./employer/ViewApplicantModal"
+export { default as CompanyImageUploadModal } from "./CompanyImageUploadModal"
 
 
 

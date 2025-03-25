@@ -46,7 +46,7 @@ import CompanyHome from "./components/CompanyHome";
 import SignUpRoot from "./layout/SignUpRoot";
 import EmployerRoot from "./layout/EmployerRoot";
 import EmployeeRoot from "./layout/EmployeeRoot";
-import { ApplicantInfo, EmployerDashboard, JobDetails, MyJobs } from "./pages/employer";
+import { ApplicantInfo, EmployerDashboard, EmployerProfile, JobDetails, MyJobs } from "./pages/employer";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -112,6 +112,7 @@ const App = () => {
             <Route path=":id" element={<JobDetails />} />
             <Route path=":id/applicant/:aid" element={<ApplicantInfo />} />
           </Route>
+          <Route path="profile" element={<EmployerProfile />} />
         </Route>
 
         {/* Employee Dashboard */}

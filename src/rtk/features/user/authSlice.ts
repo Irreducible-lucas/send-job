@@ -107,21 +107,55 @@ export const updateUserProfile = createAsyncThunk(
     try {
       const token = localStorage.getItem("accessToken") ?? "";
 
-      // Send updated user data to your backend
-      const response = await axios.patch(`/users/update/${userData.get("id")}`, userData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      
+      if (!token) {
+        return thunkAPI.rejectWithValue("Authentication token is missing");
+      }
+
+      const user = localStorage.getItem("user_data");
+
+      if (!user) {
+        return thunkAPI.rejectWithValue("User data not found in localStorage");
+      }
+
+      const parsedUser = JSON.parse(user);
+
+      // console.log("User Info:", parsedUser)
+
+      if (!parsedUser?.role) {
+        return thunkAPI.rejectWithValue("User role is missing or invalid");
+      }
+
+      let response;
+
+      if (parsedUser.role === "company") {
+        response = await axios.patch(`/companies/${userData.get("id")}?role=company`, userData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } else {
+        response = await axios.patch(`/users/update/${userData.get("id")}?role=seeker`, userData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
+
       const updatedUser = response.data.user;
+
+      if (!updatedUser) {
+        return thunkAPI.rejectWithValue("Failed to retrieve updated user data");
+      }
+
       localStorage.setItem("user_data", JSON.stringify(updatedUser));
 
       return {
         user: updatedUser,
-        token: token
+        token: token,
       };
     } catch (error: any) {
+      console.error("Error updating user profile:", error);
+
       let errorMessage = "Failed to update profile";
 
       if (error.response?.data?.message) {

@@ -6,7 +6,7 @@ import { FaUser } from "react-icons/fa6";
 import { FaUserGraduate } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 
-const Dashboard = () => {
+const EmployeeProfile = () => {
     const [selected, setSelected] = useState({
         id: 1,
         name: "Personal Information",
@@ -53,4 +53,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default EmployeeProfile

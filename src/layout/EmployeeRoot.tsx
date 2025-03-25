@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 import { GoSignOut } from "react-icons/go";
 import { logOut } from "../rtk/features/user/authSlice";
 import { useAppDispatch, useAppSelector } from "../rtk/hooks";
-import { setJobAppModalOpen } from "../rtk/features/user/jobSlice";
-import { JobApplicationModal } from "../components";
+import { setJobAppModalOpen, setSeekerJobDetailsModalOpen } from "../rtk/features/user/jobSlice";
+import { EmployeeJobDetails, JobApplicationModal } from "../components";
 
 const EmployeeRoot = () => {
-  const auth = useAppSelector((state) => state.auth)
-  const { isJobAppModalOpen } = useAppSelector((state) => state.job)
+  const {currentUser} = useAppSelector((state) => state.auth)
+  const { isJobAppModalOpen, isSeekerJobDetailsModalOpen } = useAppSelector((state) => state.job)
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     dispatch(logOut());
@@ -27,8 +27,8 @@ const EmployeeRoot = () => {
               <h1 className="font-bold text-2xl font-barlow">Logo</h1>
             </div>
             <div className="flex flex-col items-center gap-4">
-              <img src={"https://gravatar.com/avatar/e5607a7ede604ade06cfbd847d9b5a02?s=400&d=robohash&r=x"} className="bg-slate-300 rounded-full border w-[80px] h-[80px]" alt="User profile picture" />
-              <h2 className="text-center text-black font-barlow font-bold">{auth?.currentUser?.name}</h2>
+            <img src={currentUser?.photoUrl ?? "https://gravatar.com/avatar/e5607a7ede604ade06cfbd847d9b5a02?s=400&d=robohash&r=x"} className="bg-slate-300 rounded-full border w-[80px] h-[80px] object-cover object-center" alt="User profile picture" />
+              <h2 className="text-center text-black font-barlow font-bold">{currentUser?.name}</h2>
             </div>
             <div className="flex flex-col">
               <Link to={"/employee"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
@@ -55,6 +55,9 @@ const EmployeeRoot = () => {
         <Outlet />
         {isJobAppModalOpen && (
           <JobApplicationModal onClose={() => dispatch(setJobAppModalOpen(false))} />
+        )}
+        {isSeekerJobDetailsModalOpen && (
+          <EmployeeJobDetails onClose={() => dispatch(setSeekerJobDetailsModalOpen(false))} />
         )}
       </section>
     </main>

@@ -13,7 +13,7 @@ export const CompanyTab = [
   },
 ];
 
-const CompanyJobs = ({ jobs }: any) => {
+const CompanyJobs = ({ jobs, isLoading: isLoadingJobs }: any) => {
   const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState("All");
   const [updateJob, { isLoading }] = useUpdateJobInfoMutation();
@@ -24,14 +24,27 @@ const CompanyJobs = ({ jobs }: any) => {
   };
 
   // Function to handle adding a new job
-  const closeJob = async (jobId: any, closed: boolean) => {
+  const closeJob = async (jobId: any) => {
     try {
-      await updateJob({ id: jobId, data: { closed: !closed } });
-      toast.success(`Job successfully ${!closed ? "closed" : "reopened"}`);
+      await updateJob({ id: jobId, data: { closed: true } });
+      toast.success(`Job successfully closed`);
     } catch (error) {
       toast.error("Error occured while closing jobs");
     }
   };
+
+  const reOpenJob = async (jobId: any) => {
+    try {
+      await updateJob({ id: jobId, data: { closed: false } });
+      toast.success(`Job successfully reopened`);
+    } catch (error) {
+      toast.error("Error occured while reopening jobs");
+    }
+  };
+
+  if (isLoadingJobs) {
+    return (<div>Loading posted jobs, please wait...</div>)
+  }
 
   return (
     <div className="p-6 min-h-screen">
@@ -67,7 +80,7 @@ const CompanyJobs = ({ jobs }: any) => {
           )
           .map((job: any) => (
             <div
-              key={job?.job_id}
+              key={job?.id}
               className="bg-white p-4 rounded-2xl shadow-md border"
             >
               <div className="flex gap-3 mb-4">
@@ -85,14 +98,10 @@ const CompanyJobs = ({ jobs }: any) => {
                 </div>
               </div>
               <div className="flex justify-between items-center mb-4">
-                <div className="flex gap-4">
-                  <div className="text-gray-700 text-sm">
-                    <span className="font-bold mr-1">{job?.applicants}</span> applicant{job?.applicants > 1 ? "s" : ""}
-                  </div>
-                  {/* <div className="text-gray-700 text-sm flex items-center">
-                    <FaEye className="mr-1" /> <span className="font-bold mr-1">{job?.views}</span> views
-                  </div> */}
+                <div className="text-gray-700 text-sm">
+                  {job?.job_employment_type}
                 </div>
+
                 <div
                   className={`text-sm px-3 py-1 rounded-full ${!job?.closed
                     ? "bg-green-100 text-green-600"
@@ -103,13 +112,23 @@ const CompanyJobs = ({ jobs }: any) => {
                 </div>
               </div>
               <div className="flex mt-6 gap-4">
-                <button
-                  className={`flex-1 border-[1px] rounded-lg py-2 flex items-center justify-center ${job?.closed ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-white" : "border-red-500 text-red-500 hover:bg-red-600 hover:text-white"}`}
-                  onClick={() => closeJob(job?.job_id, job?.closed)}
+                {job?.closed ? (
+                  <button
+                  className={`flex-1 border-[1px] rounded-lg py-2 flex items-center justify-center border-green-500 text-green-500 hover:bg-green-600 hover:text-white`}
+                  onClick={() => reOpenJob(job?.id)}
                 >
                   <FaBriefcase className="mr-2" />
-                  {!job?.closed ? <p>{isLoading ? "closing..." : "Close Job"}</p> : <p>{isLoading ? "reopening..." : "Reopen Job"}</p>}
+                  <p>{isLoading ? "reopening..." : "Reopen Job"}</p>
                 </button>
+                ) : (
+                  <button
+                  className={`flex-1 border-[1px] rounded-lg py-2 flex items-center justify-center border-red-500 text-red-500 hover:bg-red-600 hover:text-white`}
+                  onClick={() => closeJob(job?.id)}
+                >
+                  <FaBriefcase className="mr-2" />
+                  <p>{isLoading ? "closing..." : "Close Job"}</p>
+                </button>
+                )}
                 <button
                   className="flex-1 border-[1px] rounded-lg py-2 border-blue-500 text-blue-500 hover:bg-blue-600 hover:text-white"
                   onClick={() => viewJob(job)}

@@ -3,7 +3,6 @@ import {
   DialogContent,
   DialogTrigger,
 } from "../../../components/dialog"
-import { useAppSelector } from "../../rtk/hooks";
 import moment from "moment";
 import { useGetMyEducationalHistoryQuery } from "../../rtk/services/education";
 import { useGetMyWorkHistoryQuery } from "../../rtk/services/work";
@@ -12,11 +11,10 @@ import { useGetDocumentsQuery } from "../../rtk/services/application";
 import { Link } from "react-router-dom";
 import SendInterviewDialog from "../SendInterviewInviteDialog";
 
-export default function ViewApplicantModal() {
-  const { applicantInfo, jobInfo } = useAppSelector((state) => state.job);
-  const { data: response } = useGetMyEducationalHistoryQuery(applicantInfo?.userId);
-  const { data: work_response } = useGetMyWorkHistoryQuery(applicantInfo?.userId);
-  const { data: documents } = useGetDocumentsQuery({ userId: applicantInfo?.userId, jobId: jobInfo?.job_id });
+export default function ViewApplicantModal({applicant}: any) {
+  const { data: response } = useGetMyEducationalHistoryQuery(applicant?.userId);
+  const { data: work_response } = useGetMyWorkHistoryQuery(applicant?.userId);
+  const { data: documents } = useGetDocumentsQuery({ userId: applicant?.userId, jobId: applicant?.jobId });
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -26,7 +24,7 @@ export default function ViewApplicantModal() {
           View Profile
         </button>
       </DialogTrigger>
-      <DialogContent className="max-w-lg h-[70%] overflow-y-auto">
+      <DialogContent className="w-[90%] lg:w-[50%] h-[70%] overflow-y-auto">
         <div >
           {/* Header */}
           <div>
@@ -37,28 +35,28 @@ export default function ViewApplicantModal() {
           <div className="p-4">
             <div className="flex items-center gap-4">
               <img
-                src={applicantInfo?.photoUrl}
+                src={applicant?.photoUrl}
                 className="w-16 h-16 object-cover object-center rounded-full"
                 alt="profile picture"
               />
               <div>
-                <h3 className="text-lg font-semibold">{applicantInfo?.name}</h3>
-                <p className="text-sm text-gray-500">{applicantInfo?.email}</p>
-                <p className="text-xs text-gray-400">{applicantInfo?.gender}</p>
-                <p className="text-xs text-gray-400">Applied {moment(applicantInfo?.date_applied).fromNow()}</p>
+                <h3 className="text-lg font-semibold">{applicant?.name}</h3>
+                <p className="text-sm text-gray-500">{applicant?.email}</p>
+                <p className="text-xs text-gray-400">{applicant?.gender}</p>
+                <p className="text-xs text-gray-400">Applied {moment(applicant?.date_applied).fromNow()}</p>
               </div>
             </div>
 
             {/* Action Buttons */}
             <div className="mt-4">
-              {applicantInfo?.status === "processing" ? (<SendInterviewDialog />) : (<div className={`w-full bg-gray-300/85 flex items-center justify-center p-2 rounded-lg ${applicantInfo?.status === "rejected" ? "text-red-600" : "text-green-600"}`}>{applicantInfo?.status === "interview" ? "Interview Invitation sent" : applicantInfo?.status}</div>)}
+              {applicant?.status === "processing" ? (<SendInterviewDialog />) : (<div className={`w-full flex items-center justify-center p-2 rounded-lg font-bold ${applicant?.status === "rejected" ? "text-red-600 bg-red-200/85" : "text-green-600 bg-green-200/85"}`}>{applicant?.status === "interview" ? "Interview Invitation sent" : `Invitation ${applicant?.status}`}</div>)}
             </div>
           </div>
 
           {/* About Me */}
           <div className="border-t-2 border-b-2 border-gray-500 p-5">
             <h4 className="text-md font-bold text-black">About me</h4>
-            <p className="text-sm text-gray-600 mt-1">{applicantInfo?.about_me}</p>
+            <p className="text-sm text-gray-600 mt-1">{applicant?.about_me}</p>
           </div>
 
           {/* Education */}

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AddJobStepperOne from "./AddJobStepperOne";
 import AddJobStepperTwo from "./AddJobStepperTwo";
-import AddJobStepThree from "./AddJobStepThree";
 import { Bounce, toast } from "react-toastify";
 import { useAppSelector } from "../rtk/hooks";
 import Axios from "../axios"
@@ -17,7 +16,6 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     title: "",
-    description: "",
     workplace_type: "",
     employment_type: "",
     city: "",
@@ -28,6 +26,8 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
     min_salary: "",
     max_salary: "",
   });
+
+  const [jobDescription, setJobDescription] = useState<string>('');
 
   const [quiz, setQuiz] = useState<any>([]);
   const [question, setQuestion] = useState("");
@@ -170,40 +170,16 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
 
   const handleSave = async () => {
     if (!formData.title.trim()) {
-      alert("Job title cannot be empty.");
+      toast.warn("Job title cannot be empty.");
       return;
     }
-    // if (quiz.length === 0) {
-    //   toast.warn('Please add screening questions', {
-    //     position: "top-center",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: false,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //     transition: Bounce,
-    //   });
-    //   return;
-    // }
 
-    // if (quiz.length < 3) {
-    //   toast.warn('Please add atleast 3 screening questions', {
-    //     position: "top-center",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: false,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //     transition: Bounce,
-    //   });
-    //   return;
-    // }
+    if (!jobDescription.trim()) {
+      toast.warn("Job Description cannot be empty.");
+      return;
+    }
 
-    const job_data = { ...formData, employer_name: currentUser?.company_name, employer_logo: currentUser?.company_logo_url, employer_website: currentUser?.company_website, companyId: currentUser?.id, required_skills: JSON.stringify(skills) };
+    const job_data = { ...formData, description: jobDescription, employer_name: currentUser?.company_name, employer_logo: currentUser?.company_logo_url, employer_website: currentUser?.company_website, companyId: currentUser?.id, required_skills: JSON.stringify(skills) };
     try {
       await createJob(job_data);
       // await createQuiz(res?.job?.id, quiz);
@@ -278,8 +254,8 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
         )}
         {step === 2 && (
           <AddJobStepperTwo
-            formData={formData}
-            handleChange={handleChange}
+            jobDescription={jobDescription}
+            setJobDescription={setJobDescription}
             skills={skills}
             newSkill={newSkill}
             setNewSkill={setNewSkill}

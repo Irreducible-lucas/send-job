@@ -1,11 +1,11 @@
 import { useAppDispatch } from "../rtk/hooks";
-import { FaTrashAlt, FaBriefcase, FaRegEdit, FaBoxOpen } from "react-icons/fa";
+import { FaBriefcase, FaRegEdit, FaBoxOpen } from "react-icons/fa";
 import { useDeleteJobByIdMutation, useUpdateJobInfoMutation } from "../rtk/services/jobs";
 import { setEditJobModalOpen, setJobInfo } from "../rtk/features/user/jobSlice";
-import { Job } from "../type";
 import { Bounce, toast } from "react-toastify";
+import DeleteDialog from "./DeleteDialog";
 
-const CompanySavedDraft = ({ jobs }: any) => {
+const CompanySavedDraft = ({ jobs, isLoading }: any) => {
   const dispatch = useAppDispatch();
   const [deleteJobById, { isLoading: isDeleting }] = useDeleteJobByIdMutation();
   const [postJobById, { isLoading: isPosting }] = useUpdateJobInfoMutation();
@@ -15,9 +15,13 @@ const CompanySavedDraft = ({ jobs }: any) => {
     dispatch(setJobInfo(job));
   }
 
+  if(isLoading) {
+    return (<div>Loading saved jobs please wait...</div>)
+  }
+
   const postJob = async (job_id: number) => {
     try {
-      await postJobById({ id: job_id, data: { posted: true, featured: true } })
+      await postJobById({ id: job_id, data: { posted: true, featured: true } });
       toast.success('job posted successfully', {
         position: "top-center",
         autoClose: 5000,
@@ -82,21 +86,21 @@ const CompanySavedDraft = ({ jobs }: any) => {
       </div>)}
       {/* Draft jobs list */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {jobs?.map((job: Job) => (
+        {jobs?.map((job: any) => (
           <div
             key={job.id}
             className="bg-white p-4 lg:p-6 rounded-lg shadow-md border"
           >
             <div className="flex gap-4">
               <div className="h-[100px] w-[100px] p-2 rounded-lg border-gray-200 bg-white border-2">
-                {job?.employer_logo === "" ? (<div className="h-full grid place-items-center w-full rounded-full bg-blue-700">
+                {job?.company_logo_url === "" ? (<div className="h-full grid place-items-center w-full rounded-full bg-blue-700">
                   <FaBriefcase className="text-white" size={50} />
-                </div>) : (<img src={job?.employer_logo} alt="Logo" className="w-10 h-10" />)}
+                </div>) : (<img src={job?.company_logo_url} alt="Logo" className="w-20 h-20" />)}
               </div>
-              <div className="flex flex-col justify-center gap-2">
+              <div className="flex flex-1 flex-col justify-center gap-2">
                 <h3 className="text-lg font-semibold">{job?.job_title}</h3>
                 <p className="text-sm text-gray-500">
-                  {job?.employer_name}
+                  {job?.company_name}
                 </p>
                 <div className="flex gap-4 flex-wrap">
                   <div className="bg-blue-50 text-blue-600 text-sm rounded-lg py-1 px-3">
@@ -118,13 +122,14 @@ const CompanySavedDraft = ({ jobs }: any) => {
               >
                 <FaRegEdit className="mr-2" /> Edit
               </button>
-              <button
+              <DeleteDialog handleDelete={() => deleteJob(job.id)} isDeleting={isDeleting}/>
+              {/* <button
                 onClick={() => deleteJob(job.id)}
                 disabled={isDeleting ? true : false}
                 className="flex items-center justify-center border-[1px] rounded-xl py-2 disabled:bg-red-100 border-red-500 text-red-500 hover:bg-red-600 hover:text-white"
               >
                 <FaTrashAlt className="mr-2" /> {isDeleting ? "Deleting..." : "Delete"}
-              </button>
+              </button> */}
             </div>
             <button
               onClick={() => postJob(job.id)}

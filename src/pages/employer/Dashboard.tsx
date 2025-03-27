@@ -5,6 +5,7 @@ import Header from '../../components/employer/Header';
 import { useAppSelector } from '../../rtk/hooks';
 import { useGetJobApplicantsByCompanyIdQuery } from '../../rtk/services/application';
 import { useGetJobsByCompanyIdQuery } from '../../rtk/services/jobs';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
     const { currentUser }: any = useAppSelector((state) => state.auth);
@@ -56,9 +57,9 @@ const Dashboard = () => {
                         <h2 className="text-lg md:text-xl font-semibold">
                             Recommend for you
                         </h2>
-                        <a href="#" className="text-blue-600">
+                        <Link to={"/employer/jobs"} className="text-blue-600">
                             See all
-                        </a>
+                        </Link>
                     </div>
                     <RecommendedCandidates />
                 </div>

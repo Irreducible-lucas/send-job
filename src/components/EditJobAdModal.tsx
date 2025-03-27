@@ -18,7 +18,6 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         title: jobInfo?.job_title,
-        description: jobInfo?.job_description,
         workplace_type: jobInfo?.workplace_type,
         employment_type: jobInfo?.job_employment_type,
         city: jobInfo?.job_city,
@@ -29,6 +28,7 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
         min_salary: jobInfo?.job_min_salary,
         max_salary: jobInfo?.job_max_salary,
     });
+    const [jobDescription, setJobDescription] = useState<string>(jobInfo?.job_description);
 
     const [skills, setSkills] = useState<string[]>(JSON.parse(jobInfo?.job_required_skills));
     const [newSkill, setNewSkill] = useState("");
@@ -130,8 +130,8 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
                 )}
                 {step === 2 && (
                     <AddJobStepperTwo
-                        formData={formData}
-                        handleChange={handleChange}
+                        jobDescription={jobDescription}
+                        setJobDescription={setJobDescription}
                         skills={skills}
                         newSkill={newSkill}
                         setNewSkill={setNewSkill}

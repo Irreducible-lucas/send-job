@@ -1,12 +1,10 @@
 import { useAppDispatch } from "../../rtk/hooks"
 import { setIsViewingApplicantProfile, setApplicantInfo } from "../../rtk/features/user/jobSlice"
-import { useGetApplicantsByJobIdQuery } from "../../rtk/services/application"
 import moment from "moment"
 
 
-const ApplicantsListTab = ({jobId}: any) => {
+const ApplicantsListTab = ({applicants, isLoading}: any) => {
     const dispatch = useAppDispatch();
-    const {data: response, isLoading} = useGetApplicantsByJobIdQuery(jobId);
 
     const viewApplicantProfile = (info: any) => {
         dispatch(setIsViewingApplicantProfile(true));
@@ -15,7 +13,8 @@ const ApplicantsListTab = ({jobId}: any) => {
     return (
         <div className="h-[150px] overflow-y-auto pb-4 grid grid-cols-1 place-items-center">
             {isLoading && (<p>Loading applicants...</p>)}
-            {response?.data?.applicants.map((applicant: any) => (
+            {applicants?.length === 0 && (<p>No applicants available</p>)}
+            {applicants?.map((applicant: any) => (
                 <div key={applicant?.id} className="bg-white p-4 rounded-lg shadow mt-4 w-[80%]">
                     <div className="flex items-center gap-4">
                         <img
@@ -25,10 +24,6 @@ const ApplicantsListTab = ({jobId}: any) => {
                         />
                         <div>
                             <h3 className="font-bold">{applicant.name}</h3>
-                            {/* <p className="text-gray-500 text-sm">{applicant.role}</p> */}
-                            {/* <p className="text-gray-400 text-sm">
-                                {applicant.location}
-                            </p> */}
                             <p className="text-gray-400 text-xs mt-1">
                                 Applied {" "}{moment(applicant.date_applied).fromNow()}
                             </p>

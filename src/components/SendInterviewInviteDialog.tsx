@@ -16,24 +16,25 @@ import { useAppSelector } from "../rtk/hooks"
 import { toast } from "react-toastify"
 
 export default function SendInterviewDialog() {
-    const {applicantInfo} = useAppSelector((state) => state.job);
-    
-    const [updateApplication, {isLoading}] = useUpdateApplicationMutation();
+    const { applicantInfo } = useAppSelector((state) => state.job);
+
+    const [updateApplication, { isLoading }] = useUpdateApplicationMutation();
 
 
     const updateAppStatus = async () => {
         const update = {
             status: "interview"
         }
-        await updateApplication({appId: applicantInfo?.id, update: update});
+        await updateApplication({ appId: applicantInfo?.id, update: update });
         toast.success("Interview invitation sent")
     }
 
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button className="w-full bg-blue-600 text-white flex items-center gap-2 hover:bg-blue-700"><FaCalendarCheck className="text-lg" />
-                    Send Interview Invitation</Button>
+                <Button disabled={isLoading} className="w-full disabled:bg-blue-800 bg-blue-600 text-white flex items-center gap-2 hover:bg-blue-700"><FaCalendarCheck className="text-lg" />
+                {isLoading ? "sending..." : "Send Interview Invitation"}
+                </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -44,7 +45,7 @@ export default function SendInterviewDialog() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction disabled={isLoading} onClick={updateAppStatus}>{isLoading ? "updating..." : "Continue"}</AlertDialogAction>
+                    <AlertDialogAction disabled={isLoading} onClick={updateAppStatus}>Continue</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

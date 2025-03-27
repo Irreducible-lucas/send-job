@@ -4,15 +4,15 @@ import { CompanyJob, CompanySavedDraft } from '../../components';
 import { FaPlus } from "react-icons/fa";
 import { useGetJobsByCompanyIdQuery } from '../../rtk/services/jobs';
 import { useAppSelector, useAppDispatch } from '../../rtk/hooks';
-import { useGetJobApplicantsByCompanyIdQuery } from '../../rtk/services/application';
 import { setJobModalOpen } from '../../rtk/features/user/jobSlice';
 
 const MyJobs = () => {
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
-  const {data: company_jobs}: any = useGetJobsByCompanyIdQuery({id: currentUser?.id});
-  const { data: application }: any = useGetJobApplicantsByCompanyIdQuery({ id: currentUser?.id });
-  const saved_jobs = company_jobs?.data.filter((job: any) => job.posted === false);
+  const {data: company_jobs, isLoading}: any = useGetJobsByCompanyIdQuery({id: currentUser?.id});
+  const saved_jobs = company_jobs?.data.filter((job: any) => job.posted === 0);
+  const posted_jobs = company_jobs?.data.filter((job: any) => job.posted === 1);
+
   const [selectedTab, setSelectedTab] = useState("saved");
   
   return (
@@ -40,8 +40,8 @@ const MyJobs = () => {
           </button>
         </div>
         <div>
-          {selectedTab === "saved" && <CompanySavedDraft jobs={saved_jobs} />}
-          {selectedTab === "posted" && <CompanyJob jobs={application?.data} />}
+          {selectedTab === "saved" && <CompanySavedDraft jobs={saved_jobs} isLoading={isLoading} />}
+          {selectedTab === "posted" && <CompanyJob jobs={posted_jobs} isLoading={isLoading} />}
         </div>
       </div>
       <div className="mt-6 flex justify-center fixed bottom-10 right-10 z-20">

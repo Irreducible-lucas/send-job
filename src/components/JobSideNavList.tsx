@@ -1,6 +1,4 @@
-import { time } from "console";
 import {
-  useGetJobsByCategoryQuery,
   useGetJobsByCompanyIdQuery,
 } from "../rtk/services/jobs";
 import { Job } from "../type";
@@ -12,17 +10,17 @@ interface Props {
 }
 
 const JobSideNavList = ({ job }: Props) => {
-  const id: any = job.companyId;
+  const companyId: any = job.companyId;
 
-  const catId: any = job.category_id;
+  // const catId: any = job.category_id;
 
-  const { data, isLoading, error } = useGetJobsByCompanyIdQuery(id, {
+  const { data, isLoading, error } = useGetJobsByCompanyIdQuery({id: companyId}, {
     refetchOnMountOrArgChange: true,
   });
 
-  const { data: jobsByCate } = useGetJobsByCategoryQuery(catId, {
-    refetchOnMountOrArgChange: true,
-  });
+  // const { data: jobsByCate } = useGetJobsByCategoryQuery(catId, {
+  //   refetchOnMountOrArgChange: true,
+  // });
 
   if (isLoading) return "loading...";
   if (error) return "Something went wrong!" + error;
@@ -30,13 +28,13 @@ const JobSideNavList = ({ job }: Props) => {
 
   return (
     <div className="">
-      <div className="space-y-4">
+      {/* <div className="space-y-4">
         <h1 className="font-bold text-base">Similar Jobs</h1>
         {jobsByCate?.data.map((item: Job) => {
           if (item.id !== job.id)
             return <JobSideNavCard key={item.id} job={item} />;
         })}
-      </div>
+      </div> */}
       <div className="space-y-4 mt-10">
         <h1 className="font-bold text-base">
           Other Jobs From {job.employer_name}

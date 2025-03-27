@@ -10,7 +10,7 @@ export const applicationApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["MyApplications", "Documents"],
+  tagTypes: ["MyApplications", "Documents", "JobApplicants"],
   endpoints: (builder) => ({
     applyForJob: builder.mutation({
       query: (newApplication: any) => ({
@@ -33,6 +33,7 @@ export const applicationApi = createApi({
 
     getApplicantsByJobId: builder.query<any, number>({
       query: (id) => `application/job/${id}`,
+      providesTags: ["JobApplicants"],
     }),
 
     getJobApplicantsByCompanyId: builder.query<APIResponse, { id: number }>({
@@ -50,7 +51,7 @@ export const applicationApi = createApi({
         method: "PATCH",
         body: update,
       }),
-      invalidatesTags: ["MyApplications"],
+      invalidatesTags: ["MyApplications", "JobApplicants"],
     }),
   }),
 });

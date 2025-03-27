@@ -3,7 +3,7 @@ import EmployeeJobCard from "./EmployeeJobCard"
 import { useGetMyApplicationsQuery } from "../rtk/services/application";
 
 const EmployeeProcessJobs = ({ userId }: any) => {
-    const {data: jobs, isLoading} = useGetMyApplicationsQuery(userId);
+    const {data: jobs, isLoading} = useGetMyApplicationsQuery(userId, {refetchOnMountOrArgChange: true});
     const [filteredJobs, setFilteredJobs] = useState<any>([]);
 
     useEffect(() => {

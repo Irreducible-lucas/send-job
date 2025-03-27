@@ -69,9 +69,9 @@ const EmployeeJobDetails = ({ onClose }: any) => {
               <div className="rounded-lg border-gray-200 bg-white border-2">
                 {jobInfo?.employer_logo === "" ? (<div className="p-2 h-[100px] w-[100px] grid place-items-center rounded-full bg-blue-700">
                   <FaBriefcase className="text-white" size={50} />
-                </div>) : (<img src={jobInfo?.employer_logo} alt="Logo" className="h-[100px] w-[100px] object-cover object-center" />)}
+                </div>) : (<img src={jobInfo?.employer_logo} alt="Logo" className="h-20 w-20 object-cover object-center" />)}
               </div>
-              <div className="flex flex-1 flex-col gap-3 w-full">
+              <div className="flex flex-1 flex-col gap-3">
                 <h3 className="text-xl font-semibold capitalize">{jobInfo?.job_title}</h3>
                 <div className="flex items-center gap-4">
                   <p className="text-base text-blue-600">
@@ -99,7 +99,7 @@ const EmployeeJobDetails = ({ onClose }: any) => {
             <div className="text-gray-500 text-base flex flex-col gap-4 pb-4">
               <div>
                 <h2 className="font-bold text-black mb-2">Job Description</h2>
-                <div>{jobInfo?.job_description}</div>
+                <div dangerouslySetInnerHTML={{ __html: jobInfo?.job_description }} />
               </div>
               <div>
                 <h2 className="font-bold text-black mb-2">Job Experience</h2>

@@ -7,10 +7,15 @@ import ApplicantsListTab from "./ApplicantsListTab";
 import JobDescriptionTab from "./JobDescriptionTab";
 import ApplicantProfile from "./ApplicantProfile";
 import moment from "moment";
+import { useGetApplicantsByJobIdQuery } from "../../rtk/services/application";
 
 const EmployerJobDetails = ({ onClose }: any) => {
   const { jobInfo, isViewingApplicantProfile } = useAppSelector((state) => state.job);
-  const [selectedTab, setSelectedTab] = useState("applicants");
+  const [selectedTab, setSelectedTab] = useState("description");
+  const { data: response, isLoading } = useGetApplicantsByJobIdQuery(jobInfo?.id, { refetchOnMountOrArgChange: true });
+  const interviews = response?.data.applicants.filter((applicant: any) => applicant.status === "interview");
+  const rejected = response?.data.applicants.filter((applicant: any) => applicant.status === "rejected");
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] lg:w-[50%] relative h-[90%] max-h-[90%]">
@@ -67,29 +72,21 @@ const EmployerJobDetails = ({ onClose }: any) => {
             <div className="p-3 w-full grid grid-cols-3 rounded-lg border-gray-200 bg-white border-2 my-4">
               <div className="grid place-items-center gap-1">
                 <h3 className="text-gray-500">Applicants</h3>
-                <p className="font-bold text-lg">{jobInfo?.applicants}</p>
+                <p className="font-bold text-lg">{isLoading ? 0 : response?.total}</p>
               </div>
               <div className="grid place-items-center gap-1 border-x-4  ">
                 <h3 className="text-gray-500">Interview</h3>
-                <p className="font-bold text-lg">1</p>
+                <p className="font-bold text-lg">{isLoading ? 0 : interviews.length}</p>
               </div>
               <div className="grid place-items-center gap-1">
                 <h3 className="text-gray-500">Rejected</h3>
-                <p className="font-bold text-lg">0</p>
+                <p className="font-bold text-lg">{isLoading ? 0 : rejected.length}</p>
               </div>
             </div>
 
             <div className='w-full'>
               <div className="grid grid-cols-2 bg-white mb-4 border-b-2 border-gray-300">
-                <button
-                  className={`py-3 px-6 text-lg font-medium transition-colors duration-200 ${selectedTab === "applicants"
-                    ? "border-b-4 border-blue-500 text-blue-600"
-                    : "text-gray-500 hover:text-gray-700"
-                    }`}
-                  onClick={() => setSelectedTab("applicants")}
-                >
-                  Applicants ({jobInfo.applicants})
-                </button>
+
                 <button
                   className={`py-3 px-6 text-lg font-medium transition-colors duration-200 ${selectedTab === "description"
                     ? "border-b-4 border-blue-500 text-blue-600"
@@ -99,9 +96,18 @@ const EmployerJobDetails = ({ onClose }: any) => {
                 >
                   Job Description
                 </button>
+                <button
+                  className={`py-3 px-6 text-lg font-medium transition-colors duration-200 ${selectedTab === "applicants"
+                    ? "border-b-4 border-blue-500 text-blue-600"
+                    : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  onClick={() => setSelectedTab("applicants")}
+                >
+                  Applicants ({response?.total})
+                </button>
               </div>
               <div>
-                {selectedTab === "applicants" && <ApplicantsListTab jobId={jobInfo?.job_id}/>}
+                {selectedTab === "applicants" && <ApplicantsListTab applicants={response?.data?.applicants} isLoading={isLoading} />}
                 {selectedTab === "description" && <JobDescriptionTab job={jobInfo} />}
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import { IoBriefcaseOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
@@ -17,6 +17,9 @@ const EmployeeRoot = () => {
     dispatch(logOut());
   };
 
+  const location = useLocation();
+  const isActive = (path: any) => location.pathname === path;
+
   return (
     <main className="bg-gray-100 h-screen grid md:grid-cols-[250px_1fr] overflow-hidden">
       <aside className="hidden md:block overflow-y-auto">
@@ -30,16 +33,16 @@ const EmployeeRoot = () => {
             <img src={currentUser?.photoUrl ?? "https://gravatar.com/avatar/e5607a7ede604ade06cfbd847d9b5a02?s=400&d=robohash&r=x"} className="bg-slate-300 rounded-full border w-[80px] h-[80px] object-cover object-center" alt="User profile picture" />
               <h2 className="text-center text-black font-barlow font-bold">{currentUser?.name}</h2>
             </div>
-            <div className="flex flex-col">
-              <Link to={"/employee"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
+            <div className="flex flex-col gap-2">
+              <Link to={"/employee"} className={`group p-4 rounded-lg flex items-center gap-4 ${isActive("/employee") ? "bg-blue-700 text-white font-bold" : "hover:bg-blue-700 text-black hover:text-white" }`}>
                 <RxDashboard size={30} />
                 <p className="text-lg group-hover:font-bold">Dashboard</p>
               </Link>
-              <Link to={"/employee/jobs"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
+              <Link to={"/employee/jobs"} className={`group p-4 rounded-lg flex items-center gap-4 ${isActive("/employee/jobs") ? "bg-blue-700 text-white font-bold" : "hover:bg-blue-700 text-black hover:text-white" }`}>
                 <IoBriefcaseOutline size={30} />
                 <p className="text-lg group-hover:font-bold">Jobs</p>
               </Link>
-              <Link to={"/employee/profile"} className="group p-4 rounded-lg flex items-center gap-4 hover:bg-blue-700 text-black hover:text-white">
+              <Link to={"/employee/profile"} className={`group p-4 rounded-lg flex items-center gap-4 ${isActive("/employee/profile") ? "bg-blue-700 text-white font-bold" : "hover:bg-blue-700 text-black hover:text-white" }`}>
                 <CgProfile size={30} />
                 <p className="text-lg group-hover:font-bold">Profile</p>
               </Link>

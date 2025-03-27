@@ -3,7 +3,7 @@ import { useAppSelector } from '../rtk/hooks';
 import { EmployeeFinishedJobs, EmployeeProcessJobs, EmployeeSavedJobs } from '../components';
 
 const Jobs = () => {
-  const { currentUser } = useAppSelector((state) => state.auth);
+  const { currentUser }: any = useAppSelector((state) => state.auth);
   const [selectedTab, setSelectedTab] = useState("saved");
 
   return (

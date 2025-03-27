@@ -14,7 +14,7 @@ const ApplicantProfile = () => {
     const { applicantInfo, jobInfo } = useAppSelector((state) => state.job);
     const { data: response } = useGetMyEducationalHistoryQuery(applicantInfo?.userId);
     const { data: work_response } = useGetMyWorkHistoryQuery(applicantInfo?.userId);
-    const { data: documents } = useGetDocumentsQuery({ userId: applicantInfo?.userId, jobId: jobInfo?.job_id });
+    const { data: documents } = useGetDocumentsQuery({ userId: applicantInfo?.userId, jobId: jobInfo?.id });
 
     return (
         <div className="h-full overflow-y-auto">
@@ -44,7 +44,7 @@ const ApplicantProfile = () => {
 
                 {/* Action Buttons */}
                 <div className="mt-4">
-                    {applicantInfo?.status === "processing" ? (<SendInterviewDialog />) : (<div className={`w-full bg-gray-300/85 flex items-center justify-center p-2 rounded-lg ${applicantInfo?.status === "rejected" ? "text-red-600" : "text-green-600"}`}>{applicantInfo?.status === "interview" ? "Interview Invitation sent" : applicantInfo?.status}</div>)}
+                    {applicantInfo?.status === "processing" ? (<SendInterviewDialog />) : (<div className={`w-full flex items-center justify-center p-2 rounded-lg font-bold ${applicantInfo?.status === "rejected" ? "text-red-600 bg-red-200/85" : "text-green-600 bg-green-200/85"}`}>{applicantInfo?.status === "interview" ? "Interview Invitation sent" : `Invitation ${applicantInfo?.status}`}</div>)}
                 </div>
             </div>
 

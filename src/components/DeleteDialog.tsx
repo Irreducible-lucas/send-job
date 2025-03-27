@@ -17,7 +17,7 @@ export default function DeleteDialog({handleDelete, isDeleting}: any) {
         <AlertDialog>
             <AlertDialogTrigger asChild>
                 <Button className='bg-red-600 hover:bg-red-900 hover:cursor-pointer p-2 rounded-lg'>
-                    <MdDelete className='text-white' size={20} />
+                    <MdDelete className='text-white' size={20} /> Delete
                 </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>

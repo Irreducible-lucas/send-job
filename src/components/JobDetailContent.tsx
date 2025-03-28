@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../rtk/hooks";
 import { setJobAppModalOpen, setJobInfo } from "../rtk/features/user/jobSlice";
 import { FaBriefcase } from "react-icons/fa";
+import { useGetApplicationStatusQuery } from "../rtk/services/application";
 
 interface Props {
   job: Job;
@@ -17,9 +18,11 @@ interface Props {
 }
 
 const JobDetailContent = ({ job, showButton = true }: Props) => {
-  const { token } = useAppSelector((state) => state.auth);
+  const { token, currentUser } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const currencyFormat = new Intl.NumberFormat("en-Us");
+  const {data: applied, isLoading} = useGetApplicationStatusQuery({userId: currentUser?.id, jobId: job?.id});
+
 
   const applyToJob = () => {
     if (!token) {
@@ -42,9 +45,10 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
               {showButton && (
                 <button
                   onClick={() => applyToJob()}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                  disabled={applied?.status}
+                  className="bg-blue-600 disabled:bg-blue-600/50 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                 >
-                  Apply Now
+                  {applied?.status ? "Applied" : "Apply Now"}
                 </button>
               )}
 

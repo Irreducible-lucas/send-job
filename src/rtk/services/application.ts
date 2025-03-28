@@ -36,6 +36,10 @@ export const applicationApi = createApi({
       providesTags: ["JobApplicants"],
     }),
 
+    getApplicationStatus: builder.query<any, {userId: number, jobId: number}>({
+      query: ({userId, jobId}) => `application?userId=${userId}&jobId=${jobId}`,
+    }),
+
     getJobApplicantsByCompanyId: builder.query<APIResponse, { id: number }>({
       query: ({ id }) => `application/company/${id}`,
       keepUnusedDataFor: 15,
@@ -56,5 +60,7 @@ export const applicationApi = createApi({
   }),
 });
 
-export const { useApplyForJobMutation, useGetDocumentsQuery, useGetMyApplicationsQuery, useGetApplicantsByJobIdQuery, useGetJobApplicantsByCompanyIdQuery, useGetRecommendedApplicantsByIdQuery, useUpdateApplicationMutation } =
+export const { useApplyForJobMutation, useGetDocumentsQuery, useGetMyApplicationsQuery, 
+  useGetApplicantsByJobIdQuery, useGetJobApplicantsByCompanyIdQuery, 
+  useGetRecommendedApplicantsByIdQuery, useUpdateApplicationMutation, useGetApplicationStatusQuery } =
   applicationApi;

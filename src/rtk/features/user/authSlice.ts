@@ -32,11 +32,13 @@ export const login = createAsyncThunk(
       );
       // Get access token after user logged in successfully
       const accessToken = await userCredential.user.getIdToken();
+
       const response = await axios.get("/users/info", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      console.log(response);
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("user_data", JSON.stringify(response.data.user));
       return {
@@ -91,8 +93,8 @@ export const getCurrentUser = createAsyncThunk(
       }
       const data = {
         user: userData,
-        token: token
-      }
+        token: token,
+      };
       return data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data.message);
@@ -152,7 +154,7 @@ const authSlice = createSlice({
         state.currentUser = null;
         state.token = "";
         state.error = "";
-      })
+      });
   },
 });
 

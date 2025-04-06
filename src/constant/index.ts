@@ -17,63 +17,63 @@ export const links: Link[] = [
     url: "/jobs",
   },
 
-  {
-    id: 6,
-    text: "Application",
-    url: "/applications",
-    child: null,
-  },
+  // {
+  //   id: 6,
+  //   text: "Application",
+  //   url: "/applications",
+  //   child: null,
+  // },
 
-  {
-    id: 3,
-    text: "Talent Solutions",
-    url: "/talent-solution",
-    child: [
-      {
-        id: 1,
-        text: "Post Jobs",
-        url: "/talent-solution/post-job",
-      },
-      { id: 2, text: "Hire Talent", url: "/talent-solution/hire-talent" },
-      {
-        id: 3,
-        text: "Skill Assessment",
-        url: "/talent-solution/skill-assessment",
-      },
-      {
-        id: 4,
-        text: "Upskill Team",
-        url: "/upskill-team",
-      },
-    ],
-  },
-  {
-    id: 4,
-    text: "Resources",
-    url: "/resources",
-    child: [
-      {
-        id: 1,
-        text: "Career Advice",
-        url: "/resources/career-advice",
-      },
-      {
-        id: 2,
-        text: "Hiring Tips",
-        url: "/resources/hiring-tips",
-      },
-      {
-        id: 3,
-        text: "FAQs",
-        url: "/resources/faqs",
-      },
-      {
-        id: 4,
-        text: "Training Programs",
-        url: "/resources/training-programs",
-      },
-    ],
-  },
+  // {
+  //   id: 3,
+  //   text: "Talent Solutions",
+  //   url: "/talent-solution",
+  //   child: [
+  //     {
+  //       id: 1,
+  //       text: "Post Jobs",
+  //       url: "/talent-solution/post-job",
+  //     },
+  //     { id: 2, text: "Hire Talent", url: "/talent-solution/hire-talent" },
+  //     {
+  //       id: 3,
+  //       text: "Skill Assessment",
+  //       url: "/talent-solution/skill-assessment",
+  //     },
+  //     {
+  //       id: 4,
+  //       text: "Upskill Team",
+  //       url: "/upskill-team",
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 4,
+  //   text: "Resources",
+  //   url: "/resources",
+  //   child: [
+  //     {
+  //       id: 1,
+  //       text: "Career Advice",
+  //       url: "/resources/career-advice",
+  //     },
+  //     {
+  //       id: 2,
+  //       text: "Hiring Tips",
+  //       url: "/resources/hiring-tips",
+  //     },
+  //     {
+  //       id: 3,
+  //       text: "FAQs",
+  //       url: "/resources/faqs",
+  //     },
+  //     {
+  //       id: 4,
+  //       text: "Training Programs",
+  //       url: "/resources/training-programs",
+  //     },
+  //   ],
+  //},
 ];
 
 export const jobCategories: JobCategory[] = [

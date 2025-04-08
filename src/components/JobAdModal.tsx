@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import AddJobStepperOne from "./AddJobStepperOne";
 import AddJobStepperTwo from "./AddJobStepperTwo";
-import AddJobStepThree from "./AddJobStepThree";
+import { Bounce, toast } from "react-toastify";
+import { useAppSelector } from "../rtk/hooks";
+import Axios from "../axios"
+import { useCreateJobMutation } from "../rtk/services/jobs";
 
 interface JobAdModalProps {
   onClose: () => void;
 }
 
 const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
+  const [createJobMutation, { isLoading: isCreatingJob }] = useCreateJobMutation();
+  const { currentUser } = useAppSelector((state) => state.auth)
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     title: "",
-    employment_type: "",
     workplace_type: "",
+    employment_type: "",
     city: "",
     state: "",
     country: "",
@@ -20,14 +25,130 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
     currency: "",
     min_salary: "",
     max_salary: "",
-    description: "",
   });
 
-  const [skills, setSkills] = useState<string[]>(["Figma (software)"]);
+  const [jobDescription, setJobDescription] = useState<string>('');
+
+  const [quiz, setQuiz] = useState<any>([]);
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState([]);
+  // const [isCorrect, setIsCorrect] = useState("0");
+  // const [showQuiz, setShowQuiz] = useState(false); 
+
+  // Function to create a job
+  const createJob = async (jobData: any) => {
+    try {
+      const response = await createJobMutation(jobData);
+      return response.data;
+    } catch (error) {
+      toast.error('Sorry, error occured while creating job', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+  };
+
+  // Function to create a quiz with the job ID
+  const createQuiz = async (jobId: any, quizData: any) => {
+    const data = {
+      jobId: jobId,
+      quiz: quizData
+    }
+    try {
+      const response = await Axios.post('/jobs/test', data);
+      return response.data;  // Assuming response.data contains the quiz details
+    } catch (error) {
+      toast.error('Sorry, error occured while creating job test', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+  };
+
+  const addQuestion = () => {
+    if (question === "") {
+      toast.warn('Question field cannot be empty.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+
+    if (options.length < 2) {
+      toast.warn('Options must be more than two(2)', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+
+    const checkEmptyOption = options.filter((option: any) => option.option === "");
+
+    if (checkEmptyOption.length > 0) {
+      toast.warn('An Option field cannot be empty', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+
+    const newQuiz = {
+      question: question,
+      options: options,
+    };
+
+    setQuiz((prevQuiz: any) => [...prevQuiz, newQuiz]);
+    setQuestion("");
+    setOptions([]);
+  };
+
+  // const cancelQuestion = () => {
+  //   setQuestion("");
+  //   setOptions([]);
+  //   setIsCorrect("0");
+  //   setShowQuiz(false);
+  // };
+
+
+  const [skills, setSkills] = useState<string[]>([]);
   const [newSkill, setNewSkill] = useState("");
-  const [screeningQuestions, setScreeningQuestions] = useState([
-    { question: "", type: "" },
-  ]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -47,34 +168,51 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
     setSkills(skills.filter((s) => s !== skill));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!formData.title.trim()) {
-      alert("Job title cannot be empty.");
+      toast.warn("Job title cannot be empty.");
       return;
     }
-    // onSave({ ...formData, jobDescription, skills, screeningQuestions });
+
+    if (!jobDescription.trim()) {
+      toast.warn("Job Description cannot be empty.");
+      return;
+    }
+
+    const job_data = { ...formData, description: jobDescription, employer_name: currentUser?.company_name, employer_logo: currentUser?.company_logo_url, employer_website: currentUser?.company_website, companyId: currentUser?.id, required_skills: JSON.stringify(skills) };
+    try {
+      await createJob(job_data);
+      // await createQuiz(res?.job?.id, quiz);
+      toast.success('Job created successfully', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } catch (error) {
+      console.log("Error:", error)
+      toast.error('Sorry, error occured.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
     onClose();
   };
 
-  const addQuestion = () => {
-    setScreeningQuestions([...screeningQuestions, { question: "", type: "" }]);
-  };
-
-  const handleQuestionChange = (index: number, value: string) => {
-    const updatedQuestions = [...screeningQuestions];
-    updatedQuestions[index].question = value;
-    setScreeningQuestions(updatedQuestions);
-  };
-
-  const handleTypeChange = (index: number, value: string) => {
-    const updatedQuestions = [...screeningQuestions];
-    updatedQuestions[index].type = value;
-    setScreeningQuestions(updatedQuestions);
-  };
-
   const handleNext = () => {
-    console.log("Form data:", formData);
-    console.log("Skills:", skills);
     setStep(step + 1);
   };
 
@@ -116,8 +254,8 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
         )}
         {step === 2 && (
           <AddJobStepperTwo
-            formData={formData}
-            handleChange={handleChange}
+            jobDescription={jobDescription}
+            setJobDescription={setJobDescription}
             skills={skills}
             newSkill={newSkill}
             setNewSkill={setNewSkill}
@@ -125,14 +263,16 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
             removeSkill={removeSkill}
           />
         )}
-        {step === 3 && (
+        {/* {step === 3 && (
           <AddJobStepThree
-            screeningQuestions={screeningQuestions}
+            setOptions={setOptions}
             addQuestion={addQuestion}
-            handleQuestionChange={handleQuestionChange}
-            handleTypeChange={handleTypeChange}
+            quiz={quiz}
+            options={options}
+            question={question}
+            setQuestion={setQuestion}
           />
-        )}
+        )} */}
         <hr className="border-gray-300 my-3" /> {/* Line above the buttons */}
         <div className="flex justify-between gap-3 mt-4">
           {step > 1 && (
@@ -143,7 +283,7 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
               Back
             </button>
           )}
-          {step < 3 ? (
+          {step < 2 ? (
             <button
               onClick={handleNext}
               className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition ml-auto"
@@ -155,7 +295,7 @@ const JobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
               onClick={handleSave}
               className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition ml-auto"
             >
-              Save Job
+              {isCreatingJob ? "Saving job..." : "Save Job"}
             </button>
           )}
         </div>

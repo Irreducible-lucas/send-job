@@ -7,8 +7,10 @@ import { layout } from "../styles";
 import FeaturedJobCard from "./FeaturedJobCard";
 import { Job } from "../type";
 import { toast } from "react-toastify";
+import { useAppSelector } from "../rtk/hooks";
 
 const FeaturedJobList = () => {
+  const {currentUser} = useAppSelector((state) => state.auth)
   const { data, isLoading } = useGetFeaturedJobsQuery("", {
     refetchOnMountOrArgChange: true,
   });
@@ -20,12 +22,12 @@ const FeaturedJobList = () => {
     });
   };
 
-  const [saveJob] = useSaveJobMutation();
+  const [saveJob, {isLoading: isSavingJob}] = useSaveJobMutation();
 
   const onSaveJob = async (job: Job) => {
     const data: any = {
       jobId: job.id,
-      userId: 1,
+      userId: currentUser?.id,
     };
 
     let response: any = await saveJob(data);
@@ -50,7 +52,7 @@ const FeaturedJobList = () => {
           Featured Jobs
         </h2>
       </div>
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data &&
           data?.data.length > 0 &&
           data?.data.map((job: Job, index: number) => (
@@ -59,6 +61,7 @@ const FeaturedJobList = () => {
               job={job}
               handleNavigate={handleNavigate}
               saveJob={onSaveJob}
+              loading={isSavingJob}
             />
           ))}
       </div>

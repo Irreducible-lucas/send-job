@@ -22,6 +22,7 @@ export interface Job {
   employer_website: string;
   job_title: string;
   job_employment_type: string;
+  workplace_type: string;
   job_salary_currency: string;
   job_min_salary: number;
   job_max_salary: number;
@@ -38,6 +39,31 @@ export interface Job {
   closed: boolean;
   required_docs: string;
   experience: string;
+}
+
+export interface JobData {
+  employer_name: string;
+  employer_logo: string;
+  employer_website: string;
+  title: string;
+  description: string;
+  workplace_type: string;
+  employment_type: string;
+  city: string;
+  state: string;
+  country: string;
+  experience: string;
+  currency: string;
+  min_salary: number;
+  max_salary: number;
+  required_skills: string;
+  companyId: number;
+  is_remote?: boolean;
+  category_id?: number;
+  featured?: boolean;
+  posted?: boolean;
+  closed?: boolean;
+  required_docs?: string;
 }
 
 export interface recruiterProps {
@@ -241,10 +267,37 @@ export interface CompanyApplicantProps {
   status?: string;
   imageUrl: string;
 }
-export interface CompanyInfoProps{
+export interface CompanyInfoProps {
   logo: string;
-   title: string;
+  title: string;
   company: string;
   postedDate: string;
+}
+
+export interface SeekerSavedJob {
+  id: number;
+  userId: number;
+  jobId: number;
+  employer_name: string;
+  employer_logo: string;
+  employer_website: string;
+  job_title: string;
+  job_employment_type: string;
+  job_salary_currency: string;
+  job_min_salary: number,
+  job_max_salary: number,
+  job_description: string;
+  job_required_skills: string;
+  job_is_remote: boolean,
+  job_city: string;
+  job_state: string;
+  job_country: string;
+  companyId: number;
+  category_id: number;
+  featured: boolean,
+  posted: boolean,
+  closed: boolean,
+  required_docs: string;
+  experience: string;
 }
 

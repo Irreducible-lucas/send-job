@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 // import userReducer from "./features/user/userSlice";
 import authReducer from "./features/user/authSlice";
 import jobInterestReducer from "./features/user/jobInterestSlice";
-import jobReducer from "./features/employer/jobSlice"
+import jobReducer from "./features/user/jobSlice"
 
 import { jobsApi } from "./services/jobs";
 import { applicationApi } from "./services/application";
+import { educationApi } from "./services/education";
+import { workApi } from "./services/work";
 
 const store = configureStore({
   reducer: {
@@ -14,12 +16,16 @@ const store = configureStore({
     jobInterests: jobInterestReducer,
     [jobsApi.reducerPath]: jobsApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
+    [educationApi.reducerPath]: educationApi.reducer,
+    [workApi.reducerPath]: workApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       jobsApi.middleware,
-      applicationApi.middleware
+      applicationApi.middleware,
+      educationApi.middleware,
+      workApi.middleware,
     ),
 });
 

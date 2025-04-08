@@ -1,10 +1,10 @@
 import React from "react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 interface Step2Props {
-  formData: any;
-  handleChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => void;
+  jobDescription: string;
+  setJobDescription: React.Dispatch<React.SetStateAction<string>>;
   skills: string[];
   newSkill: string;
   setNewSkill: React.Dispatch<React.SetStateAction<string>>;
@@ -13,21 +13,42 @@ interface Step2Props {
 }
 
 const AddJobStepperTwo: React.FC<Step2Props> = ({
-  formData,
-  handleChange,
+  jobDescription,
+  setJobDescription,
   skills,
   newSkill,
   setNewSkill,
   addSkill,
   removeSkill,
 }) => {
+
+  // Quill modules configuration
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'script': 'sub' }, { 'script': 'super' }],
+      [{ 'indent': '-1' }, { 'indent': '+1' }],
+      ['link'],
+    ]
+  };
   return (
     <div className="flex-grow overflow-auto p-4 max-h-[60vh] bg-white">
       <div className="mb-4">
         <label htmlFor="jobDescription" className="block font-semibold mb-1">
           Job Description
         </label>
-        <textarea
+        <ReactQuill
+          id="jobDescription"
+          theme="snow"
+          value={jobDescription}
+          onChange={setJobDescription}
+          modules={modules}
+          placeholder="Write your job description here..."
+          className="h-48 max-h-48 block"
+        />
+        {/* <textarea
           id="jobDescription"
           name="description"
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -36,11 +57,11 @@ const AddJobStepperTwo: React.FC<Step2Props> = ({
           value={formData.description}
           onChange={handleChange}
           required
-        ></textarea>
+        ></textarea> */}
       </div>
 
-      <div className="mb-4">
-        <h3 className="block font-semibold">Required skills</h3>
+      <div className="mb-4 mt-20">
+        <h3 className="font-semibold">Required skills</h3>
         <p className="text-gray-500 text-sm">add skills to be seen by the right candidates (select up to 10)</p>
       </div>
 
@@ -64,7 +85,7 @@ const AddJobStepperTwo: React.FC<Step2Props> = ({
 
       {/* Skill List */}
       <div className="flex flex-wrap gap-2">
-        {skills.map((skill) => (
+        {skills.length > 0 && skills.map((skill) => (
           <div
             key={skill}
             className="flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded-full shadow"

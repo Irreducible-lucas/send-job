@@ -14,7 +14,7 @@ import {
   ReadyToWork,
 } from "./components";
 import Root from "./layout/Root";
-import DashboardRoot from "./layout/DashboardRoot";
+
 import {
   Home,
   TalentSolutions,
@@ -32,7 +32,10 @@ import {
   Application,
   ApplicationSucessful,
   EmployerSignUp,
-  OnlyEmployerRoute,
+  OnlyLoggedInUserRoute,
+  EmployeeDashboard,
+  EmployeeJobsPage,
+  EmployeeProfile,
 } from "./pages";
 import ProfileRoot from "./layout/ProfileRoot";
 import JobsTab from "./pages/JobsTab";
@@ -42,7 +45,8 @@ import { useAppDispatch } from "./rtk/hooks";
 import CompanyHome from "./components/CompanyHome";
 import SignUpRoot from "./layout/SignUpRoot";
 import EmployerRoot from "./layout/EmployerRoot";
-import { ApplicantInfo, EmployerDashboard, JobDetails, MyJobs } from "./pages/employer";
+import EmployeeRoot from "./layout/EmployeeRoot";
+import { ApplicantInfo, EmployerDashboard, EmployerProfile, JobDetails, MyJobs } from "./pages/employer";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -89,15 +93,6 @@ const App = () => {
           <Route path="/jobs/apply/:slug" element={<Application />} />
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route path="/jobs/success" element={<ApplicationSucessful />} />
-          {/* <Route
-          <Route
-            path="/talent-solution/hire-talent"
-            element={<CompanyHome />}
-          />
-          <Route
-            path="talent-solution/skill-assessment"
-            element={<SavedJobTab />}
-          /> */}
           <Route path="upskill-team" element={<UpskillTeam />} />
           {/* Resources Sub-Routes */}
           <Route path="resources/career-advice" element={<CompanyHome />} />
@@ -110,18 +105,25 @@ const App = () => {
         </Route>
 
         {/* Employer Dashboard */}
-        <Route path="employer" element={<OnlyEmployerRoute><EmployerRoot /></OnlyEmployerRoute>}>
+        <Route path="employer" element={<OnlyLoggedInUserRoute><EmployerRoot /></OnlyLoggedInUserRoute>}>
           <Route index element={<EmployerDashboard />} />
           <Route path="jobs">
             <Route index element={<MyJobs />} />
             <Route path=":id" element={<JobDetails />} />
             <Route path=":id/applicant/:aid" element={<ApplicantInfo />} />
           </Route>
+          <Route path="profile" element={<EmployerProfile />} />
         </Route>
 
-        {/* Admin Dashboard Layout */}
-        <Route path="dashboard" element={<DashboardRoot />}>
-          {/* Add dashboard-related routes here */}
+        {/* Employee Dashboard */}
+        <Route path="employee" element={<EmployeeRoot />}>
+          <Route index element={<EmployeeDashboard />} />
+          <Route path="jobs">
+            <Route index element={<EmployeeJobsPage />} />
+            {/* <Route path=":id" element={<JobDetails />} />
+            <Route path=":id/applicant/:aid" element={<ApplicantInfo />} /> */}
+          </Route>
+          <Route path="profile" element={<EmployeeProfile />} />
         </Route>
 
         {/* Catch-all Route */}

@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Header from '../../components/employer/Header'
 import { CompanyJob, CompanySavedDraft } from '../../components';
 import { FaPlus } from "react-icons/fa";
+import { useGetJobsByCompanyIdQuery } from '../../rtk/services/jobs';
+import { useAppSelector, useAppDispatch } from '../../rtk/hooks';
+import { setJobModalOpen } from '../../rtk/features/user/jobSlice';
 
 const MyJobs = () => {
+  const dispatch = useAppDispatch();
+  const { currentUser } = useAppSelector((state) => state.auth);
+  const {data: company_jobs, isLoading}: any = useGetJobsByCompanyIdQuery({id: currentUser?.id});
+  const saved_jobs = company_jobs?.data.filter((job: any) => job.posted === 0);
+  const posted_jobs = company_jobs?.data.filter((job: any) => job.posted === 1);
+
   const [selectedTab, setSelectedTab] = useState("saved");
-  const [isAddingJob, setIsAddingJob] = useState(false);
+  
   return (
     <div className={"grid grid-rows-[70px_1fr] pb-6"}>
       <Header title='Job Ads' />
@@ -18,7 +27,7 @@ const MyJobs = () => {
               }`}
             onClick={() => setSelectedTab("saved")}
           >
-            Saved Draft
+            Saved Jobs
           </button>
           <button
             className={`py-3 px-6 text-lg font-medium transition-colors duration-200 ${selectedTab === "posted"
@@ -31,13 +40,13 @@ const MyJobs = () => {
           </button>
         </div>
         <div>
-          {selectedTab === "saved" && <CompanySavedDraft />}
-          {selectedTab === "posted" && <CompanyJob />}
+          {selectedTab === "saved" && <CompanySavedDraft jobs={saved_jobs} isLoading={isLoading} />}
+          {selectedTab === "posted" && <CompanyJob jobs={posted_jobs} isLoading={isLoading} />}
         </div>
       </div>
       <div className="mt-6 flex justify-center fixed bottom-10 right-10 z-20">
         <button
-          onClick={() => setIsAddingJob(true)} // Open the Add Job modal
+          onClick={() => dispatch(setJobModalOpen(true))}
           className="flex items-center text-lg px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-900 transition"
         >
           <FaPlus className="mr-2" /> Add Job

@@ -1,10 +1,9 @@
 import React from "react";
-import { Job } from "../type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 interface JobSideNavCardProps {
-  job: Job;
+  job: any;
 }
 
 const JobSideNavCard: React.FC<JobSideNavCardProps> = ({ job }) => {
@@ -12,8 +11,8 @@ const JobSideNavCard: React.FC<JobSideNavCardProps> = ({ job }) => {
     <div className="flex p-4 border rounded-lg shadow-sm space-x-4">
       {/* Company Logo */}
       <img
-        src={job.employer_logo}
-        alt={`${job.employer_name} logo`}
+        src={job.company_logo_url}
+        alt={`${job.company_name} logo`}
         className="w-12 h-12 rounded-full object-cover"
       />
 
@@ -29,7 +28,7 @@ const JobSideNavCard: React.FC<JobSideNavCardProps> = ({ job }) => {
             {job.job_is_remote ? "Remote" : "Onsite"}
           </span>
           <span className="px-2 py-1 text-xs font-medium text-gray-500 bg-gray-100 rounded">
-            {job.experience}
+            {job.experience} years
           </span>
         </div>
         <div className="flex items-center gap-3">

@@ -1,10 +1,18 @@
 import { Christiana, ellipse, event } from "../assets";
+import {
+  Applicant,
+  CompanyApplicantProps,
+  FeaturedJobProps,
+  FooterProps,
+  JobCategory,
+  Link,
+  Location,
+  NewsCardProps,
+  recruiterProps,
+  Testimonial,
+} from "../type";
 
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { Applicant, CompanyApplicantProps, FeaturedJobProps, FooterProps, Job, JobCategory,JobDetailSidebarProps,Link, Location, NewsCardProps, recruiterProps, Testimonial } from "../type";
-
-
-export const BASE_URL = "http://localhost:3000/api/";
+export const BASE_URL = "https://syncapi.onrender.com/api/"; //"http://localhost:3000/api/";
 
 export const links: Link[] = [
   {
@@ -438,7 +446,7 @@ export const jobDetails = {
   ],
 };
 
-export const jobDeatilsSidebar: JobDetailSidebarProps[] = [
+export const jobDeatilsSidebar = [
   {
     id: 1,
     title: "Lead UI Designer",
@@ -476,7 +484,7 @@ export const jobDeatilsSidebar: JobDetailSidebarProps[] = [
     logo: ellipse,
   },
 ];
-export const otherJobs: JobDetailSidebarProps[] = [
+export const otherJobs = [
   {
     id: 1,
     title: "UI Designer",
@@ -588,12 +596,12 @@ export const companySteps = [
   },
   {
     title: "Company Data",
-    description: "Enter your company's details, including name, category, and contact info.",
-  }
+    description:
+      "Enter your company's details, including name, category, and contact info.",
+  },
 ];
 
-
-export  const processJobs = [
+export const processJobs = [
   {
     id: 1,
     image:
@@ -725,7 +733,8 @@ export const recommendedCandidates = [
     role: "Frontend Developer",
     experience: ["React Developer (4 years)", "Web Designer (2 years)"],
     image: ellipse,
-  },{
+  },
+  {
     id: 3,
     name: "Cristofer Korsgaard",
     role: "UI/UX Designer",
@@ -742,24 +751,24 @@ export const recommendedCandidates = [
 ];
 export const companyJobs = [
   {
-    id: Date.now() + 1, 
+    id: Date.now() + 1,
     title: "UI/UX Designer",
     postedDate: "21 July 2022",
     applicants: 15,
     views: 20,
     isActive: true,
     status: "Active",
-    image: "https://via.placeholder.com/40", 
+    image: "https://via.placeholder.com/40",
   },
   {
-    id: Date.now() + 2, 
+    id: Date.now() + 2,
     title: "Frontend Developer",
     postedDate: "2 August 2022",
     applicants: 10,
     views: 30,
     isActive: false,
     status: "Inactive",
-    image: "https://via.placeholder.com/40", 
+    image: "https://via.placeholder.com/40",
   },
 ];
 
@@ -867,8 +876,7 @@ export const companyJobDetails = [
     title: "UI/UX Designer",
     company: "Figma Company",
     postedDate: "Posted 21 July 2022",
-  }
- 
+  },
 ];
 
 export const profileData = {
@@ -878,13 +886,17 @@ export const profileData = {
   location: "Indonesia",
   appliedDate: "Applied 1 day ago",
   avatar: "/avatar.png",
-  about: "Have interest in user interface and user experience design. I love research design for user experience, because I think design is not just about aesthetics but how we can create designs that are useful to many people and provide solutions around us.",
+  about:
+    "Have interest in user interface and user experience design. I love research design for user experience, because I think design is not just about aesthetics but how we can create designs that are useful to many people and provide solutions around us.",
   education: [
     {
       institution: "University of Indonesia",
       duration: "2019 - 2022",
       degree: "S1 - Computer Science",
-      experiences: ["Volunteer in national seminars", "Student association member"],
+      experiences: [
+        "Volunteer in national seminars",
+        "Student association member",
+      ],
     },
   ],
   workExperience: [
@@ -900,4 +912,3 @@ export const profileData = {
     },
   ],
 };
-

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../constant";
-import { APIResponse, Job } from "../../type";
+import { APIResponse, Job, JobData } from "../../type";
 
 // Define a service using a base URL and expected endpoints
 export const jobsApi = createApi({
@@ -16,7 +16,7 @@ export const jobsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Job", "SavedJobs"],
+  tagTypes: ["Job", "SavedJobs", "CompanyJobs", "JobTest"],
   endpoints: (builder) => ({
     getFeaturedJobs: builder.query<APIResponse, string>({
       query: () => `jobs/featured`,
@@ -30,6 +30,23 @@ export const jobsApi = createApi({
 
     getJobsByCompanyId: builder.query<APIResponse, { id: number }>({
       query: ({ id }) => `jobs/company/${id}`,
+      providesTags: ["CompanyJobs"]
+    }),
+
+    getTestbyJobId: builder.query<APIResponse, number>({
+      query: (job_id) => `jobs/test/${job_id}`,
+      providesTags: ["JobTest"]
+    }),
+
+    updateTestQuestion: builder.mutation<any, any>({
+      query: (data) => (
+        {
+          url: "/jobs/test/question",
+          method: "PATCH",
+          body: data
+        }
+      ),  
+      invalidatesTags: ["JobTest"],
     }),
 
     getAllJobs: builder.query<APIResponse, { id: number }>({
@@ -72,19 +89,67 @@ export const jobsApi = createApi({
       invalidatesTags: ["SavedJobs"],
     }),
 
-    getSavedJobs: builder.query<APIResponse, string>({
-      query: () => `jobs/saved`,
+    getSavedJobs: builder.query<APIResponse, {id: number}>({
+      query: (id) => `jobs/saved/${id}`,
       providesTags: ["SavedJobs"],
+      keepUnusedDataFor: 10,
     }),
+
+    createJob: builder.mutation<{ job: Job, message: string }, JobData>({
+      query: (job) => ({
+        url: "jobs/create",
+        method: "POST",
+        body: job,
+      }),
+      invalidatesTags: ["CompanyJobs"],
+    }),
+
+    updateJobById: builder.mutation<any, { id: number, data: any }>({
+      query: ({ id, data }) => (
+        {
+          url: `/jobs/update/${id}`,
+          method: "PUT",
+          body: data
+        }
+      ),
+      invalidatesTags: ["CompanyJobs"],
+    }),
+
+    updateJobInfo: builder.mutation<any, { id: number, data: any }>({
+      query: ({ id, data }) => (
+        {
+          url: `/jobs/update/${id}`,
+          method: "PATCH",
+          body: data
+        }
+      ),
+      invalidatesTags: ["CompanyJobs", "Job"],
+    }),
+
+    deleteJobById: builder.mutation<any, number>({
+      query: (id) => (
+        {
+          url: `/jobs/${id}`,
+          method: "DELETE"
+        }
+      ),
+      invalidatesTags: ["CompanyJobs"],
+    })
   }),
 });
 
 export const {
   useGetFeaturedJobsQuery,
   useGetJobsByCompanyIdQuery,
+  useGetTestbyJobIdQuery,
   useGetJobsByCategoryQuery,
   useGetMatchedJobsQuery,
   useSearchJobQuery,
   useSaveJobMutation,
   useGetSavedJobsQuery,
+  useCreateJobMutation,
+  useDeleteJobByIdMutation,
+  useUpdateJobByIdMutation,
+  useUpdateJobInfoMutation,
+  useUpdateTestQuestionMutation,
 } = jobsApi;

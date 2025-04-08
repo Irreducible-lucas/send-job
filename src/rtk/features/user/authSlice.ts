@@ -102,6 +102,81 @@ export const getCurrentUser = createAsyncThunk(
   }
 );
 
+// thunk action to update user profile
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async (userData: any, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken") ?? "";
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("Authentication token is missing");
+      }
+
+      const user = localStorage.getItem("user_data");
+
+      if (!user) {
+        return thunkAPI.rejectWithValue("User data not found in localStorage");
+      }
+
+      const parsedUser = JSON.parse(user);
+
+      // console.log("User Info:", parsedUser)
+
+      if (!parsedUser?.role) {
+        return thunkAPI.rejectWithValue("User role is missing or invalid");
+      }
+
+      let response;
+
+      if (parsedUser.role === "company") {
+        response = await axios.patch(
+          `/companies/${userData.get("id")}?role=company`,
+          userData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } else {
+        response = await axios.patch(
+          `/users/update/${userData.get("id")}?role=seeker`,
+          userData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
+
+      const updatedUser = response.data.user;
+
+      if (!updatedUser) {
+        return thunkAPI.rejectWithValue("Failed to retrieve updated user data");
+      }
+
+      localStorage.setItem("user_data", JSON.stringify(updatedUser));
+
+      return {
+        user: updatedUser,
+        token: token,
+      };
+    } catch (error: any) {
+      console.error("Error updating user profile:", error);
+
+      let errorMessage = "Failed to update profile";
+
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      }
+
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const logOut = createAsyncThunk("auth/logout", async () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("user_data");
@@ -154,6 +229,19 @@ const authSlice = createSlice({
         state.currentUser = null;
         state.token = "";
         state.error = "";
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = "";
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentUser = action.payload.user;
+        state.error = "";
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   },
 });

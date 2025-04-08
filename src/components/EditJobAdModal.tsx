@@ -18,6 +18,7 @@ const EditJobAdModal: React.FC<JobAdModalProps> = ({ onClose }) => {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         title: jobInfo?.job_title,
+        category_id: jobInfo?.category_id,
         workplace_type: jobInfo?.workplace_type,
         employment_type: jobInfo?.job_employment_type,
         city: jobInfo?.job_city,

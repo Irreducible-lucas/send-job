@@ -8,6 +8,7 @@ import { jobsApi } from "./services/jobs";
 import { applicationApi } from "./services/application";
 import { educationApi } from "./services/education";
 import { workApi } from "./services/work";
+import {categoryApi} from "./services/categories"
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     [applicationApi.reducerPath]: applicationApi.reducer,
     [educationApi.reducerPath]: educationApi.reducer,
     [workApi.reducerPath]: workApi.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -26,6 +28,7 @@ const store = configureStore({
       applicationApi.middleware,
       educationApi.middleware,
       workApi.middleware,
+      categoryApi.middleware
     ),
 });
 

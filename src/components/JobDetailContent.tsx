@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../rtk/hooks";
 import { setJobAppModalOpen, setJobInfo } from "../rtk/features/user/jobSlice";
 import { FaBriefcase } from "react-icons/fa";
 import { useGetApplicationStatusQuery } from "../rtk/services/application";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   job: Job;
@@ -21,12 +22,17 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
   const { token, currentUser } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const currencyFormat = new Intl.NumberFormat("en-Us");
-  const {data: applied, isLoading} = useGetApplicationStatusQuery({userId: currentUser?.id, jobId: job?.id});
+  const { data: applied, isLoading } = useGetApplicationStatusQuery({
+    userId: currentUser?.id,
+    jobId: job?.id,
+  });
 
+  let navigate = useNavigate();
 
   const applyToJob = () => {
     if (!token) {
-      toast.error("Please login to apply for job");
+      // toast.error("Please login to apply for job");
+      navigate(`/login`);
       return;
     }
     dispatch(setJobInfo(job));
@@ -75,11 +81,13 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
               <div className="w-16 h-16 rounded-full bg-blue-600 grid place-items-center">
                 <FaBriefcase size={30} className="text-white" />
               </div>
-            ) : (<img
-              src={job.employer_logo}
-              className="w-16 h-16 rounded-full"
-              alt="Company Logo"
-            />)}
+            ) : (
+              <img
+                src={job.employer_logo}
+                className="w-16 h-16 rounded-full"
+                alt="Company Logo"
+              />
+            )}
 
             <div>
               <div className="flex items-center gap-3">
@@ -127,7 +135,10 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
         <h2 className="text-xl font-semibold mb-3">About this role</h2>
         <div>
           <h2 className="font-bold text-black mb-2">Job Description</h2>
-          <div className="text-black" dangerouslySetInnerHTML={{ __html: job?.job_description }} />
+          <div
+            className="text-black"
+            dangerouslySetInnerHTML={{ __html: job?.job_description }}
+          />
         </div>
         <div>
           <h2 className="font-bold text-black mb-2">Job Experience</h2>
@@ -136,12 +147,27 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
         {job?.job_required_skills.startsWith("[") && (
           <div>
             <h2 className="font-bold text-black mb-2">Skills</h2>
-            <div className="flex gap-3 flex-wrap">{JSON.parse(job?.job_required_skills).map((skill: string, index: any) => <div key={index} className="bg-blue-100 rounded-lg text-blue-600 py-1 px-3">{skill}</div>)}</div>
+            <div className="flex gap-3 flex-wrap">
+              {JSON.parse(job?.job_required_skills).map(
+                (skill: string, index: any) => (
+                  <div
+                    key={index}
+                    className="bg-blue-100 rounded-lg text-blue-600 py-1 px-3"
+                  >
+                    {skill}
+                  </div>
+                )
+              )}
+            </div>
           </div>
         )}
         <div>
           <h2 className="font-bold text-black mb-2">Salary Expectation</h2>
-          <div><span className="font-bold">{job?.job_salary_currency}</span> {currencyFormat.format(job?.job_min_salary)} - {currencyFormat.format(job?.job_max_salary)}</div>
+          <div>
+            <span className="font-bold">{job?.job_salary_currency}</span>{" "}
+            {currencyFormat.format(job?.job_min_salary)} -{" "}
+            {currencyFormat.format(job?.job_max_salary)}
+          </div>
         </div>
       </div>
     </div>

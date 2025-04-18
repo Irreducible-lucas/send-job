@@ -8,6 +8,7 @@ interface initialState {
   token: string;
   isLoading: boolean;
   error: string;
+  authInitialized: boolean;
 }
 
 const initialState: initialState = {
@@ -15,6 +16,7 @@ const initialState: initialState = {
   token: "",
   isLoading: false,
   error: "",
+  authInitialized: false,
 };
 
 export const login = createAsyncThunk(
@@ -95,8 +97,10 @@ export const getCurrentUser = createAsyncThunk(
         user: userData,
         token: token,
       };
+      console.log("data", data);
       return data;
     } catch (error: any) {
+      console.log("data", error);
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
@@ -199,12 +203,14 @@ const authSlice = createSlice({
         state.currentUser = action.payload.user;
         state.token = action.payload.token;
         state.error = "";
+        state.authInitialized = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.currentUser = null;
         state.token = "";
         state.error = action.payload as string;
+        state.authInitialized = true;
       })
       .addCase(getCurrentUser.pending, (state) => {
         state.isLoading = true;
@@ -217,18 +223,21 @@ const authSlice = createSlice({
         state.currentUser = action.payload.user;
         state.token = action.payload.token;
         state.error = "";
+        state.authInitialized = true;
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
         state.currentUser = null;
         state.token = "";
         state.error = action.payload as string;
+        state.authInitialized = true;
       })
       .addCase(logOut.fulfilled, (state) => {
         state.isLoading = false;
         state.currentUser = null;
         state.token = "";
         state.error = "";
+        state.authInitialized = true;
       })
       .addCase(updateUserProfile.pending, (state) => {
         state.isLoading = true;

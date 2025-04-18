@@ -7,19 +7,19 @@ import { AppDispatch, RootState } from "../rtk";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const auth = useSelector((state: RootState) => state.auth)
+  const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (auth?.currentUser?.role === "seeker") {
-      navigate("/");
+      navigate("/employee");
     }
 
     if (auth?.currentUser?.role === "company") {
       navigate("/employer");
     }
-  }, [auth])
+  }, [auth]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,9 +53,11 @@ const LoginForm = () => {
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
-          {auth.error && auth.error !== "user not logged in" && (<div className="bg-red-100 p-3 grid place-items-center rounded-lg">
-            <p className="text-red-600">{auth.error}</p>
-          </div>)}
+          {auth.error && auth.error !== "user not logged in" && (
+            <div className="bg-red-100 p-3 grid place-items-center rounded-lg">
+              <p className="text-red-600">{auth.error}</p>
+            </div>
+          )}
           {/* Remember Me and Forgot Password */}
           <div className="flex items-center justify-between">
             <label className="text-sm flex items-center">
@@ -67,7 +69,10 @@ const LoginForm = () => {
             </a>
           </div>
           {/* Login Button */}
-          <button disabled={auth.isLoading} className="w-full py-3 disabled:bg-blue-600/30 disabled:hover:cursor-not-allowed bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          <button
+            disabled={auth.isLoading}
+            className="w-full py-3 disabled:bg-blue-600/30 disabled:hover:cursor-not-allowed bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
             {auth.isLoading ? "Logging in..." : "Login"}
           </button>
         </div>

@@ -14,13 +14,13 @@ export { default as LoginPage } from "./LoginPage";
 export { default as JobDetail } from "./JobDetail";
 export { default as Application } from "./Application";
 export { default as ApplicationSucessful } from "./ApplicationSucessful";
-export {default as OnlyLoggedInUserRoute} from "./OnlyEmployerRoute";
-export { default as EmployeeDashboard} from "./EmployeeDashboard";
+export { default as ProtectedRoute } from "./ProtectedRoute";
+export { default as EmployeeDashboard } from "./EmployeeDashboard";
 export { default as EmployeeJobsPage } from "./Jobs";
 export { default as EmployeeProfile } from "./EmployeeProfile";
 export { default as EmployeeEduHistory } from "./EmployeeEduHistory";
 // Sign up pages
-export { default as SignUpPage } from "./SignUp"
+export { default as SignUpPage } from "./SignUp";
 export { default as JobSeekerSignUp } from "./SeekerSignUp";
 export { default as EmployerSignUp } from "./EmployerSignUp";
 export { default as WorkExperienceHistory } from "./WorkExperienceHistory";

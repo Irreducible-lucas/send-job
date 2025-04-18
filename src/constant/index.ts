@@ -12,7 +12,7 @@ import {
   Testimonial,
 } from "../type";
 
-export const BASE_URL = "https://syncapi.onrender.com/api/"; //"http://localhost:3000/api/";
+export const BASE_URL = "http://localhost:3000/api/"; // "https://syncapi.onrender.com/api/";
 
 export const links: Link[] = [
   {

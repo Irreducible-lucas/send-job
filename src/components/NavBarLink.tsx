@@ -29,10 +29,11 @@ const NavBarLinks = ({
   return (
     <>
       <ul
-        className={`${isOpen
-          ? "fixed top-0 left-0 w-full flex flex-col gap-4 bg-white p-2 z-50"
-          : "hidden"
-          } lg:flex lg:items-center lg:justify-end lg:gap-12`}
+        className={`${
+          isOpen
+            ? "fixed top-0 left-0 w-full flex flex-col gap-4 bg-white p-2 z-50"
+            : "hidden"
+        } lg:flex lg:items-center lg:justify-end lg:gap-12`}
       >
         <div className="lg:hidden flex items-center justify-between w-full">
           <NavLink to={"/"}>
@@ -59,12 +60,13 @@ const NavBarLinks = ({
                 <DropdownMenuTrigger>
                   <div className={"group flex gap-2 items-center"}>
                     <span
-                      className={`${isOpen
-                        ? "text-black"
-                        : fill
+                      className={`${
+                        isOpen
+                          ? "text-black"
+                          : fill
                           ? "text-black"
                           : "text-white"
-                        } group-hover:text-blue-500 text-sm`}
+                      } group-hover:text-blue-500 text-sm`}
                     >
                       {link.text}
                     </span>
@@ -74,8 +76,9 @@ const NavBarLinks = ({
                       viewBox="0 0 10 6"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className={`${fill ? "stroke-darkgrey" : "stroke-white"
-                        } group-hover:stroke-blue-500`}
+                      className={`${
+                        fill ? "stroke-darkgrey" : "stroke-white"
+                      } group-hover:stroke-blue-500`}
                     >
                       <path
                         d="M1.46631 1.24185L4.98355 4.75816L8.49987 1.24185"
@@ -93,10 +96,11 @@ const NavBarLinks = ({
                         {({ isActive }) => (
                           <div className={"flex items-center justify-center"}>
                             <span
-                              className={`${isActive
-                                ? "text-black"
-                                : "text-black hover:text-blue-500"
-                                } text-sm`}
+                              className={`${
+                                isActive
+                                  ? "text-black"
+                                  : "text-black hover:text-blue-500"
+                              } text-sm`}
                             >
                               {children.text}
                             </span>
@@ -112,10 +116,11 @@ const NavBarLinks = ({
                 {({ isActive }) => (
                   <div className={"lg:flex lg:items-center lg:justify-center"}>
                     <span
-                      className={`text-sm ${isActive
-                        ? "text-red-500"
-                        : "text-black hover:text-blue-500"
-                        }`}
+                      className={`text-sm ${
+                        isActive
+                          ? "text-red-500"
+                          : "text-black hover:text-blue-500"
+                      }`}
                     >
                       {link.text}
                     </span>
@@ -128,36 +133,48 @@ const NavBarLinks = ({
 
         {/* Buttons section */}
         <div className="flex flex-col gap-4 lg:flex-row">
-          {(!auth?.currentUser || auth?.currentUser?.role === "company") ? (
-            <NavLink to="/employer" className="w-full text-sm font-bold md:w-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+          {!auth?.currentUser || auth?.currentUser?.role === "company" ? (
+            <NavLink
+              to="/employer"
+              className="w-full text-sm font-bold md:w-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+            >
               Post Job for Free
             </NavLink>
           ) : (
-            <NavLink to="/employee" className="w-full text-sm font-bold md:w-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+            <NavLink
+              to="/employee"
+              className="w-full text-sm font-bold md:w-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+            >
               Dashboard
             </NavLink>
           )}
 
           {!auth?.token ? (
             <div className="flex flex-col md:flex-row gap-2">
-              <NavLink to="/login" className="w-full text-sm md:w-auto px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition">
+              <NavLink
+                to="/login"
+                className="w-full text-sm md:w-auto px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition"
+              >
                 Login
               </NavLink>
-              <NavLink to="/sign-up" className="w-full text-sm md:w-auto px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition">
+              {/* <NavLink
+                to="/sign-up"
+                className="w-full text-sm md:w-auto px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition"
+              >
                 Sign Up
-              </NavLink>
+              </NavLink> */}
             </div>
           ) : (
             <div className="flex gap-2">
-              <NavLink
+              {/* <NavLink
                 to="/profile"
                 className={`flex items-center gap-2 text-sm hover:text-blue-500 ${fill ? "text-blue-500" : "text-white"
                   }`}
               >
-                {/* {(auth.currentUser?.photoUrl || auth.currentUser?.profile_image_url) ? <img src={auth.currentUser?.photoUrl || auth.currentUser?.profile_image_url} className="w-8 h-8 rounded-full" alt="" /> : <FaUserCircle className="w-8 h-8" />} */}
+                {(auth.currentUser?.photoUrl || auth.currentUser?.profile_image_url) ? <img src={auth.currentUser?.photoUrl || auth.currentUser?.profile_image_url} className="w-8 h-8 rounded-full" alt="" /> : <FaUserCircle className="w-8 h-8" />}
                 <FaUserCircle className="w-8 h-8" />
                 {auth?.currentUser?.name || auth?.currentUser?.full_name}
-              </NavLink>
+              </NavLink> */}
               <button
                 onClick={() => handleLogout()}
                 className="px-4 py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition"

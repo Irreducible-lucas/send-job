@@ -32,7 +32,7 @@ import {
   Application,
   ApplicationSucessful,
   EmployerSignUp,
-  OnlyLoggedInUserRoute,
+  ProtectedRoute,
   EmployeeDashboard,
   EmployeeJobsPage,
   EmployeeProfile,
@@ -46,7 +46,13 @@ import CompanyHome from "./components/CompanyHome";
 import SignUpRoot from "./layout/SignUpRoot";
 import EmployerRoot from "./layout/EmployerRoot";
 import EmployeeRoot from "./layout/EmployeeRoot";
-import { ApplicantInfo, EmployerDashboard, EmployerProfile, JobDetails, MyJobs } from "./pages/employer";
+import {
+  ApplicantInfo,
+  EmployerDashboard,
+  EmployerProfile,
+  JobDetails,
+  MyJobs,
+} from "./pages/employer";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -58,17 +64,6 @@ const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" errorElement={<ErrorPage />}>
-        {/* Authentication Routes */}
-        <Route path="login" element={<LoginPage />} />
-        <Route path="sign-up" element={<SignUpRoot />}>
-          <Route index element={<SignUpPage />} />
-          <Route
-            path="job-seeker"
-            element={<JobSeekerSignUp />}
-          />
-          <Route path="employer" element={<EmployerSignUp />} />
-        </Route>
-
         {/* Profile Route and sub-routes */}
         <Route path="profile" element={<ProfileRoot />}>
           <Route index element={<Profile />} />
@@ -105,25 +100,37 @@ const App = () => {
         </Route>
 
         {/* Employer Dashboard */}
-        <Route path="employer" element={<OnlyLoggedInUserRoute><EmployerRoot /></OnlyLoggedInUserRoute>}>
-          <Route index element={<EmployerDashboard />} />
-          <Route path="jobs">
-            <Route index element={<MyJobs />} />
-            <Route path=":id" element={<JobDetails />} />
-            <Route path=":id/applicant/:aid" element={<ApplicantInfo />} />
+        <Route path="employer" element={<ProtectedRoute />}>
+          <Route element={<EmployerRoot />}>
+            <Route index element={<EmployerDashboard />} />
+            <Route path="jobs">
+              <Route index element={<MyJobs />} />
+              <Route path=":id" element={<JobDetails />} />
+              <Route path=":id/applicant/:aid" element={<ApplicantInfo />} />
+            </Route>
+            <Route path="profile" element={<EmployerProfile />} />
           </Route>
-          <Route path="profile" element={<EmployerProfile />} />
         </Route>
 
         {/* Employee Dashboard */}
-        <Route path="employee" element={<EmployeeRoot />}>
-          <Route index element={<EmployeeDashboard />} />
-          <Route path="jobs">
-            <Route index element={<EmployeeJobsPage />} />
-            {/* <Route path=":id" element={<JobDetails />} />
+        <Route path="employee" element={<ProtectedRoute />}>
+          <Route element={<EmployeeRoot />}>
+            <Route index element={<EmployeeDashboard />} />
+            <Route path="jobs">
+              <Route index element={<EmployeeJobsPage />} />
+              {/* <Route path=":id" element={<JobDetails />} />
             <Route path=":id/applicant/:aid" element={<ApplicantInfo />} /> */}
+            </Route>
+            <Route path="profile" element={<EmployeeProfile />} />
           </Route>
-          <Route path="profile" element={<EmployeeProfile />} />
+        </Route>
+
+        {/* Authentication Routes */}
+        <Route path="login" element={<LoginPage />} />
+        <Route path="sign-up" element={<SignUpRoot />}>
+          <Route index element={<SignUpPage />} />
+          <Route path="job-seeker" element={<JobSeekerSignUp />} />
+          <Route path="employer" element={<EmployerSignUp />} />
         </Route>
 
         {/* Catch-all Route */}

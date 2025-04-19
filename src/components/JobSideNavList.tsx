@@ -15,15 +15,16 @@ const JobSideNavList = ({ job }: Props) => {
 
   const catId: any = job.category_id;
 
-  const { data, isLoading, error } = useGetJobsByCompanyIdQuery({id: companyId}, {
-    refetchOnMountOrArgChange: true,
-  });
+  const { data, isLoading, error } = useGetJobsByCompanyIdQuery(
+    { id: companyId },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   const { data: jobsByCate } = useGetJobsByCategoryQuery(catId, {
     refetchOnMountOrArgChange: true,
   });
-
-  console.log("jjobs category", data?.data)
 
   if (isLoading) return "loading...";
   if (error) return "Something went wrong!" + error;
@@ -33,10 +34,14 @@ const JobSideNavList = ({ job }: Props) => {
     <div className="">
       <div className="space-y-4">
         <h1 className="font-bold text-base">Similar Jobs</h1>
-        {jobsByCate?.data.length === 0 ? (<p className="p-4 text-gray-500">No similar jobs at the moment</p>) : jobsByCate?.data.map((item: Job) => {
-          if (item.id !== job.id)
-            return <JobSideNavCard key={item.id} job={item} />;
-        })}
+        {jobsByCate?.data.length === 0 ? (
+          <p className="p-4 text-gray-500">No similar jobs at the moment</p>
+        ) : (
+          jobsByCate?.data.map((item: Job) => {
+            if (item.id !== job.id)
+              return <JobSideNavCard key={item.id} job={item} />;
+          })
+        )}
       </div>
       <div className="space-y-4 mt-10">
         <h1 className="font-bold text-base">

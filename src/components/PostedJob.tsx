@@ -35,7 +35,7 @@ const PostedJob = ({ showHeading = true }: PostedJobProps) => {
   let navigate = useNavigate();
 
   const handleNavigate = (item: any) => {
-    navigate(`/jobs/${item.job_title}`, {
+    navigate(`/jobs/${item.id}`, {
       state: { state: item },
     });
   };

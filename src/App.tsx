@@ -85,7 +85,7 @@ const App = () => {
           <Route path="/resources" element={<Resources />} />
           Talent Solutions Sub-Routes
           {/* <Route path="/talent-solution/post-job" element={<PostJob />} /> */}
-          <Route path="/jobs/:slug" element={<JobDetail />} />
+          <Route path="/jobs/:jobId" element={<JobDetail />} />
           <Route path="/jobs/apply/:slug" element={<Application />} />
           <Route path="/talent-solution/hire-talent" element={<HireTalent />} />
           <Route path="/jobs/success" element={<ApplicationSucessful />} />

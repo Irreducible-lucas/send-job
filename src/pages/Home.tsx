@@ -4,13 +4,16 @@ import {
   MatchedJob,
   NewsLetter,
 } from "../components";
+import { useAppSelector } from "../rtk/hooks";
 
 const Home = () => {
+  const { currentUser }: any = useAppSelector((state) => state.auth);
+
   return (
     <div>
       <HeroSection />
 
-      <MatchedJob />
+      {currentUser && currentUser.role === "seeker" && <MatchedJob />}
 
       <FeaturedJobList />
 

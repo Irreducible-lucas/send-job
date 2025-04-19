@@ -40,7 +40,7 @@ export const login = createAsyncThunk(
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(response);
+
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("user_data", JSON.stringify(response.data.user));
       return {
@@ -97,10 +97,9 @@ export const getCurrentUser = createAsyncThunk(
         user: userData,
         token: token,
       };
-      console.log("data", data);
+
       return data;
     } catch (error: any) {
-      console.log("data", error);
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
@@ -124,8 +123,6 @@ export const updateUserProfile = createAsyncThunk(
       }
 
       const parsedUser = JSON.parse(user);
-
-      // console.log("User Info:", parsedUser)
 
       if (!parsedUser?.role) {
         return thunkAPI.rejectWithValue("User role is missing or invalid");
@@ -168,8 +165,6 @@ export const updateUserProfile = createAsyncThunk(
         token: token,
       };
     } catch (error: any) {
-      console.error("Error updating user profile:", error);
-
       let errorMessage = "Failed to update profile";
 
       if (error.response?.data?.message) {

@@ -2,24 +2,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { login, getCurrentUser } from "../rtk/features/user/authSlice";
+import { login } from "../rtk/features/user/authSlice";
 import { AppDispatch, RootState } from "../rtk";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (auth?.currentUser?.role === "seeker") {
-      navigate("/employee");
-    }
+  const location = useLocation();
+  const from = location.state?.prev || "/";
 
-    if (auth?.currentUser?.role === "company") {
-      navigate("/employer");
+  useEffect(() => {
+    if (auth?.currentUser?.role) {
+      navigate(from, { replace: true });
     }
-  }, [auth]);
+  }, [auth, from]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

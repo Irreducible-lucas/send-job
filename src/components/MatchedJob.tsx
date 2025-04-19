@@ -4,14 +4,16 @@ import {
   useSaveJobMutation,
 } from "../rtk/services/jobs";
 import { layout } from "../styles";
-import Button from "./Button";
 
 import { Job } from "../type";
 import PostedJobCard from "./PostedJobCard";
 import { toast } from "react-toastify";
+import { useAppSelector } from "../rtk/hooks";
 
 const MatchedJobs = () => {
-  const userId: any = 10;
+  const { currentUser }: any = useAppSelector((state) => state.auth);
+
+  const userId: any = currentUser.id;
   const { data, error } = useGetMatchedJobsQuery(userId, {
     refetchOnMountOrArgChange: true,
   });
@@ -54,6 +56,17 @@ const MatchedJobs = () => {
           Jobs For You
         </h2>
       </div>
+
+      {data && data?.data.length === 0 && (
+        <div className="w-full">
+          <h2 className="lg:text-2xl text-xl font-bold text-gray-800 mt-2 text-center">
+            No suitable jobs found
+          </h2>
+          <h2 className="lg:text-xl text-sm font-bold text-gray-800 mt-2 text-center">
+            Update your profile, so we can help you find the best jbos for you
+          </h2>
+        </div>
+      )}
 
       <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data &&

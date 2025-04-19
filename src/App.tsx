@@ -12,6 +12,7 @@ import {
   ProfileEdits,
   QualificationEdits,
   ReadyToWork,
+  Unauthorised,
 } from "./components";
 import Root from "./layout/Root";
 
@@ -100,7 +101,10 @@ const App = () => {
         </Route>
 
         {/* Employer Dashboard */}
-        <Route path="employer" element={<ProtectedRoute />}>
+        <Route
+          path="employer"
+          element={<ProtectedRoute allowedRoles={["company"]} />}
+        >
           <Route element={<EmployerRoot />}>
             <Route index element={<EmployerDashboard />} />
             <Route path="jobs">
@@ -113,7 +117,10 @@ const App = () => {
         </Route>
 
         {/* Employee Dashboard */}
-        <Route path="employee" element={<ProtectedRoute />}>
+        <Route
+          path="employee"
+          element={<ProtectedRoute allowedRoles={["seeker"]} />}
+        >
           <Route element={<EmployeeRoot />}>
             <Route index element={<EmployeeDashboard />} />
             <Route path="jobs">
@@ -135,6 +142,7 @@ const App = () => {
 
         {/* Catch-all Route */}
         <Route path="*" element={<ErrorPage />} />
+        <Route path="/not-authorized" element={<Unauthorised />} />
       </Route>
     )
   );

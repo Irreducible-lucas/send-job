@@ -35,15 +35,15 @@ const JobDetails = () => {
 
   return (
     <div
-      className={`${layout.section} grid grid-cols-1 md:grid-cols-3 gap-x-6`}
+      className={`${layout.section} grid grid-cols-1 md:grid-cols-3 gap-x-6 bg-blue-50`}
     >
       {/* Main Content */}
-      <div className="md:col-span-2">
+      <div className="md:col-span-2 bg-white rounded-lg shadow-lg p-4">
         <JobDetailContent job={job} />
       </div>
 
       {/* Sidebar */}
-      <div className="md:col-span-1">
+      <div className="md:col-span-1 bg-white rounded-lg shadow-lg p-4">
         <JobSideNavList job={job} />
       </div>
     </div>

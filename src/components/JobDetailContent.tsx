@@ -45,7 +45,7 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
         {/* Job Header */}
         <div>
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold mb-2">{job?.job_title}</h1>
+            <h1 className="text-2xl font-bold">{job?.job_title}</h1>
             <div className="flex items-center space-x-3">
               {/* Apply Now Button */}
               {showButton && (
@@ -75,6 +75,7 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
               </button> */}
             </div>
           </div>
+          <hr className="my-4" />
 
           <div className="flex items-center gap-5">
             {job?.employer_logo === "" ? (
@@ -132,14 +133,16 @@ const JobDetailContent = ({ job, showButton = true }: Props) => {
         </div>
 
         {/* About Section */}
-        <h2 className="text-xl font-semibold mb-3">About this role</h2>
+        
         <div>
-          <h2 className="font-bold text-black mb-2">Job Description</h2>
+          <h2 className="text-xl font-semibold mb-2">About this role</h2>
+        <hr />
+          {/* <h2 className="font-bold text-black mb-2">Job Description</h2> */}
+        </div>
           <div
             className="text-black"
             dangerouslySetInnerHTML={{ __html: job?.job_description }}
           />
-        </div>
         <div>
           <h2 className="font-bold text-black mb-2">Job Experience</h2>
           <div>{job?.experience} years working experience</div>

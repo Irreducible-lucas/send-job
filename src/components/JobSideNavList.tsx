@@ -33,7 +33,10 @@ const JobSideNavList = ({ job }: Props) => {
   return (
     <div className="">
       <div className="space-y-4">
-        <h1 className="font-bold text-base">Similar Jobs</h1>
+        <div>
+          <h1 className="font-bold text-base mb-2">Similar Jobs</h1>
+          <hr />
+        </div>
         {jobsByCate?.data.length === 0 ? (
           <p className="p-4 text-gray-500">No similar jobs at the moment</p>
         ) : (
@@ -44,9 +47,12 @@ const JobSideNavList = ({ job }: Props) => {
         )}
       </div>
       <div className="space-y-4 mt-10">
-        <h1 className="font-bold text-base">
+        <div>
+          <h1 className="font-bold text-base mb-2">
           Other Jobs From {job.employer_name}
         </h1>
+        <hr />
+        </div>
         {data?.data.map((item: Job) => {
           if (item.id !== job.id)
             return <JobSideNavCard key={item.id} job={item} />;
